@@ -1,0 +1,12 @@
+use_frameworks!
+
+target 'MinterCore_Example' do
+  pod 'MinterCore', :path => '../'
+
+  target 'MinterCore_Tests' do
+    inherit! :search_paths
+
+    pod 'Quick', '~> 1.2.0'
+    pod 'Nimble', '~> 7.0.2'
+  end
+end
