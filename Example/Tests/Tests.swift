@@ -2,7 +2,7 @@
 
 import Quick
 import Nimble
-import MinterCore
+//import MinterCore
 
 class TableOfContentsSpec: QuickSpec {
     override func spec() {
