@@ -7,9 +7,25 @@
 
 import Foundation
 
+enum HTTPClientResponseStatusCode : Int {
+	case noError = 0
+	case coinNotFound = 200
+	case insufficientFundsForTransaction = 300
+	case nonceTooLow = 400
+	case nonceTooHigh = 401
+	case incorrenctSignture = 500
+	case incorrenctTransactionData = 600
+	case unknownError = 900
+}
+
+typealias HTTPClientResponseDictionary = [String : Any]
+
+
 public protocol HTTPClient {
 	
-	typealias CompletionBlock = ((_ response: DataResponse<Any?>, _ error: Error?) -> Void)
+	typealias HTTPClientResponse = (code: HTTPClientResponseStatusCode, result: HTTPClientResponseDictionary?)
+	
+	typealias CompletionBlock = ((_ response: HTTPClientResponse, _ error: Error?) -> Void)
 	
 	
 	func postRequest(_ url: String, parameters: [String: Any]?, completionHandler: HTTPClient.CompletionBlock?)

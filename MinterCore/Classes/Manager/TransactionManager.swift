@@ -12,15 +12,7 @@ public class TransactionManager : BaseManager {
 	
 	//MARK: -
 	
-	private var httpClient: HTTPClient
-	
-	init(httpClient: HTTPClient) {
-		self.httpClient = httpClient
-	}
-	
-	//MARK: -
-	
-	public func transactions(completion: )
+//	public func transactions(completion: )
 	
 	
 }

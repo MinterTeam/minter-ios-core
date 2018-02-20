@@ -9,4 +9,12 @@ import Foundation
 
 public class BaseManager {
 	
+	//MARK: -
+	
+	var httpClient: HTTPClient
+	
+	init(httpClient: HTTPClient) {
+		self.httpClient = httpClient
+	}
+
 }
