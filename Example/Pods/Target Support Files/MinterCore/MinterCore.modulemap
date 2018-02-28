@@ -1,0 +1,6 @@
+framework module MinterCore {
+  umbrella header "MinterCore-umbrella.h"
+
+  export *
+  module * { export * }
+}

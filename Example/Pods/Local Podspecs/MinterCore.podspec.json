@@ -1,0 +1,30 @@
+{
+  "name": "MinterCore",
+  "version": "0.1.0",
+  "summary": "A short description of MinterCore.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/sidorov.panda/MinterCore",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "sidorov.panda": "ody344@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/sidorov.panda/MinterCore.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "MinterCore/Classes/**/*",
+  "dependencies": {
+    "Alamofire": [
+      "~> 4.6"
+    ],
+    "ObjectMapper": [
+      "~> 3.1"
+    ]
+  }
+}

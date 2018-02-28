@@ -1,6 +1,6 @@
 //
 //  APIClient.swift
-//  Alamofire
+//  MinterCore
 //
 //  Created by Alexey Sidorov on 19/02/2018.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class APIClient {
+public class APIClient {
 	
 	//MARK: -
 	
@@ -48,12 +48,28 @@ class APIClient {
 	}
 
 	// MARK: - Alamofire helper function.
-	fileprivate func performRequest(_ url: String, parameters: [String: Any]? = nil, method: HTTPMethod = .get, completionHandler: HTTPClient.CompletionBlock?) {
+	fileprivate func performRequest(_ URL: URL, parameters: [String: Any]? = nil, method: HTTPMethod = .get, completion: HTTPClient.CompletionBlock?) {
 		
 		let encodeUsing: ParameterEncoding = JSONEncoding.default//(method == .post || method == .put) ? JSONEncoding.default : URLEncoding.default
 		
-		APIClient.AlamofireManager.request(url, method: method, parameters: parameters, encoding: encodeUsing).responseJSON { response in
+		APIClient.AlamofireManager.request(URL, method: method, parameters: parameters, encoding: encodeUsing).responseJSON { response in
 			
+			var error: Error?
+			var resp = HTTPClient.HTTPClientResponse(HTTPClientResponseStatusCode.unknownError, [:])
+			
+			defer {
+				completion?(resp, error)
+			}
+			
+			error = response.error
+			
+			guard let result = response.result.value as? [String : Any] else {
+				return
+			}
+			
+			if let code = result["code"] as? Int, let respData = result["result"] {
+				resp = HTTPClient.HTTPClientResponse(HTTPClientResponseStatusCode(rawValue: code) ?? HTTPClientResponseStatusCode.unknown, respData)
+			}
 		}
 	}
 }
@@ -62,20 +78,20 @@ extension APIClient : HTTPClient {
 
 	// MARK: - Protocol methods
 	
-	public func postRequest(_ url: String, parameters: [String: Any]?, completionHandler: HTTPClient.CompletionBlock?) {
-		performRequest(url, parameters: parameters,  method: .post, completionHandler: completionHandler)
+	public func postRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?) {
+		performRequest(URL, parameters: parameters,  method: .post, completion: completion)
 	}
 	
-	public func getRequest(_ url: String, parameters: [String: Any]?, completionHandler: HTTPClient.CompletionBlock?) {
-		performRequest(url, parameters: parameters,  method: .get, completionHandler: completionHandler)
+	public func getRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?) {
+		performRequest(URL, parameters: parameters,  method: .get, completion: completion)
 	}
 	
-	public func putRequest(_ url: String, parameters: [String: Any]?, completionHandler: HTTPClient.CompletionBlock?) {
-		performRequest(url, parameters: parameters,  method: .put, completionHandler: completionHandler)
+	public func putRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?) {
+		performRequest(URL, parameters: parameters,  method: .put, completion: completion)
 	}
 	
-	public func deleteRequest(_ url: String, parameters: [String: Any]?, completionHandler: HTTPClient.CompletionBlock?) {
-		performRequest(url, parameters: parameters,  method: .delete, completionHandler: completionHandler)
+	public func deleteRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?) {
+		performRequest(URL, parameters: parameters,  method: .delete, completion: completion)
 	}
 	
 }

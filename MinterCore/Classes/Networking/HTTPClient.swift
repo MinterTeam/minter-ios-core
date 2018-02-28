@@ -1,13 +1,15 @@
 //
 //  HTTPClient.swift
-//  Alamofire
+//  MinterCore
 //
 //  Created by Alexey Sidorov on 19/02/2018.
 //
 
 import Foundation
 
-enum HTTPClientResponseStatusCode : Int {
+
+public enum HTTPClientResponseStatusCode : Int {
+	case unknown = -1
 	case noError = 0
 	case coinNotFound = 200
 	case insufficientFundsForTransaction = 300
@@ -18,22 +20,24 @@ enum HTTPClientResponseStatusCode : Int {
 	case unknownError = 900
 }
 
-typealias HTTPClientResponseDictionary = [String : Any]
+public typealias HTTPClientResponseDictionary = [String : Any]
+
+//public typealias HTTPClientResponse = Any
 
 
 public protocol HTTPClient {
 	
-	typealias HTTPClientResponse = (code: HTTPClientResponseStatusCode, result: HTTPClientResponseDictionary?)
+	typealias HTTPClientResponse = (code: HTTPClientResponseStatusCode, result: Any?)
 	
 	typealias CompletionBlock = ((_ response: HTTPClientResponse, _ error: Error?) -> Void)
 	
 	
-	func postRequest(_ url: String, parameters: [String: Any]?, completionHandler: HTTPClient.CompletionBlock?)
+	func postRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?)
 	
-	func getRequest(_ url: String, parameters: [String: Any]?, completionHandler: HTTPClient.CompletionBlock?)
+	func getRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?)
 	
-	func putRequest(_ url: String, parameters: [String: Any]?, completionHandler: HTTPClient.CompletionBlock?)
+	func putRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?)
 	
-	func deleteRequest(_ url: String, parameters: [String: Any]?, completionHandler: HTTPClient.CompletionBlock?)
+	func deleteRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?)
 	
 }
