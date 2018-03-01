@@ -8,6 +8,7 @@
 
 import UIKit
 import MinterCore
+import web3swift
 
 class ViewController: UIViewController {
 
@@ -23,6 +24,7 @@ class ViewController: UIViewController {
 		coinManager.info(symbol: "MNT") { (coin, err) in
 			print(coin)
 		}
+		
 		coinManager.estimateExchangeReturn(from: "MNT", to: "MNT", amount: 2.0) { (resp, err) in
 			print(resp)
 		}
