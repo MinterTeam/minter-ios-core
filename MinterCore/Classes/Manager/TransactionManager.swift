@@ -64,4 +64,28 @@ public class TransactionManager : BaseManager {
 		}
 	}
 	
+	public func send(tx: String, completion: (() -> ())?) {
+		
+		let url = MinterAPIURL.sendTransaction.url()
+		
+		self.httpClient.postRequest(url, parameters: ["transaction" : tx]) { (response, error) in
+			
+			var transaction: Transaction?
+			var err: Error?
+			
+//			defer {
+//				completion?(transaction, err)
+//			}
+			
+			guard error == nil else {
+				err = error
+				return
+			}
+			
+//			if let res = response.result as? [String : Any] {
+//				transaction = Mapper<TransactionMappable>().map(JSON: res)
+//			}
+		}
+	}
+	
 }

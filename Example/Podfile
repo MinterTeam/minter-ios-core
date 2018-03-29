@@ -2,9 +2,9 @@ use_frameworks!
 
 target 'MinterCore_Example' do
   pod 'MinterCore', :path => '../'
-	pod 'web3swift'#, git: 'https://github.com/Vaultie/web3swift.git'
-#	pod 'BigInt', '~> 3.0'
+	pod 'BigInt'
 	pod 'CryptoSwift'
+	pod 'secp256k1.swift'
 
   target 'MinterCore_Tests' do
     inherit! :search_paths
