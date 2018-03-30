@@ -8,7 +8,8 @@
 import Foundation
 
 
-let MinterAPIBaseURL = "http://minter-fake-api.dl-dev.ru:8841/api/"
+//let MinterAPIBaseURL = "http://minter-fake-api.dl-dev.ru:8841/api/"
+let MinterAPIBaseURL = "http://159.89.107.246:8841/api/"
 
 
 enum MinterAPIURL {

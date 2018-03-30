@@ -1,15 +1,15 @@
 //
 //  RLP.swift
-//  MinterCore_Example
+//  MinterCore
 //
-//  Created by Alexey Sidorov on 16/03/2018.
-//  Copyright © 2018 CocoaPods. All rights reserved.
+//  Created by Alexey Sidorov on 30/03/2018.
 //
+
 
 import Foundation
 import BigInt
 
-public struct RLP {
+struct RLP {
 	/// Encodes an element as RLP data.
 	///
 	/// - Returns: Encoded data or `nil` if the element type is not supported.

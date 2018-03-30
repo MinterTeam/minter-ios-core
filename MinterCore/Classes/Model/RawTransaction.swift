@@ -1,9 +1,8 @@
 //
-//  JSONRPCRequest.swift
-//  MinterCore_Example
+//  RawTransaction
+//  MinterCore
 //
-//  Created by Alexey Sidorov on 13/03/2018.
-//  Copyright © 2018 CocoaPods. All rights reserved.
+//  Created by Alexey Sidorov on 30/03/2018.
 //
 
 import Foundation
@@ -11,8 +10,8 @@ import Alamofire
 import BigInt
 
 
-public struct MinterTransaction : Encodable {
-
+public struct RawTransaction : Encodable {
+	
 	public var nonce: BigUInt
 	public var gasPrice: BigUInt = BigUInt("1000000000", radix: 10)!
 	public var type: BigUInt = BigUInt(1)
@@ -20,7 +19,7 @@ public struct MinterTransaction : Encodable {
 	public var v: BigUInt = BigUInt(1)
 	public var r: BigUInt = BigUInt(0)
 	public var s: BigUInt = BigUInt(0)
-
+	
 	enum CodingKeys: String, CodingKey {
 		case nonce
 		case gasPrice
@@ -30,7 +29,7 @@ public struct MinterTransaction : Encodable {
 		case r
 		case s
 	}
-
+	
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(nonce, forKey: .nonce)
@@ -57,11 +56,10 @@ public struct MinterTransaction : Encodable {
 	}
 }
 
-public struct MinterTransactionData : Encodable {
+public struct RawTransactionData : Encodable {
 	public var to: String
 	public var value: BigUInt
 	public var coin = "MINT"
-	
 	
 	enum CodingKeys: String, CodingKey {
 		case to

@@ -32,7 +32,6 @@ class TransactionMappable : Transaction, Mappable {
 	
 	func mapping(map: Map) {
 		self.hash <- map["hash"]
-		//make transformer?
 		self.type <- map["type"]
 		self.from <- map["from"]
 		self.to <- map["data.to"]
@@ -42,15 +41,3 @@ class TransactionMappable : Transaction, Mappable {
 
 	//MARK: -
 }
-
-
-//open class TransactionTypeTransform: TransformType {
-//	public typealias Object = Transaction.TransactionType
-//
-//	public typealias JSON = String
-//
-//
-//	func transformFromJSON(_ value: Any?) -> Object?
-//	func transformToJSON(_ value: Object?) -> JSON?
-//}
-

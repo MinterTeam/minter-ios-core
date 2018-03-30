@@ -8,9 +8,6 @@
 
 import UIKit
 import MinterCore
-import CryptoSwift
-import secp256k1
-import BigInt
 
 
 class ViewController: UIViewController {
@@ -21,114 +18,69 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		wallet.balance(address: "0xa0ee9e29801935baa8a58686309aafb6a8106edd") { (resp, err)  in
-			print(resp)
-		}
+//		wallet.balance(address: "Mxa93163fdf10724dc4785ff5cbfb9ac0b5949409f") { (resp, err)  in
+//			print(resp)
+//		}
+//
+//		let coinManager = CoinManager.default
+//		coinManager.info(symbol: "MNT") { (coin, err) in
+//			print(coin)
+//		}
+//
+//		coinManager.estimateExchangeReturn(from: "MNT", to: "MNT", amount: 2.0) { (resp, err) in
+//			print(resp)
+//		}
+//
+//		transactionManager.transactions(address: "Mxa93163fdf10724dc4785ff5cbfb9ac0b5949409f") { (transactions, error) in
+//			print(transactions)
+//		}
+//
+//		transactionManager.transaction(hash: "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331") { (transaction, error) in
+//			print(transaction)
+//		}
 		
-		let coinManager = CoinManager.default
-		coinManager.info(symbol: "MNT") { (coin, err) in
-			print(coin)
-		}
+//		func calculateRSV(signiture: Data) -> (r: Data, s: Data, v: Data) {
+//			return (
+//				r: signiture[..<32],
+//				s: signiture[32..<64],
+//				v: Data(bytes: [signiture[64] + UInt8(27)])
+//			)
+//		}
 		
-		coinManager.estimateExchangeReturn(from: "MNT", to: "MNT", amount: 2.0) { (resp, err) in
-			print(resp)
-		}
+//		let myAddress = "c07ec7cdcae90dea3999558f022aeb25dabbeea2"
+//		let privateKey = Data(hex: "c0ed1a463f5d40a0b582c7344a8f25ae3e6132f3f73cc97c1c3f1923e1433a96")
+//		let publicKey = ViewController.publicKey(privateKey: privateKey)!
 		
-		transactionManager.transactions(address: "0xa0ee9e29801935baa8a58686309aafb6a8106edd") { (transactions, error) in
-			print(transactions)
-		}
 		
-		transactionManager.transaction(hash: "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331") { (transaction, error) in
-			print(transaction)
-		}
+//		let minterData = MinterTransactionData(to: "Mx32143b4d9674b13b0868da425d049fd66910ebae", value: BigUInt(100000000), coin: "MINT")
+//		let encodedData = minterData.encode()
 		
-		func calculateRSV(signiture: Data) -> (r: Data, s: Data, v: Data) {
-			return (
-				r: signiture[..<32],
-				s: signiture[32..<64],
-				v: Data([signiture[64] + UInt8(27)])
-			)
-		}
+//		var txx = MinterTransaction(nonce: BigUInt(3), gasPrice: BigUInt(1), type: BigUInt(1), data: encodedData!, v: BigUInt(1), r: BigUInt(0), s: BigUInt(0))
 		
-		let myAddress = "Mxc07ec7cdcae90dea3999558f022aeb25dabbeea2"
-		let privateKey = "c0ed1a463f5d40a0b582c7344a8f25ae3e6132f3f73cc97c1c3f1923e1433a96".data(using: .utf8)
-	
-		let minterData = MinterTransactionData(to: "Mx32143b4d9674b13b0868da425d049fd66910ebae", value: BigUInt(1), coin: "MINT")
-		let encodedData = minterData.encode()
+//		let data = txx.encode(forSignature: true)
+//		print(data?.toHexString())
 		
-		var txx = MinterTransaction(nonce: BigUInt(1), gasPrice: BigUInt(1), type: BigUInt(1), data: encodedData!, v: BigUInt(1), r: BigUInt(0), s: BigUInt(0))
+//		let sha3 = SHA3(variant: .keccak256)
+//		let hash = Data(bytes: sha3.calculate(for: data!.bytes))
+//		let signature = ViewController.sign(hash, privateKey: privateKey)
+//
+//		txx.r = BigUInt(signature.r!)
+//		txx.s = BigUInt(signature.s!)
+//		txx.v = BigUInt(signature.v!)
 		
-		let data = txx.encode(forSignature: true)
-		print(data?.toHexString())
+//		let encoded = txx.encode(forSignature: false)
+//		print(encoded?.toHexString())
 		
-		let sha3 = SHA3(variant: .keccak256)
-		let hash = Data(bytes: sha3.calculate(for: encodedData!.bytes))
-		let signature = ViewController.sign(hash, privateKey: privateKey!)
+//		transactionManager.send(tx: "0x" + encoded!.toHexString()) {
+//
+//		}
 		
-		let (r, s, v) = calculateRSV(signiture: signature!)
-		
-		txx.s = BigUInt(s)
-		txx.r = BigUInt(r)
-		txx.v = BigUInt(v)
-		
-		let encoded = txx.encode(forSignature: false)
-		print(encoded?.toHexString())
-		
-		print(RLP.encode([BigUInt(1), BigUInt(1), BigUInt(1), encodedData, v, r, s])?.toHexString())
-		
-		transactionManager.transaction(hash: encoded!.toHexString().addHexPrefix()) { (tx, err) in
-			
-		}
+//		print(publicKey.toHexString())
+		print(ViewController.address(publicKey: publicKey))
 	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
 	
-	func JSONRPCString(id: String, method: String, params: [String : Any]) -> String? {
-
-		var jsonData: Data
-
-		let raw: [String : Any] = ["jsonrpc":"2.0", "id": id, "method": method, "params": params]
-		do {
-			jsonData = try JSONSerialization.data(withJSONObject: raw, options: JSONSerialization.WritingOptions.prettyPrinted)
-		} catch {
-			return nil
-		}
-
-		return String(data: jsonData, encoding: .utf8)
-	}
-	
-	
-	public static func sign(_ data: Data, privateKey: Data) -> Data? {
-		let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY))!
-		defer { secp256k1_context_destroy(context) }
-		
-		var signature = secp256k1_ecdsa_recoverable_signature()
-		let status = privateKey.withUnsafeBytes { (key: UnsafePointer<UInt8>) in
-			data.withUnsafeBytes { secp256k1_ecdsa_sign_recoverable(context, &signature, $0, key, nil, nil) }
-		}
-		
-		guard status == 1 else { return nil }
-		
-		var output = Data(count: 65)
-		var recid = 0 as Int32
-		_ = output.withUnsafeMutableBytes { (output: UnsafeMutablePointer<UInt8>) in
-			secp256k1_ecdsa_recoverable_signature_serialize_compact(context, output, &recid, &signature)
-		}
-		
-		output[64] = UInt8(recid)
-		return output
-	}
-	
-	public func verify(privateKey: Data) -> Bool {
-		var secret = privateKey.bytes
-		let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY))!
-		defer { secp256k1_context_destroy(context) }
-		
-		guard secp256k1_ec_seckey_verify(context, &secret) == 1 else {
-			return false
-		}
-		return true
-	}
 }

@@ -1,16 +1,16 @@
 //
-//  ABIEncoder.swift
-//  web3swift
+//  Data+HEX.swift
+//  MinterCore
 //
-//  Created by Alexander Vlasov on 05.12.2017.
-//  Copyright © 2017 Alexander Vlasov. All rights reserved.
+//  Created by Alexey Sidorov on 30/03/2018.
 //
 
 import Foundation
 import BigInt
 
 extension Data {
-	func setLengthLeft(_ toBytes: UInt64, isNegative:Bool = false ) -> Data? {
+	
+	func setLengthLeft(_ toBytes: UInt64, isNegative: Bool = false) -> Data? {
 		let existingLength = UInt64(self.count)
 		if (existingLength == toBytes) {
 			return Data(self)
@@ -27,7 +27,7 @@ extension Data {
 		return data
 	}
 	
-	func setLengthRight(_ toBytes: UInt64, isNegative:Bool = false ) -> Data? {
+	func setLengthRight(_ toBytes: UInt64, isNegative: Bool = false) -> Data? {
 		let existingLength = UInt64(self.count)
 		if (existingLength == toBytes) {
 			return Data(self)
@@ -46,6 +46,7 @@ extension Data {
 }
 
 public extension Data {
+	
 	init?(hexString: String) {
 		let len = hexString.count / 2
 		var data = Data(capacity: len)
@@ -61,17 +62,7 @@ public extension Data {
 		}
 		self = data
 	}
-
-//	subscript(origin: Int) -> UInt8 {
-//		get {
-//			var result: UInt8 = 0;
-//			if (origin < self.count) {
-//				(self as NSData).getBytes(&result, range: NSMakeRange(origin, 1))
-//			}
-//			return result
-//		}
-//	}
-
+	
 	func hexadecimalString() -> String {
 		return String(map { String(format: "%02hhx ", $0) }.joined().dropLast())
 	}

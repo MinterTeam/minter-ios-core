@@ -73,9 +73,9 @@ public class TransactionManager : BaseManager {
 			var transaction: Transaction?
 			var err: Error?
 			
-//			defer {
-//				completion?(transaction, err)
-//			}
+			defer {
+				completion?()
+			}
 			
 			guard error == nil else {
 				err = error
@@ -87,5 +87,4 @@ public class TransactionManager : BaseManager {
 //			}
 		}
 	}
-	
 }
