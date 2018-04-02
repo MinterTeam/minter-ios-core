@@ -9,6 +9,7 @@ import Foundation
 import Alamofire
 import BigInt
 
+let DefaultTransactionCoin = "MINT"
 
 public struct RawTransaction : Encodable {
 	
@@ -19,6 +20,20 @@ public struct RawTransaction : Encodable {
 	public var v: BigUInt = BigUInt(1)
 	public var r: BigUInt = BigUInt(0)
 	public var s: BigUInt = BigUInt(0)
+	
+	//MARK: -
+	
+	public init(nonce: BigUInt, gasPrice: BigUInt, type: BigUInt, data: Data = Data(), v: BigUInt = BigUInt(1), r: BigUInt = BigUInt(0), s: BigUInt = BigUInt(0)) {
+		self.nonce = nonce
+		self.gasPrice = gasPrice
+		self.type = type
+		self.data = data
+		self.v = v
+		self.r = r
+		self.s = s
+	}
+	
+	//MARK: - Encodable
 	
 	enum CodingKeys: String, CodingKey {
 		case nonce
@@ -57,9 +72,20 @@ public struct RawTransaction : Encodable {
 }
 
 public struct RawTransactionData : Encodable {
+	
 	public var to: String
 	public var value: BigUInt
-	public var coin = "MINT"
+	public var coin: String = DefaultTransactionCoin
+	
+	//MARK: -
+	
+	public init(to: String, value: BigUInt, coin: String) {
+		self.to = to
+		self.value = value
+		self.coin = coin
+	}
+	
+	//MARK: - Encoding
 	
 	enum CodingKeys: String, CodingKey {
 		case to
@@ -74,7 +100,7 @@ public struct RawTransactionData : Encodable {
 		try container.encode(coin, forKey: .coin)
 	}
 	
-	func encode() -> Data? {
+	public func encode() -> Data? {
 		let dataArray = Array<UInt8>(hex: self.to.lowercased().stripMinterHexPrefix())
 		guard let toData = Data(dataArray).setLengthLeft(20) else {
 			return Data()

@@ -2,9 +2,9 @@ use_frameworks!
 
 target 'MinterCore_Example' do
   pod 'MinterCore', :path => '../'
-	pod 'BigInt'
-	pod 'CryptoSwift'
-	pod 'secp256k1.swift'
+#	pod 'BigInt'
+#	pod 'CryptoSwift'
+#	pod 'secp256k1.swift'
 
   target 'MinterCore_Tests' do
     inherit! :search_paths

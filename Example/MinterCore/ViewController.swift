@@ -8,6 +8,7 @@
 
 import UIKit
 import MinterCore
+import BigInt
 
 
 class ViewController: UIViewController {
@@ -38,45 +39,16 @@ class ViewController: UIViewController {
 //		transactionManager.transaction(hash: "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331") { (transaction, error) in
 //			print(transaction)
 //		}
+
+		let encodedData = RawTransactionData(to: "Mx32143b4d9674b13b0868da425d049fd66910ebae", value: BigUInt(1000), coin: "MINT").encode()
 		
-//		func calculateRSV(signiture: Data) -> (r: Data, s: Data, v: Data) {
-//			return (
-//				r: signiture[..<32],
-//				s: signiture[32..<64],
-//				v: Data(bytes: [signiture[64] + UInt8(27)])
-//			)
-//		}
+		let tx = RawTransaction(nonce: BigUInt(7), gasPrice: BigUInt(1), type: BigUInt(1), data: encodedData!, v: BigUInt(1), r: BigUInt(0), s: BigUInt(0))
 		
-//		let myAddress = "c07ec7cdcae90dea3999558f022aeb25dabbeea2"
-//		let privateKey = Data(hex: "c0ed1a463f5d40a0b582c7344a8f25ae3e6132f3f73cc97c1c3f1923e1433a96")
-//		let publicKey = ViewController.publicKey(privateKey: privateKey)!
+		let signedHex = RawTransactionSigner.sign(rawTx: tx, privateKey: "c0ed1a463f5d40a0b582c7344a8f25ae3e6132f3f73cc97c1c3f1923e1433a96")
 		
-		
-//		let minterData = MinterTransactionData(to: "Mx32143b4d9674b13b0868da425d049fd66910ebae", value: BigUInt(100000000), coin: "MINT")
-//		let encodedData = minterData.encode()
-		
-//		var txx = MinterTransaction(nonce: BigUInt(3), gasPrice: BigUInt(1), type: BigUInt(1), data: encodedData!, v: BigUInt(1), r: BigUInt(0), s: BigUInt(0))
-		
-//		let data = txx.encode(forSignature: true)
-//		print(data?.toHexString())
-		
-//		let sha3 = SHA3(variant: .keccak256)
-//		let hash = Data(bytes: sha3.calculate(for: data!.bytes))
-//		let signature = ViewController.sign(hash, privateKey: privateKey)
-//
-//		txx.r = BigUInt(signature.r!)
-//		txx.s = BigUInt(signature.s!)
-//		txx.v = BigUInt(signature.v!)
-		
-//		let encoded = txx.encode(forSignature: false)
-//		print(encoded?.toHexString())
-		
-//		transactionManager.send(tx: "0x" + encoded!.toHexString()) {
-//
-//		}
-		
-//		print(publicKey.toHexString())
-		print(ViewController.address(publicKey: publicKey))
+		transactionManager.send(tx: signedHex!) { (suc, err) in
+			
+		}
 	}
 
 	override func didReceiveMemoryWarning() {

@@ -64,17 +64,17 @@ public class TransactionManager : BaseManager {
 		}
 	}
 	
-	public func send(tx: String, completion: (() -> ())?) {
+	public func send(tx: String, completion: ((Bool, Error?) -> ())?) {
 		
 		let url = MinterAPIURL.sendTransaction.url()
 		
 		self.httpClient.postRequest(url, parameters: ["transaction" : tx]) { (response, error) in
 			
-			var transaction: Transaction?
+			var success: Bool = false
 			var err: Error?
 			
 			defer {
-				completion?()
+				completion?(success, err)
 			}
 			
 			guard error == nil else {
@@ -82,9 +82,8 @@ public class TransactionManager : BaseManager {
 				return
 			}
 			
-//			if let res = response.result as? [String : Any] {
-//				transaction = Mapper<TransactionMappable>().map(JSON: res)
-//			}
+			success = true
+			
 		}
 	}
 }
