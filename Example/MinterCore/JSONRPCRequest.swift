@@ -60,7 +60,7 @@ public struct MinterTransaction : Encodable {
 public struct MinterTransactionData : Encodable {
 	public var to: String
 	public var value: BigUInt
-	public var coin = "MINT"
+	public var coin = "BIP"
 	
 	
 	enum CodingKeys: String, CodingKey {
@@ -81,7 +81,10 @@ public struct MinterTransactionData : Encodable {
 		guard let toData = Data(dataArray).setLengthLeft(20) else {
 			return Data()
 		}
-		let fields = [coin, toData, value] as [Any]
+		
+		let coinData = coin.data(using: .utf8)?.setLengthLeft(10) ?? Data(repeating: 0, count: 10)
+		
+		let fields = [coinData, toData, value] as [Any]
 		return RLP.encode(fields)
 	}
 }

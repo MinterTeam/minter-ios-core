@@ -105,7 +105,10 @@ public struct RawTransactionData : Encodable {
 		guard let toData = Data(dataArray).setLengthLeft(20) else {
 			return Data()
 		}
-		let fields = [coin, toData, value] as [Any]
+		
+		let coinData = coin.data(using: .utf8)?.setLengthLeft(10) ?? Data(repeating: 0, count: 10)
+		
+		let fields = [coinData, toData, value] as [Any]
 		return RLP.encode(fields)
 	}
 }

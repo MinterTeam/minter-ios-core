@@ -40,7 +40,7 @@ class ViewController: UIViewController {
 //			print(transaction)
 //		}
 
-		let encodedData = RawTransactionData(to: "Mx32143b4d9674b13b0868da425d049fd66910ebae", value: BigUInt(1000), coin: "MINT").encode()
+		let encodedData = RawTransactionData(to: "Mxc3a55cdb5bcb97fd5657794247de4ed5e4a49f0d", value: BigUInt(1000), coin: "MINT").encode()
 		
 		let tx = RawTransaction(nonce: BigUInt(7), gasPrice: BigUInt(1), type: BigUInt(1), data: encodedData!, v: BigUInt(1), r: BigUInt(0), s: BigUInt(0))
 		
