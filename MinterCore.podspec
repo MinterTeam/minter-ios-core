@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.version          = '0.1.0'
   s.summary          = 'A short description of MinterCore.'
 
-  s.homepage         = 'https://github.com/MinterTeam/MinterCore-iOS'
+  s.homepage         = 'https://github.com/MinterTeam/MinterCore-iOS.git'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'sidorov.panda' => 'ody344@gmail.com' }
 	s.source           = { :git => 'https://github.com/MinterTeam/MinterCore-iOS', :tag => s.version.to_s }
