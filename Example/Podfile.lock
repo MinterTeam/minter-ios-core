@@ -2,10 +2,13 @@ PODS:
   - Alamofire (4.7.0)
   - BigInt (3.0.1):
     - SipHash (~> 1.2)
+  - CKMnemonic (0.1.7):
+    - CryptoSwift
   - CryptoSwift (0.8.3)
   - MinterCore (0.1.0):
     - Alamofire (~> 4.6)
     - BigInt
+    - CKMnemonic
     - CryptoSwift
     - ObjectMapper (~> 3.1)
     - secp256k1.swift
@@ -27,14 +30,15 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
+  CKMnemonic: 88e745afffea6f3c719c799d9869a2ea5eb9f08b
   CryptoSwift: 033efc3523865d19cc6ab6612fa17a62613b5dfa
-  MinterCore: e5a7be883c67636b1bd0552c1c7f39f8c304f9fb
+  MinterCore: 22eebf3b81f9477a9ea17516e3b9e7e1ecd0e6b5
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   secp256k1.swift: f2dd50b7909e7d3d7527502619d061b85bd1c294
   SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
 
-PODFILE CHECKSUM: fea80ae10bce0186e45e31f8aacf88feef18b80d
+PODFILE CHECKSUM: 5cd7a8e72a0c1d9416e4a4bff29f85864d6b8845
 
 COCOAPODS: 1.3.1

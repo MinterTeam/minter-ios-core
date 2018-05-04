@@ -23,4 +23,5 @@ Pod::Spec.new do |s|
   s.dependency 'BigInt'
   s.dependency 'CryptoSwift'
   s.dependency 'secp256k1.swift'
+  s.dependency 'CKMnemonic'
 end
