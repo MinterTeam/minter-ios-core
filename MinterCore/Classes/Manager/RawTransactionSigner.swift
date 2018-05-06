@@ -116,7 +116,7 @@ public class RawTransactionSigner {
 		)
 	}
 	
-	private static func verify(privateKey: Data) -> Bool {
+	public static func verify(privateKey: Data) -> Bool {
 		var secret = privateKey.bytes
 		let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY))!
 		defer { secp256k1_context_destroy(context) }
@@ -127,7 +127,7 @@ public class RawTransactionSigner {
 		return true
 	}
 	
-	private static func publicKey(privateKey: Data) -> Data? {
+	public static func publicKey(privateKey: Data) -> Data? {
 		let bytes = privateKey.bytes
 		var publicKeyStructure = secp256k1_pubkey()
 		var privateKey = bytes
@@ -153,7 +153,7 @@ public class RawTransactionSigner {
 		return Data(bytes: publicKey.dropFirst())
 	}
 	
-	private static func address(publicKey: Data) -> String? {
+	public static func address(publicKey: Data) -> String? {
 		return Data(bytes: SHA3(variant: .keccak256).calculate(for: publicKey.bytes)).suffix(20).toHexString()
 	}
 	
