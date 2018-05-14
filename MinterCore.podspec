@@ -24,5 +24,4 @@ Pod::Spec.new do |s|
   s.dependency 'CryptoSwift'
   s.dependency 'secp256k1.swift'
   s.dependency 'CKMnemonic'
-  s.dependency 'OpenSSL-Universal'
 end

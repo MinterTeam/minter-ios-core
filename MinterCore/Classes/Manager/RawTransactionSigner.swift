@@ -127,7 +127,7 @@ public class RawTransactionSigner {
 		return true
 	}
 	
-	public static func publicKey(privateKey: Data) -> Data? {
+	public static func publicKey(privateKey: Data, compressed: Bool = false) -> Data? {
 		let bytes = privateKey.bytes
 		var publicKeyStructure = secp256k1_pubkey()
 		var privateKey = bytes
@@ -138,19 +138,30 @@ public class RawTransactionSigner {
 			) == 1 else {
 				return nil
 		}
-		var publicKey = Array<UInt8>(repeating: 0x00, count: 65)
-		var outputLength = Int(65)
+		
+		var publicKey: Array<UInt8>
+		var outputLength: Int
+		
+		if !compressed {
+			publicKey = Array<UInt8>(repeating: 0x00, count: 65)
+			outputLength = Int(65)
+		}
+		else {
+			publicKey = Array<UInt8>(repeating: 0x00, count: 33)
+			outputLength = Int(33)
+		}
+		
 		guard secp256k1_ec_pubkey_serialize(
 			secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN) | UInt32(SECP256K1_CONTEXT_VERIFY)),
 			&publicKey,
 			&outputLength,
 			&publicKeyStructure,
-			UInt32(SECP256K1_EC_UNCOMPRESSED)
+			(compressed ? UInt32(SECP256K1_EC_COMPRESSED) : UInt32(SECP256K1_EC_UNCOMPRESSED))
 			) == 1 else {
 				return nil
 		}
-		
-		return Data(bytes: publicKey.dropFirst())
+			return Data(bytes: publicKey)
+//		return Data(bytes: publicKey.dropFirst())
 	}
 	
 	public static func address(publicKey: Data) -> String? {
