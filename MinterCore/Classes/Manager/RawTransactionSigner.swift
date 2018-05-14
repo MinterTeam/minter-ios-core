@@ -160,8 +160,7 @@ public class RawTransactionSigner {
 			) == 1 else {
 				return nil
 		}
-			return Data(bytes: publicKey)
-//		return Data(bytes: publicKey.dropFirst())
+			return Data(bytes: publicKey).dropFirst()
 	}
 	
 	public static func address(publicKey: Data) -> String? {
