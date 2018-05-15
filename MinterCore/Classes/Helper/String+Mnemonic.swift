@@ -23,8 +23,6 @@ public extension String {
 	public static func privateKeyString(seed: String) -> String? {
 		let hmac = HMAC(key: "Bitcoin seed".bytes, variant: HMAC.Variant.sha512)
 		let val = try? hmac.authenticate(seed.bytes)
-		
-		print(val?.toHexString())
 
 		guard val != nil else {
 			return nil
