@@ -19,9 +19,9 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-//		wallet.balance(address: "Mxa93163fdf10724dc4785ff5cbfb9ac0b5949409f") { (resp, err)  in
-//			print(resp)
-//		}
+		wallet.balance(address: "Mxa93163fdf10724dc4785ff5cbfb9ac0b5949409f") { (resp, err)  in
+			print(resp)
+		}
 //
 //		let coinManager = CoinManager.default
 //		coinManager.info(symbol: "MNT") { (coin, err) in

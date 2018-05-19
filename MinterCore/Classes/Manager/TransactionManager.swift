@@ -8,16 +8,20 @@
 import Foundation
 import ObjectMapper
 
+enum TransactionManagerError : Error {
+	case transactionsIncorrectPayload
+}
+
 
 public class TransactionManager : BaseManager {
 	
 	//MARK: -
 	
-	public func transactions(address: String, completion: (([Transaction], Error?) -> ())?) {
+	public func transactions(address: String, query: String, completion: (([Transaction], Error?) -> ())?) {
 		
-		let url = MinterAPIURL.getTransactions.url()
+		let url = MinterAPIURL.getTransactions(query: query).url()
 		
-		self.httpClient.postRequest(url, parameters: ["address" : address]) { (response, error) in
+		self.httpClient.getRequest(url, parameters: nil) { (response, error) in
 			
 			var transactions = [Transaction]()
 			var err: Error?
@@ -36,6 +40,7 @@ public class TransactionManager : BaseManager {
 			}
 			else {
 				transactions = []
+				err = TransactionManagerError.transactionsIncorrectPayload
 			}
 		}
 	}

@@ -33,6 +33,7 @@ public class APIClient {
 	fileprivate class func updatedManager(_ headers: [AnyHashable: Any?]? = nil) -> SessionManager {
 		let defaultHeaders = AlamofireManager.session.configuration.httpAdditionalHeaders
 		var newHeaders = defaultHeaders ?? [:]
+		
 		if headers != nil {
 			for (key, value) in headers! {
 				if let value = value {
@@ -42,6 +43,7 @@ public class APIClient {
 				}
 			}
 		}
+		
 		let configuration = AlamofireManager.session.configuration
 		configuration.httpAdditionalHeaders = newHeaders
 		return SessionManager(configuration: configuration)
@@ -49,10 +51,13 @@ public class APIClient {
 
 	// MARK: - Alamofire helper function.
 	fileprivate func performRequest(_ URL: URL, parameters: [String: Any]? = nil, method: HTTPMethod = .get, completion: HTTPClient.CompletionBlock?) {
+//		var headers = [String : String]()
+//		headers["Accept"] = "application/json, text/plain, */*"
+//		headers["Content-Type"] = nil
 		
 		let encodeUsing: ParameterEncoding = JSONEncoding.default//(method == .post || method == .put) ? JSONEncoding.default : URLEncoding.default
-		
-		APIClient.AlamofireManager.request(URL, method: method, parameters: parameters, encoding: encodeUsing).responseJSON { response in
+		let manager = APIClient.AlamofireManager
+		manager.request(URL, method: method, parameters: parameters, encoding: encodeUsing).responseJSON { response in
 			
 			var error: Error?
 			var resp = HTTPClient.HTTPClientResponse(HTTPClientResponseStatusCode.unknownError, [:])

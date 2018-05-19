@@ -8,14 +8,14 @@
 import Foundation
 
 
-//let MinterAPIBaseURL = "http://minter-fake-api.dl-dev.ru:8841/api/"
+//let MinterAPIBaseURL = "https://minter-testnet.dl-dev.ru/api/"
 let MinterAPIBaseURL = "http://159.89.107.246:8841/api/"
 
 
 enum MinterAPIURL {
 	
-	case getBalance
-	case getTransactions
+	case balance(address: String)
+	case getTransactions(query: String)
 	case getTransactionCount
 	case getCoinInfo
 	case estimateCoinExchangeReturn
@@ -26,29 +26,32 @@ enum MinterAPIURL {
 	
 	func url() -> URL {
 		switch self {
-		case .getBalance:
-			return URL(string: MinterAPIBaseURL + "getBalance")!
-			
-		case .getTransactions:
-			return URL(string: MinterAPIBaseURL + "getTransactions")!
+		case .balance(let address):
+			return URL(string: MinterAPIBaseURL + "balance/" + address)!
+
+		case .getTransactions(let query):
+			let url = URL(string: MinterAPIBaseURL + "transactions")!
+			var components = URLComponents(string: url.absoluteString)
+			components?.queryItems = [URLQueryItem(name: "query", value: query)]
+			return components!.url!
 			
 		case .getTransactionCount:
-			return URL(string: MinterAPIBaseURL + "getTransactionCount")!
+			return URL(string: MinterAPIBaseURL + "transactionCount")!
 			
 		case .getCoinInfo:
-			return URL(string: MinterAPIBaseURL + "getCoinInfo")!
+			return URL(string: MinterAPIBaseURL + "coinInfo")!
 			
 		case .estimateCoinExchangeReturn:
 			return URL(string: MinterAPIBaseURL + "estimateCoinExchangeReturn")!
 			
 		case .getTransaction:
-			return URL(string: MinterAPIBaseURL + "getTransaction")!
+			return URL(string: MinterAPIBaseURL + "transaction")!
 			
 		case .sendTransaction:
 			return URL(string: MinterAPIBaseURL + "sendTransaction")!
 
 		case .blockNumber:
-			return URL(string: MinterAPIBaseURL + "blockNumber")!
+			return URL(string: MinterAPIBaseURL + "staus")!
 			
 		}
 	}

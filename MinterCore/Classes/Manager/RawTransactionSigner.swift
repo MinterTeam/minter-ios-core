@@ -81,41 +81,6 @@ public class RawTransactionSigner {
 		)
 	}
 	
-	private static func sign1(_ data: Data, privateKey: Data) -> (r: Data?, s: Data?, v: Data?) {
-		var hash = data.bytes
-		guard hash.count == 32 else { return (r: nil, s: nil, v: nil) }
-		var signature: secp256k1_ecdsa_recoverable_signature = secp256k1_ecdsa_recoverable_signature()
-		var privateKey = privateKey.bytes
-		
-		guard secp256k1_ecdsa_sign_recoverable(
-			secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN|SECP256K1_CONTEXT_VERIFY)),
-			&signature,
-			&hash,
-			&privateKey,
-			nil,
-			nil
-			) == 1 else {
-				return (r: nil, s: nil, v: nil)
-		}
-		
-		var rs: Array<UInt8> = Array<UInt8>(repeating: 0, count: 64)
-		var recoveryID: Int32 = -1
-		guard secp256k1_ecdsa_recoverable_signature_serialize_compact(
-			secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN|SECP256K1_CONTEXT_VERIFY)),
-			&rs,
-			&recoveryID,
-			&signature
-			) == 1 && (0...255).contains(recoveryID) else {
-				return (r: nil, s: nil, v: nil)
-		}
-		
-		return (
-			r: Data(bytes: rs.prefix(32)),
-			s: Data(bytes: rs.suffix(32)),
-			v: Data([UInt8(recoveryID) + UInt8(27)])
-		)
-	}
-	
 	public static func verify(privateKey: Data) -> Bool {
 		var secret = privateKey.bytes
 		let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY))!
