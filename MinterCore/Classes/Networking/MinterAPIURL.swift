@@ -12,7 +12,7 @@ import Foundation
 let MinterAPIBaseURL = "http://159.89.107.246:8841/api/"
 
 
-enum MinterAPIURL {
+public enum MinterAPIURL {
 	
 	case balance(address: String)
 	case getTransactions(query: String)

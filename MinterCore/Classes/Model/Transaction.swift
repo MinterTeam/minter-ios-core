@@ -8,18 +8,22 @@
 import Foundation
 import ObjectMapper
 
-public class Transaction {
+open class Transaction {
 	
 	public enum TransactionType: String {
 		case sendCoin = "sendCoin"
 	}
 	
-	var hash: String?
-	var type: TransactionType?
-	var from: String?
-	var to: String?
-	var coinSymbol: String?
-	var value: Float?
+	public init() {
+		
+	}
+	
+	public var hash: String?
+	public var type: TransactionType?
+	public var from: String?
+	public var to: String?
+	public var coinSymbol: String?
+	public var value: Float?
 }
 
 class TransactionMappable : Transaction, Mappable {

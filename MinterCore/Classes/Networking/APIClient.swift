@@ -51,11 +51,8 @@ public class APIClient {
 
 	// MARK: - Alamofire helper function.
 	fileprivate func performRequest(_ URL: URL, parameters: [String: Any]? = nil, method: HTTPMethod = .get, completion: HTTPClient.CompletionBlock?) {
-//		var headers = [String : String]()
-//		headers["Accept"] = "application/json, text/plain, */*"
-//		headers["Content-Type"] = nil
 		
-		let encodeUsing: ParameterEncoding = JSONEncoding.default//(method == .post || method == .put) ? JSONEncoding.default : URLEncoding.default
+		let encodeUsing: ParameterEncoding = (method == .post || method == .put) ? JSONEncoding.default : URLEncoding.default
 		let manager = APIClient.AlamofireManager
 		manager.request(URL, method: method, parameters: parameters, encoding: encodeUsing).responseJSON { response in
 			

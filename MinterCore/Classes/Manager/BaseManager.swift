@@ -11,11 +11,11 @@ public struct BadResponse : Error {
 	
 }
 
-public class BaseManager {
+open class BaseManager {
 	
 	//MARK: -
 	
-	var httpClient: HTTPClient
+	public var httpClient: HTTPClient
 	
 	public required init(httpClient: HTTPClient) {
 		self.httpClient = httpClient
