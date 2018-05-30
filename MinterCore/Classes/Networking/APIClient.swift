@@ -57,7 +57,7 @@ public class APIClient {
 		manager.request(URL, method: method, parameters: parameters, encoding: encodeUsing).responseJSON { response in
 			
 			var error: Error?
-			var resp = HTTPClient.HTTPClientResponse(HTTPClientResponseStatusCode.unknownError, [:])
+			var resp = HTTPClient.HTTPClientResponse(response.response?.statusCode ?? -1, [:], [:], [:])
 			
 			defer {
 				completion?(resp, error)
@@ -69,9 +69,18 @@ public class APIClient {
 				return
 			}
 			
-			if let code = result["code"] as? Int, let respData = result["result"] {
-				resp = HTTPClient.HTTPClientResponse(HTTPClientResponseStatusCode(rawValue: code) ?? HTTPClientResponseStatusCode.unknown, respData)
+			let meta = result["meta"] as? [String : Any]
+			let links = result["links"] as? [String : Any]
+			var data: Any?
+			
+			if let respData = result["data"] {
+				data = respData
 			}
+			else {
+				data = result["result"]
+			}
+			
+			resp = HTTPClient.HTTPClientResponse(response.response?.statusCode ?? -1, data, meta, links)
 		}
 	}
 }

@@ -15,43 +15,45 @@ let MinterAPIBaseURL = "http://159.89.107.246:8841/api/"
 public enum MinterAPIURL {
 	
 	case balance(address: String)
-	case getTransactions(query: String)
-	case getTransactionCount
-	case getCoinInfo
+	
+	case transaction
+	case transactions
+	case transactionCount(address: String)
+	
+	case coinInfo
 	case estimateCoinExchangeReturn
-	case getTransaction
+	
 	case blockNumber
+	
 	case sendTransaction
 	
 	
 	func url() -> URL {
 		switch self {
+			
 		case .balance(let address):
 			return URL(string: MinterAPIBaseURL + "balance/" + address)!
 
-		case .getTransactions(let query):
-			let url = URL(string: MinterAPIBaseURL + "transactions")!
-			var components = URLComponents(string: url.absoluteString)
-			components?.queryItems = [URLQueryItem(name: "query", value: query)]
-			return components!.url!
+		case .transactions:
+			return URL(string: MinterAPIBaseURL + "transactions")!
 			
-		case .getTransactionCount:
-			return URL(string: MinterAPIBaseURL + "transactionCount")!
+		case .transactionCount(let address):
+			return URL(string: MinterAPIBaseURL + "transactionCount/" + address)!
 			
-		case .getCoinInfo:
+		case .coinInfo:
 			return URL(string: MinterAPIBaseURL + "coinInfo")!
 			
 		case .estimateCoinExchangeReturn:
 			return URL(string: MinterAPIBaseURL + "estimateCoinExchangeReturn")!
 			
-		case .getTransaction:
+		case .transaction:
 			return URL(string: MinterAPIBaseURL + "transaction")!
 			
 		case .sendTransaction:
 			return URL(string: MinterAPIBaseURL + "sendTransaction")!
 
 		case .blockNumber:
-			return URL(string: MinterAPIBaseURL + "staus")!
+			return URL(string: MinterAPIBaseURL + "status")!
 			
 		}
 	}

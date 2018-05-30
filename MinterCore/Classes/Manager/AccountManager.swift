@@ -7,17 +7,17 @@
 
 import Foundation
 
+
 enum AccountManagerError : Error {
 	case balanceIncorrectPayload
-	
 }
 
 
 public class AccountManager : BaseManager {
 	
-	public func balance(address: String, with completion: @escaping (([String : Any]?, Error?) -> ())) {
+	public func balance(address: String, with completion: (([String : Any]?, Error?) -> ())?) {
 		
-		let balanceURL = MinterAPIURL.balance(address: "Mx" + address).url()
+		let balanceURL = MinterAPIURL.balance(address: address).url()
 		
 		self.httpClient.getRequest(balanceURL, parameters: nil) { (response, error) in
 			
@@ -25,7 +25,7 @@ public class AccountManager : BaseManager {
 			var err: Error?
 			
 			defer {
-				completion(res, err)
+				completion?(res, err)
 			}
 			
 			guard nil == error else {
@@ -33,7 +33,7 @@ public class AccountManager : BaseManager {
 				return
 			}
 			
-			guard let balance = response.result as? [String : Any] else {
+			guard let balance = response.data as? [String : Any] else {
 				err = AccountManagerError.balanceIncorrectPayload
 				return
 			}
@@ -45,11 +45,11 @@ public class AccountManager : BaseManager {
 	
 	public func getTransactionCount(address: String, with completion: (([String : Any]?, Error?) -> ())) {
 		
-		let url = MinterAPIURL.getTransactionCount.url()
+		let url = MinterAPIURL.transactionCount(address: address).url()
 		
-		self.httpClient.postRequest(url, parameters: ["address" : address]) { (response, error) in
+		self.httpClient.postRequest(url, parameters: nil) { (response, error) in
 			print(response.code)
-			print(response.result)
+			print(response.data)
 			print(error)
 		}
 	}
@@ -60,7 +60,7 @@ public class AccountManager : BaseManager {
 		
 		self.httpClient.postRequest(url, parameters: ["transaction" : transaction]) { (response, error) in
 			print(response.code)
-			print(response.result)
+			print(response.data)
 			print(error)
 		}
 	}

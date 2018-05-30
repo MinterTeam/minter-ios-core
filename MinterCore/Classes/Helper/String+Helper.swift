@@ -8,9 +8,9 @@
 import Foundation
 
 
-extension String {
+public extension String {
 	
-	func stripMinterHexPrefix() -> String {
+	public func stripMinterHexPrefix() -> String {
 		if self.hasPrefix("Mx") || self.hasPrefix("mx") {
 			let indexStart = self.index(self.startIndex, offsetBy: 2)
 			return String(self[indexStart...])

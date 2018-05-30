@@ -98,6 +98,8 @@ public class PrivateKey {
 		let hash = Array(RIPEMD160.hash(message: pubKey.sha256()).bytes.prefix(4))
 		let fingerprint = UInt32(bytes: hash, fromIndex: 0)
 		
+		print(self.raw.toHexString())
+		
 		return PrivateKey(privateKey: self.raw, chainCode: Data(bytes: chain), depth: self.depth, fingerprint: fingerprint, childIndex: UInt32(childIndex))
 	}
 

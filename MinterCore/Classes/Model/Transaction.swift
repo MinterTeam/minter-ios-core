@@ -9,6 +9,8 @@ import Foundation
 import ObjectMapper
 
 open class Transaction {
+
+	let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd HH:mm:ss+zzzz", locale: Locale.current.identifier)
 	
 	public enum TransactionType: String {
 		case sendCoin = "sendCoin"
@@ -23,7 +25,8 @@ open class Transaction {
 	public var from: String?
 	public var to: String?
 	public var coinSymbol: String?
-	public var value: Float?
+	public var value: Double?
+	public var date: Date?
 }
 
 class TransactionMappable : Transaction, Mappable {
@@ -41,6 +44,7 @@ class TransactionMappable : Transaction, Mappable {
 		self.to <- map["data.to"]
 		self.coinSymbol <- map["data.coin"]
 		self.value <- map["data.value"]
+		self.date <- (map["date"], DateFormatterTransform(dateFormatter: dateFormatter))
 	}
 
 	//MARK: -

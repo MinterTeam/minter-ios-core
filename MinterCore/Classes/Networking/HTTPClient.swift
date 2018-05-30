@@ -8,18 +8,6 @@
 import Foundation
 
 
-public enum HTTPClientResponseStatusCode : Int {
-	case unknown = -1
-	case noError = 0
-	case coinNotFound = 200
-	case insufficientFundsForTransaction = 300
-	case nonceTooLow = 400
-	case nonceTooHigh = 401
-	case incorrenctSignture = 500
-	case incorrenctTransactionData = 600
-	case unknownError = 900
-}
-
 public typealias HTTPClientResponseDictionary = [String : Any]
 
 //public typealias HTTPClientResponse = Any
@@ -27,7 +15,8 @@ public typealias HTTPClientResponseDictionary = [String : Any]
 
 public protocol HTTPClient {
 	
-	typealias HTTPClientResponse = (code: HTTPClientResponseStatusCode, result: Any?)
+	typealias HTTPClientResponse = (code: Int, data: Any?, meta: [String : Any]?, links: [String : Any]?)
+	
 	
 	typealias CompletionBlock = ((_ response: HTTPClientResponse, _ error: Error?) -> Void)
 	

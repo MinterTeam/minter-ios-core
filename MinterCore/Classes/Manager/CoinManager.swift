@@ -13,7 +13,7 @@ public class CoinManager : BaseManager {
 
 	public func info(symbol: String, completion: ((Coin?, Error?) -> ())?) {
 		
-		let url = MinterAPIURL.getCoinInfo.url()
+		let url = MinterAPIURL.coinInfo.url()
 		
 		self.httpClient.postRequest(url, parameters: ["coin" : symbol]) { (response, error) in
 			
@@ -29,7 +29,7 @@ public class CoinManager : BaseManager {
 				return
 			}
 			
-			guard let resultPayload = response.result as? [String : Any] else {
+			guard let resultPayload = response.data as? [String : Any] else {
 				err = BadResponse()
 				return
 			}
@@ -55,7 +55,7 @@ public class CoinManager : BaseManager {
 				return
 			}
 			
-			if let estimate = response.result as? Double {
+			if let estimate = response.data as? Double {
 				resp = estimate
 			}
 		}

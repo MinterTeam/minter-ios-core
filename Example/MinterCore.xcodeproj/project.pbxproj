@@ -191,7 +191,6 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				49D65B495CFB4D92D2E3838E /* [CP] Embed Pods Frameworks */,
-				445BDD51FC5721385EA1CA46 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -211,7 +210,6 @@
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
 				502A13AFDDB0587A6B66A375 /* [CP] Embed Pods Frameworks */,
-				2AE36A940CCD9434F832BD27 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -285,36 +283,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2AE36A940CCD9434F832BD27 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MinterCore_Tests/Pods-MinterCore_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		445BDD51FC5721385EA1CA46 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MinterCore_Example/Pods-MinterCore_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		492A9912547E91D734B6B3F1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
