@@ -74,7 +74,7 @@ open class RawTransaction : Encodable {
 		try container.encode(type, forKey: .type)
 		try container.encode(data, forKey: .data)
 		try container.encode(payload, forKey: .payload)
-//		try container.encode(serviceData, forKey: .serviceData)
+		try container.encode(serviceData, forKey: .serviceData)
 		try container.encode(v, forKey: .v)
 		try container.encode(r, forKey: .r)
 		try container.encode(s, forKey: .s)
@@ -84,12 +84,12 @@ open class RawTransaction : Encodable {
 		
 		if (forSignature) {
 			
-			let fields = [self.nonce, self.gasPrice, self.type, self.data, self.payload/*, self.serviceData*/] as [Any]
+			let fields = [self.nonce, self.gasPrice, self.type, self.data, self.payload, self.serviceData] as [Any]
 			return RLP.encode(fields)
 		}
 		else {
 			
-			let fields = [self.nonce, self.gasPrice, self.type, self.data, self.payload/*, self.serviceData*/, self.v, self.r, self.s] as [Any]
+			let fields = [self.nonce, self.gasPrice, self.type, self.data, self.payload, self.serviceData, self.v, self.r, self.s] as [Any]
 			return RLP.encode(fields)
 		}
 	}

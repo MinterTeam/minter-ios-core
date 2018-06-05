@@ -8,6 +8,9 @@
 import Foundation
 import ObjectMapper
 
+public let TransactionCoinFactor = Double(1000000000000000000)
+
+
 open class Transaction {
 
 	let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd HH:mm:ss+zzzz", locale: Locale.current.identifier)

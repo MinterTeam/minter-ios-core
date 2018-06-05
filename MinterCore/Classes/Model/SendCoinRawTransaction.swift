@@ -13,7 +13,6 @@ public class SendCoinRawTransaction : RawTransaction {
 	
 	public convenience init(nonce: BigUInt, data: Data) {
 		
-//		self.init(nonce: nonce, gasPrice: BigUInt(), type: BigUInt(1))
 		self.init(nonce: nonce, gasPrice: BigUInt(1), type: BigUInt(1), payload: Data(), serviceData: Data())
 		self.data = data
 	}
