@@ -37,7 +37,9 @@ class TransactionMappable : Transaction, Mappable {
 	//MARK: - Mappable
 	
 	required init?(map: Map) {
+		super.init()
 		
+		mapping(map: map)
 	}
 	
 	func mapping(map: Map) {

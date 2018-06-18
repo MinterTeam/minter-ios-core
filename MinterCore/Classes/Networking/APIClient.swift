@@ -10,11 +10,22 @@ import Alamofire
 
 public class APIClient {
 	
+	public struct APIClientResponseError : Error {
+		
+		public init() {}
+		
+		public var userData: [String : Any]?
+	}
+	
 	//MARK: -
 	
 	public static let shared = APIClient()
 	
-	private init() {}
+	public init(headers: [String : String]? = nil) {
+		if nil != headers {
+			alamofireManager = APIClient.updatedManager(headers!)
+		}
+	}
 	
 	//MARK: -
 		
@@ -26,12 +37,11 @@ public class APIClient {
 		}
 	}
 
-	fileprivate static var AlamofireManager: SessionManager = {
-		return SessionManager(configuration: configuration)
-	}()
+	fileprivate var alamofireManager: SessionManager = SessionManager(configuration: configuration)
 
 	fileprivate class func updatedManager(_ headers: [AnyHashable: Any?]? = nil) -> SessionManager {
-		let defaultHeaders = AlamofireManager.session.configuration.httpAdditionalHeaders
+		let defaultManager = SessionManager(configuration: APIClient.configuration)
+		let defaultHeaders = defaultManager.session.configuration.httpAdditionalHeaders
 		var newHeaders = defaultHeaders ?? [:]
 		
 		if headers != nil {
@@ -44,16 +54,17 @@ public class APIClient {
 			}
 		}
 		
-		let configuration = AlamofireManager.session.configuration
+		let configuration = defaultManager.session.configuration
 		configuration.httpAdditionalHeaders = newHeaders
 		return SessionManager(configuration: configuration)
 	}
 
 	// MARK: - Alamofire helper function.
+	
 	fileprivate func performRequest(_ URL: URL, parameters: [String: Any]? = nil, method: HTTPMethod = .get, completion: HTTPClient.CompletionBlock?) {
 		
 		let encodeUsing: ParameterEncoding = (method == .post || method == .put) ? JSONEncoding.default : URLEncoding.default
-		let manager = APIClient.AlamofireManager
+		let manager = alamofireManager
 		manager.request(URL, method: method, parameters: parameters, encoding: encodeUsing).responseJSON { response in
 			
 			var error: Error?
@@ -69,8 +80,15 @@ public class APIClient {
 				return
 			}
 			
+			if let err = result["error"] as? [String : Any] {
+				var apiError = APIClientResponseError()
+				apiError.userData = err
+				error = apiError
+			}
+			
 			let meta = result["meta"] as? [String : Any]
 			let links = result["links"] as? [String : Any]
+			
 			var data: Any?
 			
 			if let respData = result["data"] {
