@@ -10,13 +10,13 @@ import ObjectMapper
 
 public class Coin {
 	
-	var name: String?
-	var symbol: String?
-	var volume: Int?
-	var crr: Double?
-	var reserveCoin: String?
-	var reserveBalance: Int?
-	var creator: String?
+	public var name: String?
+	public var symbol: String?
+	public var volume: Int?
+	public var crr: Double?
+	public var reserveCoin: String?
+	public var reserveBalance: Int?
+	public var creator: String?
 }
 
 class CoinMappable : Coin, Mappable {
@@ -35,4 +35,15 @@ class CoinMappable : Coin, Mappable {
 		self.creator <- map["creator"]
 	}
 
+}
+
+public extension Coin {
+	
+	public static func defaultCoin() -> Coin {
+		let coin = Coin()
+		coin.name = "MINT"
+		coin.symbol = "MNT"
+		return coin
+	}
+	
 }

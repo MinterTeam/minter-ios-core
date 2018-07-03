@@ -8,9 +8,9 @@
 import Foundation
 import BigInt
 
-extension Data {
+public extension Data {
 	
-	func setLengthLeft(_ toBytes: UInt64, isNegative: Bool = false) -> Data? {
+public 	func setLengthLeft(_ toBytes: UInt64, isNegative: Bool = false) -> Data? {
 		let existingLength = UInt64(self.count)
 		if (existingLength == toBytes) {
 			return Data(self)
@@ -27,7 +27,7 @@ extension Data {
 		return data
 	}
 	
-	func setLengthRight(_ toBytes: UInt64, isNegative: Bool = false) -> Data? {
+public 	func setLengthRight(_ toBytes: UInt64, isNegative: Bool = false) -> Data? {
 		let existingLength = UInt64(self.count)
 		if (existingLength == toBytes) {
 			return Data(self)
