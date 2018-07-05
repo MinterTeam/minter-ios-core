@@ -7,6 +7,8 @@
 
 import Foundation
 import ObjectMapper
+import BigInt
+
 
 
 public class CoinManager : BaseManager {
@@ -39,9 +41,10 @@ public class CoinManager : BaseManager {
 	}
 	
 	public func estimateExchangeReturn(from: String, to: String, amount: Double, completion: ((Double?, Error?) -> ())?) {
+		
 		let url = MinterAPIURL.estimateCoinExchangeReturn.url()
 		
-		self.httpClient.postRequest(url, parameters: ["from_coin" : from, "to_coin" : to, "amount" : amount]) { (response, error) in
+		self.httpClient.getRequest(url, parameters: ["from_coin" : from, "to_coin" : to, "value" : BigUInt(amount * TransactionCoinFactor)]) { (response, error) in
 			
 			var resp: Double?
 			var err: Error?
@@ -55,8 +58,11 @@ public class CoinManager : BaseManager {
 				return
 			}
 			
-			if let estimate = response.data as? Double {
-				resp = estimate
+			if let estimate = response.data as? String {
+				
+				let vv = (Double(BigInt(stringLiteral: estimate))/TransactionCoinFactor).rounded(toPlaces: 8)
+				
+				resp = vv
 			}
 		}
 	}

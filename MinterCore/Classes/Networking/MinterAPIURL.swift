@@ -8,6 +8,7 @@
 import Foundation
 
 
+
 //let MinterAPIBaseURL = "https://minter-testnet.dl-dev.ru/api/"
 let MinterAPIBaseURL = "http://minter-node-2.testnet.minter.network:8841/api/"
 
