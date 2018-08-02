@@ -12,10 +12,11 @@ public struct BadResponse : Error {
 	
 }
 
+///Base Manager class
 open class BaseManager {
 	
 	//MARK: -
-	
+	/// HTTP Client to be used to make requests to the endpoint
 	public var httpClient: HTTPClient
 	
 	public required init(httpClient: HTTPClient) {

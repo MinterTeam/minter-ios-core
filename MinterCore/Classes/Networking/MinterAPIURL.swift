@@ -21,8 +21,10 @@ public enum MinterAPIURL {
 	case transactions
 	case transactionCount(address: String)
 	
-	case coinInfo
-	case estimateCoinExchangeReturn
+	case coinInfo(coin: String)
+	case estimateCoinBuy
+	case estimateCoinSell
+	
 	
 	case blockNumber
 	
@@ -33,19 +35,16 @@ public enum MinterAPIURL {
 		switch self {
 			
 		case .balance(let address):
-			return URL(string: MinterAPIBaseURL + "balance/" + address)!
+			return URL(string: MinterAPIBaseURL + "balance/" + address.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
 
 		case .transactions:
 			return URL(string: MinterAPIBaseURL + "transactions")!
 			
 		case .transactionCount(let address):
-			return URL(string: MinterAPIBaseURL + "transactionCount/" + address)!
+			return URL(string: MinterAPIBaseURL + "transactionCount/" + address.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
 			
-		case .coinInfo:
-			return URL(string: MinterAPIBaseURL + "coinInfo")!
-			
-		case .estimateCoinExchangeReturn:
-			return URL(string: MinterAPIBaseURL + "estimateCoinExchangeReturn")!
+		case .coinInfo(let coin):
+			return URL(string: MinterAPIBaseURL + "coinInfo/" + coin.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
 			
 		case .transaction:
 			return URL(string: MinterAPIBaseURL + "transaction")!
@@ -55,6 +54,13 @@ public enum MinterAPIURL {
 
 		case .blockNumber:
 			return URL(string: MinterAPIBaseURL + "status")!
+			
+		case .estimateCoinSell:
+			return URL(string: MinterAPIBaseURL + "estimateCoinSell")!
+			
+		case .estimateCoinBuy:
+			return URL(string: MinterAPIBaseURL + "estimateCoinBuy")!
+			
 			
 		}
 	}

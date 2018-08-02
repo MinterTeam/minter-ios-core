@@ -7,8 +7,11 @@
 
 import Foundation
 import ObjectMapper
+import BigInt
 
-public let TransactionCoinFactor = Double(1000000000000000000)
+
+public let TransactionCoinFactor = BigUInt(stringLiteral: "1000000000000000000")
+public let TransactionCoinFactorDecimal = pow(10, 18)
 
 
 open class Transaction {
@@ -16,19 +19,18 @@ open class Transaction {
 	let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd HH:mm:ss+zzzz", locale: Locale.current.identifier)
 	
 	public enum TransactionType: String {
-		case sendCoin = "sendCoin"
+		case send = "send"
+		case buy = "buyCoin"
+		case sell = "sellCoin"
+		case sellAllCoins = "sellAllCoin"
 	}
 	
-	public init() {
-		
-	}
+	public init() {}
 	
 	public var hash: String?
 	public var type: TransactionType?
-	public var from: String?
-	public var to: String?
-	public var coinSymbol: String?
-	public var value: Double?
+	public var txn: Int?
+	public var data: TransactionData?
 	public var date: Date?
 }
 
@@ -45,11 +47,28 @@ class TransactionMappable : Transaction, Mappable {
 	func mapping(map: Map) {
 		self.hash <- map["hash"]
 		self.type <- map["type"]
-		self.from <- map["from"]
-		self.to <- map["data.to"]
-		self.coinSymbol <- map["data.coin"]
-		self.value <- map["data.value"]
-		self.date <- (map["date"], DateFormatterTransform(dateFormatter: dateFormatter))
+		self.txn <- map["txn"]
+		
+		if nil != type, let data = map.JSON["data"] as? [String : Any] {
+			switch type! {
+			case .buy:
+				self.data = Mapper<ConvertTransactionDataMappable>().map(JSON: data)
+				break
+				
+			case .sell:
+				self.data = Mapper<ConvertTransactionDataMappable>().map(JSON: data)
+				break
+				
+			case .sellAllCoins:
+				self.data = Mapper<SellAllCoinsTransactionDataMappable>().map(JSON: data)
+				break
+				
+			case .send:
+				self.data = Mapper<SendCoinTransactionDataMappable>().map(JSON: data)
+				break
+			}
+		}
+		self.date <- (map["date"], ISO8601DateTransform())
 	}
 
 	//MARK: -

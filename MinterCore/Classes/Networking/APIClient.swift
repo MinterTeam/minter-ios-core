@@ -85,6 +85,11 @@ public class APIClient {
 				apiError.userData = err
 				error = apiError
 			}
+			else if let code = result["code"] as? Int, let errorMessage = result["log"] as? String {
+				var apiError = APIClientResponseError()
+				apiError.userData = ["code" : code, "message" : errorMessage]
+				error = apiError
+			}
 			
 			let meta = result["meta"] as? [String : Any]
 			let links = result["links"] as? [String : Any]

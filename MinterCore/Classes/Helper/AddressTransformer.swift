@@ -9,20 +9,22 @@ import Foundation
 import ObjectMapper
 
 
-class AddressTransformer : TransformType {
+public class AddressTransformer : TransformType {
 	
-	typealias Object = String
+	public init() {}
 	
-	typealias JSON = String
+	public typealias Object = String
 	
-	func transformFromJSON(_ value: Any?) -> Object? {
+	public typealias JSON = String
+	
+	public func transformFromJSON(_ value: Any?) -> Object? {
 		if let val = value as? String {
-			return "Mx" + val.stripMinterHexPrefix()
+			return "Mx" + val.stripMinterHexPrefix().lowercased()
 		}
 		return nil
 	}
 	
-	func transformToJSON(_ value: Object?) -> JSON? {
+	public func transformToJSON(_ value: Object?) -> JSON? {
 		return value
 	}
 	

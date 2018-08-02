@@ -12,9 +12,16 @@ enum AccountManagerError : Error {
 	case balanceIncorrectPayload
 }
 
-
+/// Account Manager
 public class AccountManager : BaseManager {
 	
+	/**
+		Method retreives balance data from the Minter node
+		- Parameters:
+			- address: Address for which balance should be retreived
+			- completion: Method which will be called after request finished
+		- Precondition: `address` should contain "Mx" prefix
+	*/
 	public func balance(address: String, with completion: (([String : Any]?, Error?) -> ())?) {
 		
 		let balanceURL = MinterAPIURL.balance(address: address).url()
@@ -40,28 +47,6 @@ public class AccountManager : BaseManager {
 			
 			res = balance
 			
-		}
-	}
-	
-	public func getTransactionCount(address: String, with completion: (([String : Any]?, Error?) -> ())) {
-		
-		let url = MinterAPIURL.transactionCount(address: address).url()
-		
-		self.httpClient.postRequest(url, parameters: nil) { (response, error) in
-			print(response.code)
-			print(response.data)
-			print(error)
-		}
-	}
-	
-	public func sendTransactionCount(transaction: String, with completion: (([String : Any]?, Error?) -> ())) {
-		
-		let url = MinterAPIURL.sendTransaction.url()
-		
-		self.httpClient.postRequest(url, parameters: ["transaction" : transaction]) { (response, error) in
-			print(response.code)
-			print(response.data)
-			print(error)
 		}
 	}
 

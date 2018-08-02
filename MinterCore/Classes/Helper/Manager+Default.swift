@@ -19,9 +19,9 @@ public extension AccountManager {
 	}
 }
 
-public extension TransactionManager {
+public extension CoreTransactionManager {
 	
-	class var `default`: TransactionManager {
+	class var `default`: MinterCore.CoreTransactionManager {
 		get {
 			let httpClient = APIClient.shared
 			let manager = self.init(httpClient: httpClient)

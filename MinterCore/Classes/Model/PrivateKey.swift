@@ -1,6 +1,6 @@
 //
 //  PrivateKey.swift
-//  AEAccordion
+//  Minter
 //
 //  Created by Alexey Sidorov on 05/05/2018.
 //
@@ -8,18 +8,27 @@
 import Foundation
 import CryptoSwift
 
-
+/// Private key model
 public class PrivateKey {
 	
 	public let depth: UInt8
 	public let fingerprint: UInt32
 	public let childIndex: UInt32
 	
+	/// Raw Private key bytes
 	public let raw: Data
 	let chainCode: Data
 	
 	public let publicKey: Data
 	
+	/**
+	Private key initializer
+	- SeeAlso: https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki
+	- Parameters:
+	- seed: Data with `seed` bytes to be initialized with (e.g. UInt8([24,229, 14, 42, 180, ... , 242, 39]))
+	- Precondition: *seed* should be generated from mnemonic phrase according to BIP39 standart
+	- Returns: PrivateKey instance
+	*/
 	public convenience init(seed: Data) {
 		
 		let hmac = HMAC(key: "Bitcoin seed".data(using: .ascii)!.bytes, variant: HMAC.Variant.sha512)
@@ -30,6 +39,16 @@ public class PrivateKey {
 		self.init(privateKey: Data(bytes: privateKey), chainCode: Data(bytes: chainCode))
 	}
 	
+	/**
+	Private key initializer
+	- Parameters:
+	- privateKey: Raw data of private key
+	- chainCode: Chain code data
+	- depth: - Depth (mostly used in key derivation)
+	- fingerprint: Fingerprint hash
+	- childIndex
+	- Returns: PrivateKey instances
+	*/
 	init(privateKey: Data, chainCode: Data, depth: UInt8 = 0, fingerprint: UInt32 = 0, childIndex: UInt32 = 0) {
 		self.raw = privateKey
 		self.chainCode = chainCode
@@ -41,6 +60,10 @@ public class PrivateKey {
 
 	}
 	
+	/**
+	Extended Private Key
+	- Returns: Extended Key from the Private Key
+	*/
 	public func extended() -> String {
 		
 		var extendedPrivateKeyData = Data()
@@ -59,6 +82,13 @@ public class PrivateKey {
 		return Base58.base58FromBytes(extendedPrivateKeyData.bytes)
 	}
 	
+	/**
+	Method derives Private key
+	- Parameters:
+	- index: index to derive
+	- hardened: determines if key should be hardened
+	- Returns: PrivateKey instances
+	*/
 	public func derive(at index: UInt32, hardened: Bool = false) -> PrivateKey {
 		
 		guard (0x80000000 & index) == 0 else {

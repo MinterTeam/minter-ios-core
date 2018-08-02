@@ -9,15 +9,25 @@ import Foundation
 import ObjectMapper
 import BigInt
 
+public enum CoinManagerError : Error {
+	case wrongAmount
+	case noEstimate
+}
 
-
+///Coin Manager Class cointains methods to work with coins
 public class CoinManager : BaseManager {
 
+	/**
+	Method retreives coin info
+	- Parameters:
+	- symbol: Coin symbol e.g. MNT
+	- completion: Method which will be called after request finished
+	*/
 	public func info(symbol: String, completion: ((Coin?, Error?) -> ())?) {
 		
-		let url = MinterAPIURL.coinInfo.url()
+		let url = MinterAPIURL.coinInfo(coin: symbol).url()
 		
-		self.httpClient.postRequest(url, parameters: ["coin" : symbol]) { (response, error) in
+		self.httpClient.getRequest(url, parameters: nil) { (response, error) in
 			
 			var coin: Coin?
 			var err: Error?
@@ -40,17 +50,37 @@ public class CoinManager : BaseManager {
 		}
 	}
 	
-	public func estimateExchangeReturn(from: String, to: String, amount: Double, completion: ((Double?, Error?) -> ())?) {
+	/**
+	Method retreives buy coin estimate data from the Minter node
+	- Parameters:
+	- from: Coin symbol which you'd like to sell (e.g. MNT)
+	- to: Coin symbol you'd like to buy (e.g. BELTCOIN)
+	- amount: How many coins you'd like to buy (e.g. 1000000000000000000)
+	- completion: Method which will be called after request finished. Completion method contans: How many coins you will pay, estimate commission, error if occured.
+	- Precondition: `from` and `to` should be uppercased (e.g. MNT, BLTCOIN, etc.)
+	*/
+	public func estimateCoinBuy(from: String, to: String, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
 		
-		let url = MinterAPIURL.estimateCoinExchangeReturn.url()
+		let url = MinterAPIURL.estimateCoinBuy.url()
 		
-		self.httpClient.getRequest(url, parameters: ["from_coin" : from, "to_coin" : to, "value" : BigUInt(amount * TransactionCoinFactor)]) { (response, error) in
+		let totalAmount = amount * TransactionCoinFactorDecimal
+		
+		let formatter = NumberFormatter()
+		formatter.generatesDecimalNumbers = true
+		
+		guard let amountString = formatter.string(from: totalAmount as NSNumber), let value = BigUInt(amountString) else {
+			completion?(nil, nil, CoinManagerError.wrongAmount)
+			return
+		}
+		
+		self.httpClient.getRequest(url, parameters: ["coin_to_sell" : from, "coin_to_buy" : to, "value_to_buy" : value]) { (response, error) in
 			
-			var resp: Double?
+			var resp: Decimal?
+			var comission: Decimal?
 			var err: Error?
 			
 			defer {
-				completion?(resp, err)
+				completion?(resp, comission, err)
 			}
 			
 			guard error == nil else {
@@ -58,11 +88,69 @@ public class CoinManager : BaseManager {
 				return
 			}
 			
-			if let estimate = response.data as? String {
+			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_pay"] as? String, let commission = estimatePayload["commission"] as? String {
 				
-				let vv = (Double(BigInt(stringLiteral: estimate))/TransactionCoinFactor).rounded(toPlaces: 8)
+				let vv = (Decimal(string: willGet) ?? 0.0)/TransactionCoinFactorDecimal
+				let com = (Decimal(string: commission) ?? 0.0)/TransactionCoinFactorDecimal
+				
 				
 				resp = vv
+				comission = com
+			}
+			else {
+				err = CoinManagerError.noEstimate
+			}
+		}
+	}
+	
+	/**
+	Method retreives sell coin estimate data from the Minter node
+	- Parameters:
+	- from: Coin symbol which you'd like to sell (e.g. MNT)
+	- to: Coin symbol you'd like to buy (e.g. BELTCOIN)
+	- amount: How many coins you'd like to sell (e.g. 1000000000000000000)
+	- completion: Method which will be called after request finished. Completion method contans: How many coins you will get, estimate commission, error if occured.
+	- Precondition: `from` and `to` should be uppercased (e.g. MNT, BLTCOIN, etc.)
+	*/
+	public func estimateCoinSell(from: String, to: String, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
+		
+		let url = MinterAPIURL.estimateCoinSell.url()
+		
+		let totalAmount = amount * TransactionCoinFactorDecimal
+		let formatter = NumberFormatter()
+		formatter.generatesDecimalNumbers = true
+		
+		guard let amountString = formatter.string(from: totalAmount as NSNumber), let value = BigUInt(amountString) else {
+			completion?(nil, nil, CoinManagerError.wrongAmount)
+			return
+		}
+		
+		self.httpClient.getRequest(url, parameters: ["coin_to_sell" : from, "coin_to_buy" : to, "value_to_sell" : value]) { (response, error) in
+			
+			var resp: Decimal?
+			var comission: Decimal?
+			var err: Error?
+			
+			defer {
+				completion?(resp, comission, err)
+			}
+			
+			guard error == nil else {
+				err = error
+				return
+			}
+			
+			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_get"] as? String, let commission = estimatePayload["commission"] as? String {
+				
+				let vv = (Decimal(string: willGet) ?? 0.0)/TransactionCoinFactorDecimal
+				let com = (Decimal(string: commission) ?? 0.0)/TransactionCoinFactorDecimal
+				
+				
+				resp = vv
+				comission = com
+			}
+			else {
+				err = CoinManagerError.noEstimate
 			}
 		}
 	}

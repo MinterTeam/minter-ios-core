@@ -1,6 +1,6 @@
 //
 //  UInt32+Helper.swift
-//  AEAccordion
+//  Minter
 //
 //  Created by Alexey Sidorov on 14/05/2018.
 //

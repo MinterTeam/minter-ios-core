@@ -1,6 +1,6 @@
 //
 //  secp256k1+Helper.swift
-//  AEAccordion
+//  Minter
 //
 //  Created by Alexey Sidorov on 13/05/2018.
 //

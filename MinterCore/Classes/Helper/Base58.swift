@@ -1,6 +1,6 @@
 //
 //  Base58.swift
-//  AEAccordion
+//  Minter
 //
 //  Created by Alexey Sidorov on 06/05/2018.
 //

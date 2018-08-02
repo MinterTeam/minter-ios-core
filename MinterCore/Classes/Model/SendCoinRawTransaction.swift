@@ -11,16 +11,16 @@ import BigInt
 
 public class SendCoinRawTransaction : RawTransaction {
 	
-	public convenience init(nonce: BigUInt, data: Data) {
+	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {
 		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), type: BigUInt(1), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoin, type: BigUInt(1), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, to: String, value: BigUInt, coin: String) {
+	public convenience init(nonce: BigUInt, gasCoin: Data, to: String, value: BigUInt, coin: String) {
 		
-		let encodedData = RawTransactionData(to: to, value: value, coin: coin).encode() ?? Data()
-		self.init(nonce: nonce, data: encodedData)
+		let encodedData = SendCoinRawTransactionData(to: to, value: value, coin: coin).encode() ?? Data()
+		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
 	}
 	
 	
