@@ -43,6 +43,7 @@ public enum TransactionCommisionType {
 		switch self {
 		case .send: return 0.01 * TransactionCoinFactorDecimal
 		case .convert: return 0.1 * TransactionCoinFactorDecimal
+		//TODO: -
 		case .createCoin: return 1
 		case .declareCandidacy: return 1
 		case .delegate: return 1
@@ -55,21 +56,51 @@ public enum TransactionCommisionType {
 	
 }
 
+/// A base class for all RawTransactions
 open class RawTransaction : Encodable {
 	
+	/// Used for prevent transaction reply
 	public var nonce: BigUInt
+	/// Used for managing transaction fees
 	public var gasPrice: BigUInt = RawTransactionDefaultGasPrice
+	/// Coin which will be used to get commission from
 	public var gasCoin: Data
+	/// Transaction type
+	/// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/transactions.html#types
 	public var type: BigUInt = BigUInt(1)
+	/// Data encoded with RLP, the contents of its depend on the Tx type
 	public var data: Data
+	/// Arbitrary user-defined bytes
+	/// Using this field requires an extra commission (about 1 pip per byte)
 	public var payload: Data
+	/// Reserved field
+	/// Using this field requires an extra commission (about 1 pip per byte)
 	public var serviceData: Data
+	
+	/// ECDSA fields. Digital signature of TX
 	public var v: BigUInt = BigUInt(1)
 	public var r: BigUInt = BigUInt(0)
 	public var s: BigUInt = BigUInt(0)
 	
 	//MARK: -
 	
+	/**
+	RawTransaction initializer
+	- Parameters:
+	- nonce: BigUInt value of nonce
+	- gasPrice: BigUInt value of price
+	- gasCoin: Data
+	- type: BigUInt value of transaction type
+	- data: Transaction Data object
+	- payload: Payload Data object
+	- serviceData: ServiceData Data object
+	- v, r, s: Digital signature
+	- Precondition:
+	- nonce value can be retreived from the Minter Network, for exmple by calling this method https://minter-go-node.readthedocs.io/en/docs/api.html#transaction-count
+	- gasCoin: 10 bytes of coin symbol, if the byte count less than 10 add 0 bytes from the right (e.g. UInt8([77, 78, 84, 0, 0, 0, 0, 0, 0, 0])
+	- data: RLP-encoded data
+	- Returns: Signed RawTx hex string, which can be send to Minter Node
+	*/
 	public init(nonce: BigUInt, gasPrice: BigUInt, gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, v: BigUInt = BigUInt(1), r: BigUInt = BigUInt(0), s: BigUInt = BigUInt(0)) {
 		self.nonce = nonce
 		self.gasPrice = gasPrice
@@ -127,10 +158,14 @@ open class RawTransaction : Encodable {
 	}
 }
 
+/// SendCoinRawTransactionData
 public struct SendCoinRawTransactionData : Encodable {
 	
+	/// Address to whom you'd like to send coins
 	public var to: String
+	/// How many coins you'd like to send, the value should be in pip
 	public var value: BigUInt
+	/// Coin symbol (e.g. "MNT")
 	public var coin: String = RawTransactionDefaultTransactionCoin
 	
 	//MARK: -
@@ -169,10 +204,14 @@ public struct SendCoinRawTransactionData : Encodable {
 	}
 }
 
+/// SellCoinRawTransactionData
 public struct SellCoinRawTransactionData: Encodable {
 	
+	/// Coin symbol (e.g. "MNT")
 	public var coinFrom: String
+	/// Coin symbol (e.g. "BELTCOIN")
 	public var coinTo: String
+	/// Value in pip
 	public var value: BigUInt
 	
 	//MARK: -
@@ -208,9 +247,16 @@ public struct SellCoinRawTransactionData: Encodable {
 	}
 }
 
+/// BuyCoinRawTransactionData
 public struct BuyCoinRawTransactionData : Encodable {
+	
+	/// Coin you sell (e.g. "MNT")
 	public var coinFrom: String
+	
+	/// Coin you buy (e.g. "BELTCOIN")
 	public var coinTo: String
+	
+	/// Amount yo
 	public var value: BigUInt
 	
 	//MARK: -
@@ -247,9 +293,12 @@ public struct BuyCoinRawTransactionData : Encodable {
 
 }
 
+/// SellAllCoinsRawTransactionData
 public struct SellAllCoinsRawTransactionData: Encodable {
 	
+	/// Coin you'd like to sell
 	public var coinFrom: String
+	/// Coin you'd like to get
 	public var coinTo: String
 	
 	//MARK: -

@@ -8,7 +8,7 @@
 import Foundation
 import BigInt
 
-
+/// SendCoinRawTransaction
 public class SendCoinRawTransaction : RawTransaction {
 	
 	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {

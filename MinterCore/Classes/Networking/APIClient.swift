@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 
+/// APIClient
 public class APIClient {
 	
 	public struct APIClientResponseError : Error {

@@ -9,6 +9,7 @@ import Foundation
 import BigInt
 
 
+/// SellCoinRawTransaction
 public class SellCoinRawTransaction : RawTransaction {
 	
 	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {
@@ -25,6 +26,7 @@ public class SellCoinRawTransaction : RawTransaction {
 
 }
 
+/// SellAllCoinsRawTransaction
 public class SellAllCoinsRawTransaction : RawTransaction {
 	
 	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {
@@ -41,7 +43,7 @@ public class SellAllCoinsRawTransaction : RawTransaction {
 
 }
 
-
+/// BuyCoinRawTransaction
 public class BuyCoinRawTransaction : RawTransaction {
 	
 	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {

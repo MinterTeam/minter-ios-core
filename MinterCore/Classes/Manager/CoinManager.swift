@@ -14,7 +14,7 @@ public enum CoinManagerError : Error {
 	case noEstimate
 }
 
-///Coin Manager Class cointains methods to work with coins
+/// Coin Manager Class cointains methods to work with coins
 public class CoinManager : BaseManager {
 
 	/**

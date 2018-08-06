@@ -47,7 +47,7 @@ class CoinMappable : Coin, Mappable {
 		self.mapping(map: map)
 	}
 	
-	//MARK: - ObjectMapper
+	// MARK: - ObjectMapper
 	
 	func mapping(map: Map) {
 		self.name <- map["name"]

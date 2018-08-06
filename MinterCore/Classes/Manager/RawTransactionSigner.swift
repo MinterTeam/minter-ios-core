@@ -10,10 +10,17 @@ import CryptoSwift
 import secp256k1
 import BigInt
 
-
+/// Raw Transaction Signer class is used to sign, verify etc
 public class RawTransactionSigner {
 	
-	//throwable?
+	/**
+	Method signs Raw Transaction with privateKey
+	- Parameters:
+	- rawTx: RawTransaction instance to be signed
+	- privateKey: PrivateKey string to be used to sign Tx
+	- Precondition: `privateKey` hex string of private key
+	- Returns: Signed encoded RawTx hex string, which is ready to be sent to the Minter Network
+	*/
 	public static func sign(rawTx: RawTransaction, privateKey: String) -> String? {
 		
 		var tx = rawTx
@@ -44,17 +51,26 @@ public class RawTransactionSigner {
 		return tx.encode(forSignature: false)?.toHexString()
 	}
 	
+	/**
+	Method calculates hash from RawTx data
+	- Parameters:
+	- data: Encoded raw tx data
+	- Precondition: `data` is RawTx RLP-encoded Data object
+	*/
 	private static func hashForSigning(data: Data) -> Data? {
 		let sha3 = SHA3(variant: .keccak256)
 		let hash = Data(bytes: sha3.calculate(for: data.bytes))
 		return hash
 	}
 	
+	/**
+	Method signs Data with privateKey
+	- Parameters:
+	- data: Data to be signed
+	- privateKey: PrivateKey Data object to be used to sign Tx
+	- Returns: R S V of signed data
+	*/
 	private static func sign(_ data: Data, privateKey: Data) -> (r: Data?, s: Data?, v: Data?) {
-//		let hash = RawTransactionSigner.hashForSigning(data: data)
-//		guard hash != nil else {
-//			return (r: nil, s: nil, v: nil)
-//		}
 		
 		let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY))!
 		defer { secp256k1_context_destroy(context) }
@@ -81,6 +97,12 @@ public class RawTransactionSigner {
 		)
 	}
 	
+	/**
+	Method verifies private key data
+	- Parameters:
+	- privateKey: PrivateKey Data object to be verified
+	- Returns: if the private key verified
+	*/
 	public static func verify(privateKey: Data) -> Bool {
 		var secret = privateKey.bytes
 		let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY))!
@@ -92,6 +114,13 @@ public class RawTransactionSigner {
 		return true
 	}
 	
+	/**
+	Method retreives public key
+	- Parameters:
+	- privateKey: PrivateKey Data object
+	- compressed: whether public key should be compressed
+	- Returns: Public key data
+	*/
 	public static func publicKey(privateKey: Data, compressed: Bool = false) -> Data? {
 		let bytes = privateKey.bytes
 		var publicKeyStructure = secp256k1_pubkey()
@@ -128,6 +157,12 @@ public class RawTransactionSigner {
 			return Data(bytes: publicKey)
 	}
 	
+	/**
+	Method retreives address
+	- Parameters:
+	- publicKey: PublicKey Data object
+	- Returns: Address string without "Mx" prefix
+	*/
 	public static func address(publicKey: Data) -> String? {
 		return Data(bytes: SHA3(variant: .keccak256).calculate(for: publicKey.bytes)).suffix(20).toHexString()
 	}

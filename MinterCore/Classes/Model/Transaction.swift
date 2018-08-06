@@ -14,10 +14,12 @@ public let TransactionCoinFactor = BigUInt(stringLiteral: "1000000000000000000")
 public let TransactionCoinFactorDecimal = pow(10, 18)
 
 
+/// Transaction Model
 open class Transaction {
 
 	let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd HH:mm:ss+zzzz", locale: Locale.current.identifier)
 	
+	/// Transaction type
 	public enum TransactionType: String {
 		case send = "send"
 		case buy = "buyCoin"
