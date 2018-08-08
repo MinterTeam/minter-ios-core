@@ -9,6 +9,7 @@ import Foundation
 import ObjectMapper
 import BigInt
 
+
 public enum CoinManagerError : Error {
 	case wrongAmount
 	case noEstimate
@@ -22,6 +23,7 @@ public class CoinManager : BaseManager {
 	- Parameters:
 	- symbol: Coin symbol e.g. MNT
 	- completion: Method which will be called after request finished
+	- Precondition: symbol must be upercases (e.g. MNT)
 	*/
 	public func info(symbol: String, completion: ((Coin?, Error?) -> ())?) {
 		
@@ -57,7 +59,7 @@ public class CoinManager : BaseManager {
 	- to: Coin symbol you'd like to buy (e.g. BELTCOIN)
 	- amount: How many coins you'd like to buy (e.g. 1000000000000000000)
 	- completion: Method which will be called after request finished. Completion method contans: How many coins you will pay, estimate commission, error if occured.
-	- Precondition: `from` and `to` should be uppercased (e.g. MNT, BLTCOIN, etc.)
+	- Precondition: `from` and `to` must be uppercased (e.g. MNT, BLTCOIN, etc.)
 	*/
 	public func estimateCoinBuy(from: String, to: String, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
 		
@@ -90,9 +92,8 @@ public class CoinManager : BaseManager {
 			
 			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_pay"] as? String, let commission = estimatePayload["commission"] as? String {
 				
-				let vv = (Decimal(string: willGet) ?? 0.0)/TransactionCoinFactorDecimal
-				let com = (Decimal(string: commission) ?? 0.0)/TransactionCoinFactorDecimal
-				
+				let vv = Decimal(string: willGet) ?? 0.0
+				let com = Decimal(string: commission) ?? 0.0
 				
 				resp = vv
 				comission = com
@@ -142,8 +143,8 @@ public class CoinManager : BaseManager {
 			
 			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_get"] as? String, let commission = estimatePayload["commission"] as? String {
 				
-				let vv = (Decimal(string: willGet) ?? 0.0)/TransactionCoinFactorDecimal
-				let com = (Decimal(string: commission) ?? 0.0)/TransactionCoinFactorDecimal
+				let vv = Decimal(string: willGet) ?? 0.0
+				let com = Decimal(string: commission) ?? 0.0
 				
 				
 				resp = vv

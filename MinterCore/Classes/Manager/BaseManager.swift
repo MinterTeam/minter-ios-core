@@ -7,10 +7,9 @@
 
 import Foundation
 
+/// Error showing that result differs from the expected
+public struct BadResponse : Error {}
 
-public struct BadResponse : Error {
-	
-}
 
 /// Base Manager class
 open class BaseManager {
