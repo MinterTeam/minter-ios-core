@@ -70,7 +70,7 @@ class TransactionMappable : Transaction, Mappable {
 				break
 			}
 		}
-		self.date <- (map["date"], ISO8601DateTransform())
+		self.date <- (map["date"], DateTransform())
 	}
 
 	//MARK: -

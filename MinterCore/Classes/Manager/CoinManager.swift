@@ -63,7 +63,7 @@ public class CoinManager : BaseManager {
 		
 		let url = MinterAPIURL.estimateCoinBuy.url()
 		
-		let totalAmount = amount * TransactionCoinFactorDecimal
+		let totalAmount = amount
 		
 		let formatter = NumberFormatter()
 		formatter.generatesDecimalNumbers = true
@@ -116,7 +116,7 @@ public class CoinManager : BaseManager {
 		
 		let url = MinterAPIURL.estimateCoinSell.url()
 		
-		let totalAmount = amount * TransactionCoinFactorDecimal
+		let totalAmount = amount
 		let formatter = NumberFormatter()
 		formatter.generatesDecimalNumbers = true
 		
