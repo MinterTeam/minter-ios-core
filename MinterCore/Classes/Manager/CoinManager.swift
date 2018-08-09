@@ -12,6 +12,7 @@ import BigInt
 
 public enum CoinManagerError : Error {
 	case wrongAmount
+	/// Estimate can't be parsed or something
 	case noEstimate
 }
 
@@ -44,7 +45,7 @@ public class CoinManager : BaseManager {
 			}
 			
 			guard let resultPayload = response.data as? [String : Any] else {
-				err = BadResponse()
+				err = BaseManagerError.badResponse
 				return
 			}
 			
@@ -65,24 +66,19 @@ public class CoinManager : BaseManager {
 		
 		let url = MinterAPIURL.estimateCoinBuy.url()
 		
-		let totalAmount = amount
-		
-		let formatter = NumberFormatter()
-		formatter.generatesDecimalNumbers = true
-		
-		guard let amountString = formatter.string(from: totalAmount as NSNumber), let value = BigUInt(amountString) else {
+		guard let value = BigUInt(decimal: amount) else {
 			completion?(nil, nil, CoinManagerError.wrongAmount)
 			return
 		}
 		
 		self.httpClient.getRequest(url, parameters: ["coin_to_sell" : from, "coin_to_buy" : to, "value_to_buy" : value]) { (response, error) in
 			
-			var resp: Decimal?
+			var value: Decimal?
 			var comission: Decimal?
 			var err: Error?
 			
 			defer {
-				completion?(resp, comission, err)
+				completion?(value, comission, err)
 			}
 			
 			guard error == nil else {
@@ -92,14 +88,19 @@ public class CoinManager : BaseManager {
 			
 			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_pay"] as? String, let commission = estimatePayload["commission"] as? String {
 				
-				let vv = Decimal(string: willGet) ?? 0.0
-				let com = Decimal(string: commission) ?? 0.0
+				let willPay = Decimal(string: willGet)
+				let com = Decimal(string: commission)
 				
-				resp = vv
+				guard nil != willPay && nil != com else {
+					err = CoinManagerError.noEstimate
+					return
+				}
+				
+				value = willPay
 				comission = com
 			}
 			else {
-				err = CoinManagerError.noEstimate
+				err = BaseManagerError.badResponse
 			}
 		}
 	}
@@ -117,23 +118,19 @@ public class CoinManager : BaseManager {
 		
 		let url = MinterAPIURL.estimateCoinSell.url()
 		
-		let totalAmount = amount
-		let formatter = NumberFormatter()
-		formatter.generatesDecimalNumbers = true
-		
-		guard let amountString = formatter.string(from: totalAmount as NSNumber), let value = BigUInt(amountString) else {
+		guard let value = BigUInt(decimal: amount) else {
 			completion?(nil, nil, CoinManagerError.wrongAmount)
 			return
 		}
 		
 		self.httpClient.getRequest(url, parameters: ["coin_to_sell" : from, "coin_to_buy" : to, "value_to_sell" : value]) { (response, error) in
 			
-			var resp: Decimal?
+			var value: Decimal?
 			var comission: Decimal?
 			var err: Error?
 			
 			defer {
-				completion?(resp, comission, err)
+				completion?(value, comission, err)
 			}
 			
 			guard error == nil else {
@@ -143,15 +140,19 @@ public class CoinManager : BaseManager {
 			
 			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_get"] as? String, let commission = estimatePayload["commission"] as? String {
 				
-				let vv = Decimal(string: willGet) ?? 0.0
-				let com = Decimal(string: commission) ?? 0.0
+				let willGet = Decimal(string: willGet)
+				let com = Decimal(string: commission)
 				
+				guard nil != willGet, nil != com else {
+					err = CoinManagerError.noEstimate
+					return
+				}
 				
-				resp = vv
+				value = willGet
 				comission = com
 			}
 			else {
-				err = CoinManagerError.noEstimate
+				err = BaseManagerError.badResponse
 			}
 		}
 	}

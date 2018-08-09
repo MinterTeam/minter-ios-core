@@ -7,8 +7,11 @@
 
 import Foundation
 
-/// Error showing that result differs from the expected
-public struct BadResponse : Error {}
+
+public enum BaseManagerError : Error {
+	/// Error showing that result differs from the expected
+	case badResponse
+}
 
 
 /// Base Manager class

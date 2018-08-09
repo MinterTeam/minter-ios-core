@@ -27,10 +27,13 @@ let RawTransactionDefaultTransactionCoin = "MNT"
 
 let RawTransactionDefaultGasPrice = BigUInt("1000000000", radix: 10)!
 
-
-public enum TransactionCommisionType {
-	case send
-	case convert
+/// Transaction type
+/// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/transactions.html#types
+public enum RawTransactionType {
+	case sendCoin
+	case sellCoin
+	case sellAllCoins
+	case buyCoin
 	case createCoin
 	case declareCandidacy
 	case delegate
@@ -39,21 +42,60 @@ public enum TransactionCommisionType {
 	case setCandidateOnline
 	case setCandidateOffline
 	
-	public func amount() -> Decimal {
+	public func BigUIntValue() -> BigUInt {
 		switch self {
-		case .send: return 0.01 * TransactionCoinFactorDecimal
-		case .convert: return 0.1 * TransactionCoinFactorDecimal
-		//TODO: -
-		case .createCoin: return 1
-		case .declareCandidacy: return 1
-		case .delegate: return 1
-		case .unbond: return 1
-		case .redeemCheck: return 1
-		case .setCandidateOnline: return 1
-		case .setCandidateOffline: return 1
+		case .sendCoin:
+			return BigUInt(1)
+			
+		case .sellCoin:
+			return BigUInt(2)
+			
+		case .sellAllCoins:
+			return BigUInt(3)
+			
+		case .buyCoin:
+			return BigUInt(4)
+			
+		case .createCoin:
+			return BigUInt(5)
+			
+		case .declareCandidacy:
+			return BigUInt(6)
+			
+		case .delegate:
+			return BigUInt(7)
+			
+		case .unbond:
+			return BigUInt(8)
+			
+		case .redeemCheck:
+			return BigUInt(9)
+			
+		case .setCandidateOnline:
+			return BigUInt(10)
+			
+		case .setCandidateOffline:
+			return BigUInt(11)
 		}
 	}
 	
+	/// Comission for a transaction in pips
+	/// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/commissions.html
+	public func commission() -> Decimal {
+		switch self {
+		case .sendCoin: return 0.01 * TransactionCoinFactorDecimal
+		case .sellCoin, .buyCoin, .sellAllCoins: return 0.1 * TransactionCoinFactorDecimal
+		case .createCoin: return 1 * TransactionCoinFactorDecimal
+		case .declareCandidacy: return 10  * TransactionCoinFactorDecimal
+		case .delegate: return 0.1 * TransactionCoinFactorDecimal
+		case .unbond: return 0.1 * TransactionCoinFactorDecimal
+		case .redeemCheck: return 0.01 * TransactionCoinFactorDecimal
+		case .setCandidateOnline: return 0.1 * TransactionCoinFactorDecimal
+		case .setCandidateOffline: return 0.1 * TransactionCoinFactorDecimal
+		}
+	}
+
+
 }
 
 /// A base class for all RawTransactions
@@ -157,177 +199,3 @@ open class RawTransaction : Encodable {
 		}
 	}
 }
-
-/// SendCoinRawTransactionData
-public struct SendCoinRawTransactionData : Encodable {
-	
-	/// Address to whom you'd like to send coins
-	public var to: String
-	/// How many coins you'd like to send, the value should be in pip
-	public var value: BigUInt
-	/// Coin symbol (e.g. "MNT")
-	public var coin: String = RawTransactionDefaultTransactionCoin
-	
-	//MARK: -
-	
-	public init(to: String, value: BigUInt, coin: String) {
-		self.to = to
-		self.value = value
-		self.coin = coin
-	}
-	
-	//MARK: - Encoding
-	
-	enum CodingKeys: String, CodingKey {
-		case to
-		case value
-		case coin
-	}
-	
-	public func encode(to encoder: Encoder) throws {
-		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(to, forKey: .to)
-		try container.encode(value, forKey: .value)
-		try container.encode(coin, forKey: .coin)
-	}
-	
-	public func encode() -> Data? {
-		let dataArray = Array<UInt8>(hex: self.to.lowercased().stripMinterHexPrefix())
-		guard let toData = Data(dataArray).setLengthLeft(20) else {
-			return Data()
-		}
-		
-		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		
-		let fields = [coinData, toData, value] as [Any]
-		return RLP.encode(fields)
-	}
-}
-
-/// SellCoinRawTransactionData
-public struct SellCoinRawTransactionData: Encodable {
-	
-	/// Coin symbol (e.g. "MNT")
-	public var coinFrom: String
-	/// Coin symbol (e.g. "BELTCOIN")
-	public var coinTo: String
-	/// Value in pip
-	public var value: BigUInt
-	
-	//MARK: -
-	
-	public init(coinFrom: String, coinTo: String, value: BigUInt) {
-		self.coinFrom = coinFrom
-		self.coinTo = coinTo
-		self.value = value
-	}
-	
-	//MARK: - Encoding
-	
-	enum CodingKeys: String, CodingKey {
-		case coinFrom
-		case coinTo
-		case value
-	}
-	
-	public func encode(to encoder: Encoder) throws {
-		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(coinFrom, forKey: .coinFrom)
-		try container.encode(coinTo, forKey: .coinTo)
-		try container.encode(value, forKey: .value)
-	}
-	
-	public func encode() -> Data? {
-
-		let fromCoinData = coinFrom.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		let toCoinData = coinTo.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		
-		let fields = [fromCoinData, value, toCoinData] as [Any]
-		return RLP.encode(fields)
-	}
-}
-
-/// BuyCoinRawTransactionData
-public struct BuyCoinRawTransactionData : Encodable {
-	
-	/// Coin you sell (e.g. "MNT")
-	public var coinFrom: String
-	
-	/// Coin you buy (e.g. "BELTCOIN")
-	public var coinTo: String
-	
-	/// Amount yo
-	public var value: BigUInt
-	
-	//MARK: -
-	
-	public init(coinFrom: String, coinTo: String, value: BigUInt) {
-		self.coinFrom = coinFrom
-		self.coinTo = coinTo
-		self.value = value
-	}
-	
-	//MARK: - Encoding
-	
-	enum CodingKeys: String, CodingKey {
-		case coinFrom
-		case coinTo
-		case value
-	}
-	
-	public func encode(to encoder: Encoder) throws {
-		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(coinFrom, forKey: .coinFrom)
-		try container.encode(coinTo, forKey: .coinTo)
-		try container.encode(value, forKey: .value)
-	}
-	
-	public func encode() -> Data? {
-		
-		let fromCoinData = coinFrom.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		let toCoinData = coinTo.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		
-		let fields = [toCoinData, value, fromCoinData] as [Any]
-		return RLP.encode(fields)
-	}
-
-}
-
-/// SellAllCoinsRawTransactionData
-public struct SellAllCoinsRawTransactionData: Encodable {
-	
-	/// Coin you'd like to sell
-	public var coinFrom: String
-	/// Coin you'd like to get
-	public var coinTo: String
-	
-	//MARK: -
-	
-	public init(coinFrom: String, coinTo: String) {
-		self.coinFrom = coinFrom
-		self.coinTo = coinTo
-	}
-	
-	//MARK: - Encoding
-	
-	enum CodingKeys: String, CodingKey {
-		case coinFrom
-		case coinTo
-	}
-	
-	public func encode(to encoder: Encoder) throws {
-		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(coinFrom, forKey: .coinFrom)
-		try container.encode(coinTo, forKey: .coinTo)
-	}
-	
-	public func encode() -> Data? {
-		
-		let fromCoinData = coinFrom.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		let toCoinData = coinTo.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		
-		let fields = [fromCoinData, toCoinData] as [Any]
-		return RLP.encode(fields)
-	}
-}
-
