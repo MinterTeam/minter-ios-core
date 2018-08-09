@@ -23,27 +23,32 @@ public class RawTransactionSigner {
 	*/
 	public static func sign(rawTx: RawTransaction, privateKey: String) -> String? {
 		
-		var tx = rawTx
+		let tx = rawTx
 		
+		/// First of all we need to convert private key string into Hex Data instance
 		let privateKeyData = Data(hex: privateKey)
 		
+		/// Encoding raw tx for signature
 		let rawTxData = tx.encode(forSignature: true)
 		
 		guard rawTxData != nil else {
 			return nil
 		}
 		
+		/// Getting encoded tx signing hash
 		let hash = RawTransactionSigner.hashForSigning(data: rawTxData!)
 		
 		guard hash != nil else {
 			return nil
 		}
 		
+		/// Signing tx with hash and prepared private key and extracting digital signature
 		let sign = RawTransactionSigner.sign(hash!, privateKey: privateKeyData)
 		guard sign.r != nil && sign.s != nil && sign.v != nil else {
 			return nil
 		}
 		
+		/// Prepearing Tx to be sent to the Minter Network
 		tx.r = BigUInt(sign.r!)
 		tx.s = BigUInt(sign.s!)
 		tx.v = BigUInt(sign.v!)

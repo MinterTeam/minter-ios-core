@@ -86,7 +86,7 @@ public class CoreTransactionManager : BaseManager {
 	- Parameters:
 	- address: minter address (e.g. Mx228e5a68b847d169da439ec15f727f08233a7ca6)
 	- completion: Method which will be called after request finished, contains Tx count (nonce) and error if occured
-	- Precondition: `address` should contain "Mx" prefix
+	- Precondition: `address` must contain "Mx" prefix
 	*/
 	public func transactionCount(address: String, completion: ((Int?, Error?) -> ())?) {
 		

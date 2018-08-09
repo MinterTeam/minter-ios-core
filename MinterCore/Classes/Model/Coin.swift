@@ -15,7 +15,7 @@ public class Coin {
 	/// Coin name (e.g. Belt Coin)
 	public var name: String?
 	
-	/// Coin symbol (e.g. BLTCOIN)
+	/// Coin symbol (e.g. BELTCOIN)
 	public var symbol: String?
 	
 	/// Coin volume value (e.g. 1000000000000000000000)

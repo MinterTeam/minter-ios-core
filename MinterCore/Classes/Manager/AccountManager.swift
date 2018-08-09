@@ -18,9 +18,9 @@ public class AccountManager : BaseManager {
 	/**
 		Method retreives balance data from the Minter node
 		- Parameters:
-			- address: Address for which balance should be retreived
+			- address: Address for which balance will be retreived
 			- completion: Method which will be called after request finished
-		- Precondition: `address` should contain "Mx" prefix
+		- Precondition: `address` must contain "Mx" prefix
 	*/
 	public func balance(address: String, with completion: (([String : Any]?, Error?) -> ())?) {
 		
@@ -40,6 +40,7 @@ public class AccountManager : BaseManager {
 				return
 			}
 			
+			/// trying to parse response
 			guard let balance = response.data as? [String : Any] else {
 				err = AccountManagerError.balanceIncorrectPayload
 				return

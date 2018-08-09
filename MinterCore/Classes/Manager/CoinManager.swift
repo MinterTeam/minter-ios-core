@@ -24,7 +24,7 @@ public class CoinManager : BaseManager {
 	- Parameters:
 	- symbol: Coin symbol e.g. MNT
 	- completion: Method which will be called after request finished
-	- Precondition: symbol must be upercases (e.g. MNT)
+	- Precondition: symbol must be uppercased (e.g. MNT)
 	*/
 	public func info(symbol: String, completion: ((Coin?, Error?) -> ())?) {
 		
