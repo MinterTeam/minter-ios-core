@@ -19,7 +19,7 @@ public class Coin {
 	public var symbol: String?
 	
 	/// Coin volume value (e.g. 1000000000000000000000)
-	public var volume: Int?
+	public var volume: String?
 	
 	/// Coin Reserve Ratio (e.g. 10)
 	public var crr: Double?

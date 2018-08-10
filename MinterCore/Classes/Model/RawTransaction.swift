@@ -124,7 +124,7 @@ open class RawTransaction : Encodable {
 	public var r: BigUInt = BigUInt(0)
 	public var s: BigUInt = BigUInt(0)
 	
-	//MARK: -
+	// MARK: -
 	
 	/**
 	RawTransaction initializer
@@ -156,7 +156,7 @@ open class RawTransaction : Encodable {
 		self.s = s
 	}
 	
-	//MARK: - Encodable
+	// MARK: - Encodable
 	
 	enum CodingKeys: String, CodingKey {
 		case nonce

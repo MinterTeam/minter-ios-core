@@ -18,6 +18,14 @@ public class BuyCoinRawTransaction : RawTransaction {
 		self.data = data
 	}
 	
+	/// Convenience initializer
+	///
+	/// - Parameters:
+	///   - nonce: Nonce
+	///   - gasCoin: Coin to spend fee from
+	///   - coinFrom: Coin which you'd like to spend
+	///   - coinTo: Coin which you'd like to buy
+	///   - value: How much you'd like to buy
 	public convenience init(nonce: BigUInt, gasCoin: Data, coinFrom: String, coinTo: String, value: BigUInt) {
 		
 		let encodedData = BuyCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value).encode() ?? Data()

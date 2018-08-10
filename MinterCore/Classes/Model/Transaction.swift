@@ -16,29 +16,28 @@ public let TransactionCoinFactorDecimal = pow(10, 18)
 
 /// Transaction Model
 open class Transaction {
-
-	let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd HH:mm:ss+zzzz", locale: Locale.current.identifier)
-	
-	/// Transaction type
-	public enum TransactionType: String {
-		case send = "send"
-		case buy = "buyCoin"
-		case sell = "sellCoin"
-		case sellAllCoins = "sellAllCoin"
-	}
 	
 	public init() {}
+
+	// MARK: -
 	
 	public var hash: String?
-	public var type: TransactionType?
-	public var txn: Int?
-	public var data: TransactionData?
-	public var date: Date?
+	public var rawTx: String?
+	public var height: String?
+	public var index: Int?
+	public var txResult: [String : Any]?
+	public var from: String?
+	public var nonce: Int?
+	public var gasPrice: Int?
+	public var type: Int?
+	public var data: [String : Any]?
+	public var payload: String?
 }
+
 
 class TransactionMappable : Transaction, Mappable {
 	
-	//MARK: - Mappable
+	// MARK: - Mappable
 	
 	required init?(map: Map) {
 		super.init()
@@ -48,30 +47,15 @@ class TransactionMappable : Transaction, Mappable {
 	
 	func mapping(map: Map) {
 		self.hash <- map["hash"]
+		self.rawTx <- map["raw_tx"]
+		self.height <- map["height"]
+		self.index <- map["index"]
+		self.txResult <- map["tx_result"]
+		self.from <- map["from"]
+		self.nonce <- map["nonce"]
+		self.gasPrice <- map["gas_price"]
 		self.type <- map["type"]
-		self.txn <- map["txn"]
-		
-		if nil != type, let data = map.JSON["data"] as? [String : Any] {
-			switch type! {
-			case .buy:
-				self.data = Mapper<ConvertTransactionDataMappable>().map(JSON: data)
-				break
-				
-			case .sell:
-				self.data = Mapper<ConvertTransactionDataMappable>().map(JSON: data)
-				break
-				
-			case .sellAllCoins:
-				self.data = Mapper<SellAllCoinsTransactionDataMappable>().map(JSON: data)
-				break
-				
-			case .send:
-				self.data = Mapper<SendCoinTransactionDataMappable>().map(JSON: data)
-				break
-			}
-		}
-		self.date <- (map["date"], DateTransform())
+		self.data <- map["data"]
+		self.payload <- map["payload"]
 	}
-
-	//MARK: -
 }

@@ -27,9 +27,9 @@ public class CoreTransactionManager : BaseManager {
 	*/
 	public func transaction(hash: String, completion: ((Transaction?, Error?) -> ())?) {
 		
-		let url = MinterAPIURL.transaction.url()
+		let url = MinterAPIURL.transaction(hash: hash).url()
 		
-		self.httpClient.postRequest(url, parameters: ["hash" : hash]) { (response, error) in
+		self.httpClient.getRequest(url, parameters: nil) { (response, error) in
 			
 			var transaction: Transaction?
 			var err: Error?

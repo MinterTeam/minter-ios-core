@@ -36,7 +36,7 @@ public struct SellCoinRawTransactionData: Encodable {
 	/// Value in pip
 	public var value: BigUInt
 	
-	//MARK: -
+	// MARK: -
 	
 	public init(coinFrom: String, coinTo: String, value: BigUInt) {
 		self.coinFrom = coinFrom
@@ -44,7 +44,7 @@ public struct SellCoinRawTransactionData: Encodable {
 		self.value = value
 	}
 	
-	//MARK: - Encoding
+	// MARK: - Encoding
 	
 	enum CodingKeys: String, CodingKey {
 		case coinFrom
@@ -88,7 +88,7 @@ public class SellAllCoinsRawTransaction : RawTransaction {
 
 }
 
-//MARK: - SellAllCoinsRawTransactionData
+// MARK: - SellAllCoinsRawTransactionData
 
 /// SellAllCoinsRawTransactionData
 public struct SellAllCoinsRawTransactionData: Encodable {
@@ -98,14 +98,14 @@ public struct SellAllCoinsRawTransactionData: Encodable {
 	/// Coin you'd like to get
 	public var coinTo: String
 	
-	//MARK: -
+	// MARK: -
 	
 	public init(coinFrom: String, coinTo: String) {
 		self.coinFrom = coinFrom
 		self.coinTo = coinTo
 	}
 	
-	//MARK: - Encoding
+	// MARK: - Encoding
 	
 	enum CodingKeys: String, CodingKey {
 		case coinFrom

@@ -8,9 +8,9 @@
 import Foundation
 import BigInt
 
-extension BigUInt {
+public extension BigUInt {
 	
-	init?(decimal: Decimal) {
+	public init?(decimal: Decimal) {
 		let formatter = NumberFormatter()
 		formatter.generatesDecimalNumbers = true
 		guard let string = formatter.string(from: decimal as NSNumber) else {

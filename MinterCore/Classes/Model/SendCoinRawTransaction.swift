@@ -17,6 +17,14 @@ public class SendCoinRawTransaction : RawTransaction {
 		self.data = data
 	}
 	
+	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
+		
+		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+		
+		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: coinData, type: RawTransactionType.sendCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.data = data
+	}
+	
 	public convenience init(nonce: BigUInt, gasCoin: Data, to: String, value: BigUInt, coin: String) {
 		
 		let encodedData = SendCoinRawTransactionData(to: to, value: value, coin: coin).encode() ?? Data()
@@ -36,7 +44,7 @@ public struct SendCoinRawTransactionData : Encodable {
 	/// Coin symbol (e.g. "MNT")
 	public var coin: String = RawTransactionDefaultTransactionCoin
 	
-	//MARK: -
+	// MARK: -
 	
 	public init(to: String, value: BigUInt, coin: String) {
 		self.to = to
@@ -44,7 +52,7 @@ public struct SendCoinRawTransactionData : Encodable {
 		self.coin = coin
 	}
 	
-	//MARK: - Encoding
+	// MARK: - Encoding
 	
 	enum CodingKeys: String, CodingKey {
 		case to

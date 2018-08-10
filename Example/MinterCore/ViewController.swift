@@ -13,41 +13,53 @@ import BigInt
 
 class ViewController: UIViewController {
 	
-	let transactionManager = TransactionManager.default
-	let wallet = AccountManager.`default`
+	let transactionManager = CoreTransactionManager.default
+	let wallet = AccountManager.default
+	let coinManager = CoinManager.default
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		wallet.balance(address: "Mxa93163fdf10724dc4785ff5cbfb9ac0b5949409f") { (resp, err)  in
-			print(resp)
+		wallet.balance(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (resp, error)  in
+			print("Resp: \(String(describing: resp))")
+			print("Error: \(String(describing: error))")
 		}
-//
-//		let coinManager = CoinManager.default
-//		coinManager.info(symbol: "MNT") { (coin, err) in
-//			print(coin)
-//		}
-//
-//		coinManager.estimateExchangeReturn(from: "MNT", to: "MNT", amount: 2.0) { (resp, err) in
-//			print(resp)
-//		}
-//
-//		transactionManager.transactions(address: "Mxa93163fdf10724dc4785ff5cbfb9ac0b5949409f") { (transactions, error) in
-//			print(transactions)
-//		}
-//
-//		transactionManager.transaction(hash: "0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331") { (transaction, error) in
-//			print(transaction)
-//		}
 
-		let encodedData = RawTransactionData(to: "Mxc3a55cdb5bcb97fd5657794247de4ed5e4a49f0d", value: BigUInt(1000), coin: "MINT").encode()
+		coinManager.info(symbol: "BELTCOIN") { (coin, error) in
+			print("Coin: \(String(describing: coin))")
+			print("Error: \(String(describing: error))")
+		}
+
+		coinManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: 10000000000000) { (value, commission, error) in
+			print("Value: \(String(describing: value))")
+			print("Commission: \(String(describing: commission))")
+			print("Error: \(String(describing: error))")
+		}
 		
-		let tx = RawTransaction(nonce: BigUInt(7), gasPrice: BigUInt(1), type: BigUInt(1), data: encodedData!, v: BigUInt(1), r: BigUInt(0), s: BigUInt(0))
+		transactionManager.transaction(hash: "Mt6941456145e1edb2b46a2ff5de074fa1c9109534") { (transaction, error) in
+			print("Transaction: \(transaction)")
+		}
 		
-		let signedHex = RawTransactionSigner.sign(rawTx: tx, privateKey: "c0ed1a463f5d40a0b582c7344a8f25ae3e6132f3f73cc97c1c3f1923e1433a96")
+		/// Making send transaction
+		let sendData = SendCoinRawTransactionData(to: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d", value: BigUInt(decimal: 1 * TransactionCoinFactorDecimal)!, coin: "MNT").encode()
 		
-		transactionManager.send(tx: signedHex!) { (suc, err) in
-			
+		let rawTransaction = SendCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", data: sendData!)
+		
+		/// Signing raw transaction
+		let signedTx = RawTransactionSigner.sign(rawTx: rawTransaction, privateKey: "8da1c947b489399a5b07b6bd3d9bb41f7647bb01a28303431b6993a8092f0bed")!
+		
+		/// Sending raw transaction
+		transactionManager.send(tx: signedTx) { (txHash, resultText, error) in
+			print(txHash)
+			print(resultText)
+			print(error)
+		}
+		
+		// MARK: -
+		
+		transactionManager.transactionCount(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (count, error) in
+			print("Count: \(String(describing: count))")
+			print("Error: \(String(describing: error))")
 		}
 	}
 
