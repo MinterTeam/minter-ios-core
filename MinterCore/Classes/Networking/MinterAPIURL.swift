@@ -27,11 +27,25 @@ public enum MinterAPIURL {
 	
 	case blockNumber
 	
+	case status
+	
+	case bipVolume
+	
 	case sendTransaction
+	
+	case candidate(publicKey: String)
+	
+	case validators
 	
 	
 	func url() -> URL {
 		switch self {
+			
+		case .status:
+			return URL(string: MinterAPIBaseURL + "status/")!
+			
+		case .bipVolume:
+			return URL(string: MinterAPIBaseURL + "bipVolume/")!
 			
 		case .balance(let address):
 			return URL(string: MinterAPIBaseURL + "balance/" + address.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
@@ -57,6 +71,11 @@ public enum MinterAPIURL {
 		case .estimateCoinBuy:
 			return URL(string: MinterAPIBaseURL + "estimateCoinBuy")!
 			
+		case .candidate(let publicKey):
+			return URL(string: MinterAPIBaseURL + "candidate/" + publicKey.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
+			
+		case .validators:
+			return URL(string: MinterAPIBaseURL + "validators/")!
 			
 		}
 	}

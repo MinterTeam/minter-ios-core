@@ -40,3 +40,36 @@ public extension CoinManager {
 		}
 	}
 }
+
+public extension StatusManager {
+	
+	class var `default` : StatusManager {
+		get {
+			let httpClient = APIClient.shared
+			let manager = self.init(httpClient: httpClient)
+			return manager
+		}
+	}
+}
+
+public extension CandidateManager {
+	
+	class var `default` : CandidateManager {
+		get {
+			let httpClient = APIClient.shared
+			let manager = self.init(httpClient: httpClient)
+			return manager
+		}
+	}
+}
+
+public extension ValidatorManager {
+	
+	class var `default` : ValidatorManager {
+		get {
+			let httpClient = APIClient.shared
+			let manager = self.init(httpClient: httpClient)
+			return manager
+		}
+	}
+}

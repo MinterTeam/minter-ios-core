@@ -16,6 +16,10 @@ class ViewController: UIViewController {
 	let transactionManager = CoreTransactionManager.default
 	let wallet = AccountManager.default
 	let coinManager = CoinManager.default
+	let statusManager = StatusManager.default
+	let candidateManager = CandidateManager.default
+	let validatorManager = ValidatorManager.default
+	
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -61,6 +65,27 @@ class ViewController: UIViewController {
 			print("Count: \(String(describing: count))")
 			print("Error: \(String(describing: error))")
 		}
+		
+		statusManager.status { (statusDict, error) in
+			print(statusDict)
+			print(error)
+		}
+		
+		statusManager.baseCoinVolume(height: 2) { (volume, error) in
+			print(volume)
+			print(error)
+		}
+		
+		candidateManager.candidate(publicKey: "Mp740b1b0f0f4b29cb2fc73e53c8e4b34966a89a97d4e1b86903db6ca2cc1c1596") { (candidate, error) in
+			print(candidate)
+			print(error)
+		}
+		
+		validatorManager.validators { (validators, error) in
+			print(validators)
+			print(error)			
+		}
+		
 	}
 
 	override func didReceiveMemoryWarning() {
