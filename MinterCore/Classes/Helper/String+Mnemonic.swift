@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CKMnemonic
+//import CKMnemonic
 import CryptoSwift
 
 public extension String {

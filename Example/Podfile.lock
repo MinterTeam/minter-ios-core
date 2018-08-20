@@ -2,13 +2,10 @@ PODS:
   - Alamofire (4.7.2)
   - BigInt (3.0.1):
     - SipHash (~> 1.2)
-  - CKMnemonic (0.1.7):
-    - CryptoSwift
   - CryptoSwift (0.9.0)
-  - MinterCore (0.1.1):
+  - MinterCore (0.1.2):
     - Alamofire (~> 4.6)
     - BigInt (~> 3.0)
-    - CKMnemonic (~> 0.1)
     - CryptoSwift (~> 0.9)
     - ObjectMapper (~> 3.1)
     - secp256k1.swift (~> 0.1)
@@ -27,7 +24,6 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - BigInt
-    - CKMnemonic
     - CryptoSwift
     - Nimble
     - ObjectMapper
@@ -42,9 +38,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
-  CKMnemonic: 88e745afffea6f3c719c799d9869a2ea5eb9f08b
   CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
-  MinterCore: 95971d5396d39a212136c00a763ec45788fad463
+  MinterCore: ed5886be01b5d4c5d1dc03f89a423941f39db921
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
