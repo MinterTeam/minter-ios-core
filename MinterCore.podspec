@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MinterCore'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'A short description of MinterCore.'
 
   s.homepage         = 'https://github.com/MinterTeam'
@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
   s.author           = { 'sidorov.panda' => 'ody344@gmail.com' }
   s.source           = { :git => 'https://github.com/MinterTeam/MinterCore-iOS.git', :tag => s.version.to_s }
   s.ios.deployment_target = '9.0'
+  s.ios.vendored_frameworks = 'MinterCore.framework'
 
   s.source_files = 'MinterCore/Classes/**/*'
   s.dependency 'Alamofire', '~> 4.6'
@@ -23,5 +24,4 @@ Pod::Spec.new do |s|
   s.dependency 'BigInt', '~> 3.0'
   s.dependency 'CryptoSwift', '~> 0.9'
   s.dependency 'secp256k1.swift', '~> 0.1'
-	#s.dependency 'CKMnemonic', '~> 0.1'
 end
