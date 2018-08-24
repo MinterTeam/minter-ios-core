@@ -1,6 +1,6 @@
 # MinterCore
 
-[![CI Status](http://img.shields.io/travis/sidorov.panda/MinterCore.svg?style=flat)](https://travis-ci.org/sidorov.panda/MinterCore)
+[![CI Status](http://img.shields.io/travis/MinterTeam/minter-ios-core.svg?style=flat)](https://travis-ci.org/MinterTeam/minter-ios-core)
 [![Version](https://img.shields.io/cocoapods/v/MinterCore.svg?style=flat)](http://cocoapods.org/pods/MinterCore)
 [![License](https://img.shields.io/cocoapods/l/MinterCore.svg?style=flat)](http://cocoapods.org/pods/MinterCore)
 [![Platform](https://img.shields.io/cocoapods/p/MinterCore.svg?style=flat)](http://cocoapods.org/pods/MinterCore)
