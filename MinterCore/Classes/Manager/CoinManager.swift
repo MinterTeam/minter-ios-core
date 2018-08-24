@@ -157,7 +157,7 @@ public class CoinManager : BaseManager {
 		}
 	}
 	
-	
+	/// 
 	public func estimateTxCommission(rawTx: String, completion: ( (Decimal?, Error?) -> ())? ) {
 		
 		let url = MinterAPIURL.estimateTxCommission.url()
