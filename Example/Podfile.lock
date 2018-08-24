@@ -3,7 +3,7 @@ PODS:
   - BigInt (3.0.1):
     - SipHash (~> 1.2)
   - CryptoSwift (0.9.0)
-  - MinterCore (0.1.4):
+  - MinterCore (0.1.6):
     - Alamofire (~> 4.6)
     - BigInt (~> 3.0)
     - CryptoSwift (~> 0.9)
@@ -39,7 +39,7 @@ SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
   CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
-  MinterCore: 0659b2bcd811f9a2666cd6a2f16116d65203b09d
+  MinterCore: 0c3f7caeb8332e3e3715fdb33076118b709d5d55
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
