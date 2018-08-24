@@ -156,5 +156,30 @@ public class CoinManager : BaseManager {
 			}
 		}
 	}
+	
+	
+	public func estimateTxCommission(rawTx: String, completion: ( (Decimal?, Error?) -> ())? ) {
+		
+		let url = MinterAPIURL.estimateTxCommission.url()
+		
+		self.httpClient.getRequest(url, parameters: ["tx" : rawTx]) { (response, error) in
+			
+			var comission: Decimal?
+			var err: Error?
+			
+			defer {
+				completion?(comission, err)
+			}
+			
+			if let payload = response.data as? [String : Any], let commission = payload["commission"] as? String {
+				comission = Decimal(string: commission)
+			}
+			else {
+				err = BaseManagerError.badResponse
+			}
+			
+		}
+
+	}
 
 }

@@ -52,6 +52,12 @@ class ViewController: UIViewController {
 		/// Signing raw transaction
 		let signedTx = RawTransactionSigner.sign(rawTx: rawTransaction, privateKey: "8da1c947b489399a5b07b6bd3d9bb41f7647bb01a28303431b6993a8092f0bed")!
 		
+		
+		coinManager.estimateTxCommission(rawTx: signedTx, completion: {
+			
+		})
+		
+		
 		/// Sending raw transaction
 		transactionManager.send(tx: signedTx) { (txHash, resultText, error) in
 			print(txHash)

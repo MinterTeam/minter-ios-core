@@ -23,6 +23,7 @@ public enum MinterAPIURL {
 	case coinInfo(coin: String)
 	case estimateCoinBuy
 	case estimateCoinSell
+	case estimateTxCommission
 	
 	
 	case blockNumber
@@ -76,6 +77,9 @@ public enum MinterAPIURL {
 			
 		case .validators:
 			return URL(string: MinterAPIBaseURL + "validators/")!
+			
+		case .estimateTxCommission:
+			return URL(string: MinterAPIBaseURL + "estimateTxCommission")!
 			
 		}
 	}
