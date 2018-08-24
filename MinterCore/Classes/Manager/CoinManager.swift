@@ -157,7 +157,12 @@ public class CoinManager : BaseManager {
 		}
 	}
 	
-	/// 
+	
+	/// Method to calculate comission depend on signed rawTx
+	///
+	/// - Parameters:
+	///   - rawTx: Signed raw Tx
+	///   - completion: Method which will be called after request completed
 	public func estimateTxCommission(rawTx: String, completion: ( (Decimal?, Error?) -> ())? ) {
 		
 		let url = MinterAPIURL.estimateTxCommission.url()
