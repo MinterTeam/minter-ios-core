@@ -16,7 +16,6 @@ Pod::Spec.new do |s|
   s.author           = { 'sidorov.panda' => 'ody344@gmail.com' }
   s.source           = { :git => 'https://github.com/MinterTeam/MinterCore-iOS.git', :tag => s.version.to_s }
   s.ios.deployment_target = '9.0'
-  s.ios.vendored_frameworks = 'MinterCore.framework'
 
   s.source_files = 'MinterCore/Classes/**/*'
   s.dependency 'Alamofire', '~> 4.6'
