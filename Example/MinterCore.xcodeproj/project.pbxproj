@@ -13,12 +13,14 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		A44E0E2E6FBE9017DCCB03EF /* Pods_MinterCore_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDCB773C91F4D68FC6055A3 /* Pods_MinterCore_Example.framework */; };
+		FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */; };
+		FA47CCA921382FC1009C3F4B /* CoinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCA52138209D009C3F4B /* CoinTests.swift */; };
 		FA669B51206D263800AD110A /* String+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA669B50206D263700AD110A /* String+Helper.swift */; };
 		FA8F077C205BF273006BE885 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F077B205BF273006BE885 /* Data+Extensions.swift */; };
 		FA8F0781206BB44C006BE885 /* RLP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F0779205BF0B7006BE885 /* RLP.swift */; };
 		FAE7AD94205811DC002F5D47 /* JSONRPCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE7AD93205811DC002F5D47 /* JSONRPCRequest.swift */; };
+		FAFCC7942139437E00955258 /* TransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +54,10 @@
 		D55742130B59EFAA8B1922A5 /* Pods-MinterCore_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinterCore_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MinterCore_Example/Pods-MinterCore_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F3135CCB8FE48DFDCBBAA5BF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		FA0B6B9D2057C3AC00410652 /* Web3Signer+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Web3Signer+Helper.swift"; sourceTree = "<group>"; };
+		FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataTests.swift; sourceTree = "<group>"; };
 		FA3ABB1820596B0E0040E7B8 /* LibSecp256K1Extension2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibSecp256K1Extension2.swift; sourceTree = "<group>"; };
+		FA47CCA52138209D009C3F4B /* CoinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTests.swift; sourceTree = "<group>"; };
+		FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTests.swift; sourceTree = "<group>"; };
 		FA669B50206D263700AD110A /* String+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Helper.swift"; path = "../../MinterCore/Classes/Helper/String+Helper.swift"; sourceTree = "<group>"; };
 		FA8F0779205BF0B7006BE885 /* RLP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLP.swift; sourceTree = "<group>"; };
 		FA8F077B205BF273006BE885 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
@@ -135,6 +140,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FA47CCA421382085009C3F4B /* Model */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -177,6 +183,16 @@
 				B8E976E3943798AB7EB31695 /* Pods-MinterCore_Tests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		FA47CCA421382085009C3F4B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FA47CCA52138209D009C3F4B /* CoinTests.swift */,
+				FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */,
+				FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,11 +354,25 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MinterCore_Tests/Pods-MinterCore_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/MinterCore/MinterCore.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+				"${BUILT_PRODUCTS_DIR}/secp256k1.swift/secp256k1.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MinterCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 			);
@@ -389,7 +419,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				FAFCC7942139437E00955258 /* TransactionTests.swift in Sources */,
+				FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */,
+				FA47CCA921382FC1009C3F4B /* CoinTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

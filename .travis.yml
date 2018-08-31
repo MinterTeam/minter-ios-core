@@ -10,5 +10,6 @@ before_install:
 - gem install cocoapods # Since Travis is not always on latest version
 - pod install --project-directory=Example
 script:
-- set -o pipefail && xcodebuild clean build test -enableCodeCoverage YES -workspace Example/MinterCore.xcworkspace -scheme MinterCore-Example -destination 'platform=iOS Simulator,name=iPhone X,OS=11.4' ONLY_ACTIVE_ARCH=NO | xcpretty
+#- set -o pipefail && xcodebuild clean build test -enableCodeCoverage YES -workspace Example/MinterCore.xcworkspace -scheme MinterCore_Example -destination 'platform=iOS Simulator,name=iPhone X,OS=11.4' ONLY_ACTIVE_ARCH=NO | xcpretty
+- xctool test -workspace MinterCore.xcworkspace -scheme MinterCore_Tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
 - pod lib lint --allow-warnings

@@ -29,7 +29,7 @@ class ViewController: UIViewController {
 			print("Error: \(String(describing: error))")
 		}
 
-		coinManager.info(symbol: "BELTCOIN") { (coin, error) in
+		coinManager.info(symbol: "SHSCOIN") { (coin, error) in
 			print("Coin: \(String(describing: coin))")
 			print("Error: \(String(describing: error))")
 		}
@@ -40,7 +40,7 @@ class ViewController: UIViewController {
 			print("Error: \(String(describing: error))")
 		}
 		
-		transactionManager.transaction(hash: "Mt6941456145e1edb2b46a2ff5de074fa1c9109534") { (transaction, error) in
+		transactionManager.transaction(hash: "Mt6e59d0ad0286c1ec3539de71eb686cad42e7c741") { (transaction, error) in
 			print("Transaction: \(transaction)")
 		}
 		

@@ -25,7 +25,7 @@ public class Coin {
 	public var crr: Double?
 	
 	/// Reserve Balance (e.g. 10000000000000000000)
-	public var reserveBalance: Int?
+	public var reserveBalance: Decimal?
 	
 	/// Creator`s address (e.g. Mx8aecc99090e22db1ae017a739b0dc0beb63dbee8)
 	public var creator: String?
@@ -55,6 +55,9 @@ class CoinMappable : Coin, Mappable {
 		self.volume <- map["volume"]
 		self.crr <- map["crr"]
 		self.reserveBalance <- map["reserve_balance"]
+		if let strReserveValue = map.JSON["reserve_balance"] as? String, reserveBalance == nil {
+			self.reserveBalance = Decimal(string: strReserveValue)
+		}
 		self.creator <- map["creator"]
 	}
 

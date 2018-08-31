@@ -182,9 +182,8 @@ public class CoinManager : BaseManager {
 			else {
 				err = BaseManagerError.badResponse
 			}
-			
-		}
 
+		}
 	}
 
 }

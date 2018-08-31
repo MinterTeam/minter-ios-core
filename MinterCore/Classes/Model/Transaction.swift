@@ -23,7 +23,7 @@ open class Transaction {
 	
 	public var hash: String?
 	public var rawTx: String?
-	public var height: String?
+	public var height: Int?
 	public var index: Int?
 	public var txResult: [String : Any]?
 	public var from: String?
