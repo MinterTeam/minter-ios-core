@@ -34,7 +34,7 @@ class ViewController: UIViewController {
 			print("Error: \(String(describing: error))")
 		}
 
-		coinManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")) { (value, commission, error) in
+		coinManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
 			print("Value: \(String(describing: value))")
 			print("Commission: \(String(describing: commission))")
 			print("Error: \(String(describing: error))")
