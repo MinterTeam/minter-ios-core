@@ -11,5 +11,5 @@ before_install:
 - pod install --project-directory=Example
 script:
 #- set -o pipefail && xcodebuild clean build test -enableCodeCoverage YES -workspace Example/MinterCore.xcworkspace -scheme MinterCore_Example -destination 'platform=iOS Simulator,name=iPhone X,OS=11.4' ONLY_ACTIVE_ARCH=NO | xcpretty
-- xcodebuild test -workspace MinterCore.xcworkspace -scheme MinterCore_Tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+- xcodebuild test -workspace Example/MinterCore.xcworkspace -scheme MinterCore_Tests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
 - pod lib lint --allow-warnings
