@@ -40,6 +40,12 @@ class ViewController: UIViewController {
 			print("Error: \(String(describing: error))")
 		}
 		
+		coinManager.estimateCoinSell(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
+			print("Value: \(String(describing: value))")
+			print("Commission: \(String(describing: commission))")
+			print("Error: \(String(describing: error))")
+		}
+		
 		transactionManager.transaction(hash: "Mt6e59d0ad0286c1ec3539de71eb686cad42e7c741") { (transaction, error) in
 			print("Transaction: \(transaction)")
 		}

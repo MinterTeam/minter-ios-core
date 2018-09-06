@@ -33,25 +33,34 @@ import MinterCore
 ```swift
 let accountManager = AccountManager.default
 accountManager.balance(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (resp, error) in
-	print("Resp: \(String(describing: resp))")
-	print("Error: \(String(describing: error))")
+  print("Resp: \(String(describing: resp))")
+  print("Error: \(String(describing: error))")
 }
 ```
 **Get coin info**
 ```swift
 let coinManager = CoinManager.default
 coinManager.info(symbol: "SHSCOIN") { (coin, error) in
-	print("Coin: \(coin)")
-	print("Error: \(error)")
+  print("Coin: \(coin)")
+  print("Error: \(error)")
 }
 ```
 
 **Get estimate coin buy**
 ```swift
 coinManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
-	print("Value: \(value)")
-	print("Commission: \(commission)")
-	print("Error: \(error)")
+  print("Value: \(value)")
+  print("Commission: \(commission)")
+  print("Error: \(error)")
+}
+```
+
+**Get estimate coin sell**
+```swift
+coinManager.estimateCoinSell(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
+  print("Value: \(value)")
+  print("Commission: \(commission)")
+  print("Error: \(error)")
 }
 ```
 
@@ -59,7 +68,7 @@ coinManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: Decimal(string:
 ```swift
 let transactionManager = CoreTransactionManager.default
 transactionManager.transaction(hash: "Mt6e59d0ad0286c1ec3539de71eb686cad42e7c741") { (transaction, error) in
-	print("Transaction: \(transaction)")
+  print("Transaction: \(transaction)")
 }
 ```
 
@@ -77,9 +86,17 @@ let rawTransaction = SendCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", d
 let signedTx = RawTransactionSigner.sign(rawTx: rawTransaction, privateKey: "8da1c947b489399a5b07b6bd3d9bb41f7647bb01a28303431b6993a8092f0bed")!
 /// Send raw transaction
 transactionManager.send(tx: signedTx) { (txHash, resultText, error) in
-	print(txHash)
-	print(resultText)
-	print(error)
+  print(txHash)
+  print(resultText)
+  print(error)
+}
+```
+
+**Get nonce**
+```swift
+transactionManager.transactionCount(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (nonce, error) in
+  print("Count: \nonce)")
+  print("Error: \(error)")
 }
 ```
 
