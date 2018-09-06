@@ -95,7 +95,7 @@ transactionManager.send(tx: signedTx) { (txHash, resultText, error) in
 **Get nonce**
 ```swift
 transactionManager.transactionCount(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (nonce, error) in
-  print("Count: \nonce)")
+  print("Count: \(nonce)")
   print("Error: \(error)")
 }
 ```
@@ -126,7 +126,10 @@ statusManager.status { (status, error) in
   print(status)
   print(error)
 }
+```
 
+**Get base coin volume**
+```swift
 statusManager.baseCoinVolume(height: 2) { (volume, error) in
   print(volume)
   print(error)
