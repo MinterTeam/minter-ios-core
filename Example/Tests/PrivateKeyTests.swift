@@ -65,6 +65,21 @@ class PrivateKeySpec: QuickSpec {
 			}
 		}
 		
+		it("Can retreive public key") {
+			
+			let mnemonic = "adjust correct photo fancy knee lion blur away coconut inform sun cancel"
+			
+			let seed = String.seedString(mnemonic)!
+			let pk = PrivateKey(seed: Data(hex: seed))
+			
+			let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
+			
+			let publicKey = key.publicKey.toHexString()
+			
+			expect(publicKey).to(equal("039f1a49aa7bb95c587486d671838466137243f27b808a9eac4726ef3a33d6771b"))
+		}
+		
+		
 		describe("Can be derived") {
 			it("Can be derived with path 44/60/0/0/0") {
 				let correctSeed = "8b2868665a92d1043b55f9ccbfb4b2d2fcfd7e2111c16b0d51cef0983f95a9438f643cef3cc41277331f3da0e957110be1bc6a80771613859ea2999bbeea2876"

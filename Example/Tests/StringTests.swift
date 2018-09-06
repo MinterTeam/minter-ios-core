@@ -18,9 +18,6 @@ class StringHelperSpec: QuickSpec {
 	override func spec() {
 		
 		describe("String Mnemonic Tests") {
-			it("String+Mnemonic") {
-				
-			}
 			
 			it("Can generate mnemonic phrase") {
 				let str = String.generateMnemonicString()
