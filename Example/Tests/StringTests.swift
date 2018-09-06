@@ -30,12 +30,13 @@ class StringHelperSpec: QuickSpec {
 				
 			}
 			
-			it("Can generate Private Key seed") {
-//				String.privateKeyString(seed: )
+			it("Can get seed from mnemonic") {
 				
-				
+				let mnemonic = "globe arrange forget twice potato nurse ice dwarf arctic piano scorpion tube"
+				let correctSeed = "e4d6956689cfba26aab4156e5f4600f5f386cdd56ea57f1bfdb40f33048d4d463989c170738ae582f07227af9fd707b40cc7d7d6fd24d14a4ee1e0f45928940d"
+				let seed = String.seedString(mnemonic)
+				expect(seed).to(equal(correctSeed))
 			}
-			
 			
 		}
 		
