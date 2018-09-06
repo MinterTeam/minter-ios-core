@@ -20,21 +20,21 @@ public extension String {
 		return try? CKMnemonic.generateMnemonic(strength: 128, language: language)
 	}
 	
-	public static func privateKeyString(seed: String) -> String? {
-		let hmac = HMAC(key: "Bitcoin seed".bytes, variant: HMAC.Variant.sha512)
-		let val = try? hmac.authenticate(seed.bytes)
-
-		guard val != nil else {
-			return nil
-		}
-		
-		let privateKeyData = Data(bytes: val![0..<32])
-		
-		guard RawTransactionSigner.verify(privateKey: privateKeyData) else {
-			return nil
-		}
-		
-		return privateKeyData.toHexString()
-	}
+//	public static func privateKeyString(seed: String) -> String? {
+//		let hmac = HMAC(key: "Bitcoin seed".bytes, variant: HMAC.Variant.sha512)
+//		let val = try? hmac.authenticate(seed.bytes)
+//
+//		guard val != nil else {
+//			return nil
+//		}
+//		
+//		let privateKeyData = Data(bytes: val![0..<32])
+//		
+//		guard RawTransactionSigner.verify(privateKey: privateKeyData) else {
+//			return nil
+//		}
+//		
+//		return privateKeyData.toHexString()
+//	}
 
 }

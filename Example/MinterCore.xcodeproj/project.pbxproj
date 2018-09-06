@@ -16,9 +16,12 @@
 		A44E0E2E6FBE9017DCCB03EF /* Pods_MinterCore_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDCB773C91F4D68FC6055A3 /* Pods_MinterCore_Example.framework */; };
 		FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */; };
 		FA47CCA921382FC1009C3F4B /* CoinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCA52138209D009C3F4B /* CoinTests.swift */; };
+		FA47D27721397FD7001A3E2F /* RawTransactionSignerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */; };
+		FA47D27A213980AF001A3E2F /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47D279213980AF001A3E2F /* StringTests.swift */; };
 		FA669B51206D263800AD110A /* String+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA669B50206D263700AD110A /* String+Helper.swift */; };
 		FA8F077C205BF273006BE885 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F077B205BF273006BE885 /* Data+Extensions.swift */; };
 		FA8F0781206BB44C006BE885 /* RLP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F0779205BF0B7006BE885 /* RLP.swift */; };
+		FA9BE30F21402EDD002160F3 /* PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */; };
 		FAE7AD94205811DC002F5D47 /* JSONRPCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE7AD93205811DC002F5D47 /* JSONRPCRequest.swift */; };
 		FAFCC7942139437E00955258 /* TransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */; };
 /* End PBXBuildFile section */
@@ -58,11 +61,14 @@
 		FA3ABB1820596B0E0040E7B8 /* LibSecp256K1Extension2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibSecp256K1Extension2.swift; sourceTree = "<group>"; };
 		FA47CCA52138209D009C3F4B /* CoinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTests.swift; sourceTree = "<group>"; };
 		FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTests.swift; sourceTree = "<group>"; };
+		FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawTransactionSignerTests.swift; sourceTree = "<group>"; };
+		FA47D279213980AF001A3E2F /* StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		FA669B50206D263700AD110A /* String+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Helper.swift"; path = "../../MinterCore/Classes/Helper/String+Helper.swift"; sourceTree = "<group>"; };
 		FA8F0779205BF0B7006BE885 /* RLP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLP.swift; sourceTree = "<group>"; };
 		FA8F077B205BF273006BE885 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		FA8F077D206B8546006BE885 /* RLPSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLPSwift.swift; sourceTree = "<group>"; };
 		FA8F077F206B856E006BE885 /* Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hex.swift; sourceTree = "<group>"; };
+		FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyTests.swift; sourceTree = "<group>"; };
 		FAE7AD93205811DC002F5D47 /* JSONRPCRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONRPCRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +146,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FA47D2782139809A001A3E2F /* Helper */,
+				FA47D27521397FC3001A3E2F /* Manager */,
 				FA47CCA421382085009C3F4B /* Model */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
@@ -191,8 +199,25 @@
 				FA47CCA52138209D009C3F4B /* CoinTests.swift */,
 				FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */,
 				FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */,
+				FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		FA47D27521397FC3001A3E2F /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		FA47D2782139809A001A3E2F /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				FA47D279213980AF001A3E2F /* StringTests.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -420,8 +445,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAFCC7942139437E00955258 /* TransactionTests.swift in Sources */,
+				FA47D27721397FD7001A3E2F /* RawTransactionSignerTests.swift in Sources */,
 				FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */,
 				FA47CCA921382FC1009C3F4B /* CoinTests.swift in Sources */,
+				FA47D27A213980AF001A3E2F /* StringTests.swift in Sources */,
+				FA9BE30F21402EDD002160F3 /* PrivateKeyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,7 +11,7 @@ import Foundation
 public extension String {
 	
 	public func stripMinterHexPrefix() -> String {
-		if self.hasPrefix("Mx") || self.hasPrefix("mx") {
+		if self.hasPrefix("Mx") || self.hasPrefix("mx") || self.hasPrefix("MX") || self.hasPrefix("mX") {
 			let indexStart = self.index(self.startIndex, offsetBy: 2)
 			return String(self[indexStart...])
 		}
