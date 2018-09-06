@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import CKMnemonic
 import CryptoSwift
 
 public extension String {
@@ -27,13 +26,13 @@ public extension String {
 //		guard val != nil else {
 //			return nil
 //		}
-//		
+//
 //		let privateKeyData = Data(bytes: val![0..<32])
-//		
+//
 //		guard RawTransactionSigner.verify(privateKey: privateKeyData) else {
 //			return nil
 //		}
-//		
+//
 //		return privateKeyData.toHexString()
 //	}
 

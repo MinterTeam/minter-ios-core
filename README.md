@@ -100,6 +100,39 @@ transactionManager.transactionCount(address: "Mx6b6b3c763d2605b842013f84cac4d670
 }
 ```
 
+**Get candidate**
+```swift
+let candidateManager = CandidateManager.default
+candidateManager.candidate(publicKey: "Mp740b1b0f0f4b29cb2fc73e53c8e4b34966a89a97d4e1b86903db6ca2cc1c1596") { (candidate, error) in
+  print(candidate)
+  print(error)
+}
+```
+
+**Get validators**
+```swift
+let validatorManager = ValidatorManager.default
+validatorManager.validators { (validators, error) in
+  print(validators)
+  print(error)			
+}
+```
+
+**Get status**
+```swift
+let statusManager = StatusManager.default
+
+statusManager.status { (status, error) in
+  print(status)
+  print(error)
+}
+
+statusManager.baseCoinVolume(height: 2) { (volume, error) in
+  print(volume)
+  print(error)
+}
+```
+
 ****
 
 ## Author
