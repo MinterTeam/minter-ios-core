@@ -32,16 +32,16 @@ public class Coin {
 }
 
 /// Internal use Coin mappable class
-class CoinMappable : Coin, Mappable {
-	
-	
+public class CoinMappable : Coin, Mappable {
+
+
 	/**
 	Coin Model Initializer
 	- Parameters:
 	- map: Map object to initialize from
 	- Returns: CoinMappable instance
 	*/
-	required init?(map: Map) {
+	public required init?(map: Map) {
 		super.init()
 		
 		self.mapping(map: map)
@@ -49,7 +49,7 @@ class CoinMappable : Coin, Mappable {
 	
 	// MARK: - ObjectMapper
 	
-	func mapping(map: Map) {
+	public func mapping(map: Map) {
 		self.name <- map["name"]
 		self.symbol <- map["symbol"]
 		self.volume <- map["volume"]
