@@ -3,18 +3,12 @@
 
 <p align="center">
 <a href="https://github.com/MinterTeam/minter-ios-core/releases/latest"><img src="https://img.shields.io/github/tag/MinterTeam/minter-ios-core.svg" alt="Version"></a>
-[![CI Status](http://img.shields.io/travis/MinterTeam/minter-ios-core.svg?style=flat)](https://travis-ci.org/MinterTeam/minter-ios-core)
-[![Version](https://img.shields.io/cocoapods/v/MinterCore.svg?style=flat)](http://cocoapods.org/pods/MinterCore)
-[![License](https://img.shields.io/cocoapods/l/MinterCore.svg?style=flat)](http://cocoapods.org/pods/MinterCore)
-[![Platform](https://img.shields.io/cocoapods/p/MinterCore.svg?style=flat)](http://cocoapods.org/pods/MinterCore)
+<a href="https://travis-ci.org/MinterTeam/minter-ios-core"><img src="http://img.shields.io/travis/MinterTeam/minter-ios-core.svg?style=flat" alt="CI Status"></a> 
+<a href="http://cocoapods.org/pods/MinterCore"><img src="https://img.shields.io/cocoapods/v/MinterCore.svg?style=flat" alt="Version"></a>
+<a href="http://cocoapods.org/pods/MinterCore"><img src="https://img.shields.io/cocoapods/l/MinterCore.svg?style=flat" alt="License"></a>
+<a href="http://cocoapods.org/pods/MinterCore"><img src="https://img.shields.io/cocoapods/p/MinterCore.svg?style=flat" alt="Platform"></a>
+  
 </p>
-
-
-
-[![CI Status](http://img.shields.io/travis/MinterTeam/minter-ios-core.svg?style=flat)](https://travis-ci.org/MinterTeam/minter-ios-core)
-[![Version](https://img.shields.io/cocoapods/v/MinterCore.svg?style=flat)](http://cocoapods.org/pods/MinterCore)
-[![License](https://img.shields.io/cocoapods/l/MinterCore.svg?style=flat)](http://cocoapods.org/pods/MinterCore)
-[![Platform](https://img.shields.io/cocoapods/p/MinterCore.svg?style=flat)](http://cocoapods.org/pods/MinterCore)
 
 ## Example
 
