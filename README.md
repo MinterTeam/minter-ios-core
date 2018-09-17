@@ -1,4 +1,3 @@
-# MinterCore
 <p align="center" background="black"><img src="minter-logo.svg" width="400"></p>
 
 <p align="center">
@@ -8,8 +7,9 @@
 <a href="http://cocoapods.org/pods/MinterCore"><img src="https://img.shields.io/cocoapods/p/MinterCore.svg?style=flat" alt="Platform"></a>
 <a href="https://github.com/MinterTeam/minter-ios-core/blob/master/LICENSE"><img src="https://img.shields.io/github/license/MinterTeam/minter-ios-core.svg" alt="License"></a>
 <a href="https://github.com/MinterTeam/minter-ios-core/commits/master"><img src="https://img.shields.io/github/last-commit/MinterTeam/minter-ios-core.svg" alt="Last commit"></a>
-  
 </p>
+
+# MinterCore
 
 ## Example
 
