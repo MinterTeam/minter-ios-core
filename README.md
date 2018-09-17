@@ -5,8 +5,9 @@
 <a href="https://github.com/MinterTeam/minter-ios-core/releases/latest"><img src="https://img.shields.io/github/tag/MinterTeam/minter-ios-core.svg" alt="Version"></a>
 <a href="https://travis-ci.org/MinterTeam/minter-ios-core"><img src="http://img.shields.io/travis/MinterTeam/minter-ios-core.svg?style=flat" alt="CI Status"></a> 
 <a href="http://cocoapods.org/pods/MinterCore"><img src="https://img.shields.io/cocoapods/v/MinterCore.svg?style=flat" alt="Version"></a>
-<a href="http://cocoapods.org/pods/MinterCore"><img src="https://img.shields.io/cocoapods/l/MinterCore.svg?style=flat" alt="License"></a>
 <a href="http://cocoapods.org/pods/MinterCore"><img src="https://img.shields.io/cocoapods/p/MinterCore.svg?style=flat" alt="Platform"></a>
+<a href="https://github.com/MinterTeam/minter-ios-core/blob/master/LICENSE"><img src="https://img.shields.io/github/license/MinterTeam/minter-ios-core.svg" alt="License"></a>
+<a href="https://github.com/MinterTeam/minter-ios-core/commits/master"><img src="https://img.shields.io/github/last-commit/MinterTeam/minter-ios-core.svg" alt="Last commit"></a>
   
 </p>
 
