@@ -72,7 +72,7 @@ public struct DelegateRawTransactionData : Encodable {
 		
 		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		
-		let fields = [publicKey, coinData, value] as [Any]
+		let fields = [Data(hex: publicKey), coinData, value] as [Any]
 		return RLP.encode(fields)
 	}
 	
