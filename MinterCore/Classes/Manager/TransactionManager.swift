@@ -15,7 +15,7 @@ public enum TransactionManagerError : Error {
 }
 
 ///Transaction Manager class
-public class CoreTransactionManager : BaseManager {
+public class TransactionManager : BaseManager {
 	
 	//MARK: -
 	

@@ -13,7 +13,7 @@ import BigInt
 
 class ViewController: UIViewController {
 	
-	let transactionManager = CoreTransactionManager.default
+	let transactionManager = TransactionManager.default
 	let wallet = AccountManager.default
 	let coinManager = CoinManager.default
 	let statusManager = StatusManager.default
