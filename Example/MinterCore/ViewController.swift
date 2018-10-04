@@ -24,7 +24,7 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		wallet.balance(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (resp, error)  in
+		wallet.balance(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (resp, error) in
 			print("Resp: \(String(describing: resp))")
 			print("Error: \(String(describing: error))")
 		}

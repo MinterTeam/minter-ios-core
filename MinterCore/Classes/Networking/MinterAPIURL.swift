@@ -10,7 +10,7 @@ import Foundation
 
 
 //let MinterAPIBaseURL = "https://minter-testnet.dl-dev.ru/api/"
-let MinterAPIBaseURL = "https://minter-node-2.testnet.minter.network:8841/api/"
+let MinterAPIBaseURL: String! = MinterCoreSDK.shared.url?.absoluteString//"https://minter-node-2.testnet.minter.network:8841/api/"
 
 
 public enum MinterAPIURL {
@@ -40,6 +40,11 @@ public enum MinterAPIURL {
 	
 	
 	func url() -> URL {
+		
+		guard nil != MinterAPIBaseURL && nil != URL(string: MinterAPIBaseURL) else {
+			fatalError("MinterCore should be initialized. Please call MinterCoreSDK.initialize(url:) first")
+		}
+		
 		switch self {
 			
 		case .status:
