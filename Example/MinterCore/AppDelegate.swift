@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 			
 			
-			MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841/api/")
-//			MinterCoreSDK.initialize(urlString: "http://138.197.222.87:8842/api/")
+//			MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841/api/")
+			MinterCoreSDK.initialize(urlString: "http://138.197.222.87:8842/api/")
 			return true
     }
 

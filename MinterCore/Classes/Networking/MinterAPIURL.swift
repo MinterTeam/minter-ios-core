@@ -42,7 +42,7 @@ public enum MinterAPIURL {
 	func url() -> URL {
 		
 		guard nil != MinterAPIBaseURL && nil != URL(string: MinterAPIBaseURL) else {
-			fatalError("MinterCore should be initialized. Please call MinterCoreSDK.initialize(url:) first")
+			fatalError("MinterCore must be initialized. Please call MinterCoreSDK.initialize(url:) first")
 		}
 		
 		switch self {
