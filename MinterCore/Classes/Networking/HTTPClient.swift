@@ -17,9 +17,7 @@ public protocol HTTPClient {
 	
 	typealias HTTPClientResponse = (code: Int, data: Any?, meta: [String : Any]?, links: [String : Any]?)
 	
-	
 	typealias CompletionBlock = ((_ response: HTTPClientResponse, _ error: Error?) -> Void)
-	
 	
 	func postRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?)
 	

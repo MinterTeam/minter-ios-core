@@ -53,7 +53,9 @@ class ViewController: UIViewController {
 		/// Making send transaction
 		let sendData = SendCoinRawTransactionData(to: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d", value: BigUInt(decimal: 1 * TransactionCoinFactorDecimal)!, coin: "MNT").encode()
 		
-		let rawTransaction = SendCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", data: sendData!)
+		let rawTransaction1 = SendCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", data: sendData!)
+		
+		let rawTransaction = CreateCoinRawTransaction(nonce: BigUInt(4), gasCoin: "MNT", name: "BELT COIN3", symbol: "BELTCOIN3", initialAmount: BigUInt(decimal: 1000 * TransactionCoinFactorDecimal)!, initialReserve: BigUInt(decimal: 100 * TransactionCoinFactorDecimal)!, reserveRatio: BigUInt(10))
 		
 		let mnemonic = "adjust correct photo fancy knee lion blur away coconut inform sun cancel"
 		
@@ -64,8 +66,6 @@ class ViewController: UIViewController {
 		
 		let publicKey = RawTransactionSigner.publicKey(privateKey: key.raw, compressed: false)!.dropFirst()
 		let address = RawTransactionSigner.address(publicKey: publicKey)
-		
-		
 		
 		/// Signing raw transaction
 		let signedTx = RawTransactionSigner.sign(rawTx: rawTransaction, privateKey: key.raw.toHexString())!

@@ -9,9 +9,7 @@ import Foundation
 
 
 
-//let MinterAPIBaseURL = "https://minter-node-2.testnet.minter.network:8841/api/"
 let MinterAPIBaseURL: String! = MinterCoreSDK.shared.url?.absoluteString
-
 
 
 public enum MinterAPIURL {

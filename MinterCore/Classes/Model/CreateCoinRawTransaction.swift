@@ -11,9 +11,9 @@ import BigInt
 /// CreateCoinRawTransaction
 public class CreateCoinRawTransaction : RawTransaction {
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {
-		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoin, type: RawTransactionType.createCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
+		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: coinData, type: RawTransactionType.createCoin.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
@@ -27,8 +27,8 @@ public class CreateCoinRawTransaction : RawTransaction {
 	///   - initialAmount: Coin initial amount
 	///   - initialReserve: Coin reserve balance
 	///		- reserveRatio: Coin reserve ratio in percent (e.g. 10%)
-	public convenience init(nonce: BigUInt, gasCoin: Data, name: String, symbol: String, initialAmount: BigUInt, initialReserve: BigUInt, reserveRatio: BigUInt) {
-		
+	public convenience init(nonce: BigUInt, gasCoin: String, name: String, symbol: String, initialAmount: BigUInt, initialReserve: BigUInt, reserveRatio: BigUInt) {
+//		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		let encodedData = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio).encode() ?? Data()
 		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
 	}

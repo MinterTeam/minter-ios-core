@@ -9,6 +9,7 @@ import Foundation
 import Alamofire
 import BigInt
 
+
 public protocol RLPEncodable : Encodable {
 	func encode() -> Data?
 }
@@ -17,17 +18,6 @@ public protocol SignatureRLPEncodable : RLPEncodable {
 	func encode(forSignature: Bool) -> Data?
 }
 
-public enum TransactionHTTPClientResponseStatusCode : Int {
-	case unknown = -1
-	case noError = 0
-	case coinNotFound = 200
-	case insufficientFundsForTransaction = 300
-	case nonceTooLow = 400
-	case nonceTooHigh = 401
-	case incorrenctSignture = 500
-	case incorrenctTransactionData = 600
-	case unknownError = 900
-}
 
 //TODO: Change depend on network!
 let RawTransactionDefaultTransactionCoin = "MNT"
@@ -164,7 +154,7 @@ open class RawTransaction : Encodable, SignatureRLPEncodable {
 	
 	public var signatureType: BigUInt
 	
-	public var signatureData: RLPEncodable
+	public var signatureData: SignatureData
 	
 //	/// ECDSA fields. Digital signature of TX
 //	public var v: BigUInt = BigUInt(1)
@@ -190,7 +180,7 @@ open class RawTransaction : Encodable, SignatureRLPEncodable {
 	- data: RLP-encoded data
 	- Returns: Signed RawTx hex string, which can be send to Minter Node
 	*/
-	public init(nonce: BigUInt, gasPrice: BigUInt, gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: RLPEncodable = SignatureData()) {
+	public init(nonce: BigUInt, gasPrice: BigUInt, gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: SignatureData = SignatureData()) {
 		self.nonce = nonce
 		self.gasPrice = gasPrice
 		self.gasCoin = gasCoin
