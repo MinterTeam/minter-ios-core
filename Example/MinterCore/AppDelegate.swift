@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+			// Override point for customization after application launch.
 			
 			
 //			MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841/api/")
