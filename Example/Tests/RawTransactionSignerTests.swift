@@ -49,6 +49,20 @@ class RawTransactionSignerSpec: QuickSpec {
 				expect(address).to(equal("33bd6a537e8ad987b234ea3098c992f158df7b0f"))
 			}
 			
+			it("RawTransactionSigner can retreive Address") {
+				
+				let mnemonic = "adjust correct photo fancy knee lion blur away coconut inform sun cancel"
+				
+				let seed = String.seedString(mnemonic)!
+				let pk = PrivateKey(seed: Data(hex: seed))
+				
+				let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
+				
+				let address = RawTransactionSigner.address(privateKey: key.raw.toHexString())
+				
+				expect(address).to(equal("33bd6a537e8ad987b234ea3098c992f158df7b0f"))
+			}
+			
 		}
 	}
 	

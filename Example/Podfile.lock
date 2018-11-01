@@ -14,11 +14,13 @@ PODS:
   - Quick (1.2.0)
   - secp256k1.swift (0.1.4)
   - SipHash (1.2.2)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - MinterCore (from `../`)
   - Nimble (~> 7.0.2)
   - Quick (~> 1.2.0)
+  - SVProgressHUD
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -30,6 +32,7 @@ SPEC REPOS:
     - Quick
     - secp256k1.swift
     - SipHash
+    - SVProgressHUD
 
 EXTERNAL SOURCES:
   MinterCore:
@@ -45,7 +48,8 @@ SPEC CHECKSUMS:
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: a92d8dbbe3ebd2ecbebccfb0c75349a28f38c550
+PODFILE CHECKSUM: 196126e40f6bf59f844b38cb955bd9b51be982c4
 
 COCOAPODS: 1.5.3

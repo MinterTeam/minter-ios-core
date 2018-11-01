@@ -2,6 +2,7 @@ use_frameworks!
 
 target 'MinterCore_Example' do
 	pod 'MinterCore', :path => '../'
+	pod 'SVProgressHUD'
 
 	target 'MinterCore_Tests' do
 		inherit! :search_paths

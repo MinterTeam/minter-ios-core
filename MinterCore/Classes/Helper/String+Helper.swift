@@ -17,4 +17,14 @@ public extension String {
 		}
 		return self
 	}
+	
+	public func stripMinterCheckHexPrefix() -> String {
+		if self.hasPrefix("Mc") || self.hasPrefix("mc") || self.hasPrefix("Mc") || self.hasPrefix("mc") {
+			let indexStart = self.index(self.startIndex, offsetBy: 2)
+			return String(self[indexStart...])
+		}
+		return self
+	}
+	
+	
 }

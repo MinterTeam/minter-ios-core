@@ -19,7 +19,7 @@ public class AccountManager : BaseManager {
 		Method retreives balance data from the Minter node
 		- Parameters:
 			- address: Address for which balance will be retreived
-			- completion: Method which will be called after request finished
+			- completion: Method which will be called after request finished. Balance is in PIPs
 		- Precondition: `address` must contain "Mx" prefix
 	*/
 	public func balance(address: String, with completion: (([String : Any]?, Error?) -> ())?) {

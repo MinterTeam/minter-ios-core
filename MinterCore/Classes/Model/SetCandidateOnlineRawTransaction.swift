@@ -11,9 +11,10 @@ import BigInt
 /// SetCandidateOnlineRawTransaction
 public class SetCandidateOnlineRawTransaction : RawTransaction {
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {
+	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
 		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoin, type: RawTransactionType.unbond.BigUIntValue(), payload: Data(), serviceData: Data())
+		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: coinData, type: RawTransactionType.setCandidateOnline.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
@@ -23,7 +24,7 @@ public class SetCandidateOnlineRawTransaction : RawTransaction {
 	///   - nonce: Nonce
 	///   - gasCoin: Coin to spend fee from
 	///   - publicKey: Validator's public key
-	public convenience init(nonce: BigUInt, gasCoin: Data, publicKey: String) {
+	public convenience init(nonce: BigUInt, gasCoin: String, publicKey: String) {
 		
 		let encodedData = SetCandidateOnlineRawTransactionData(publicKey: publicKey).encode() ?? Data()
 		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
@@ -56,7 +57,8 @@ public struct SetCandidateOnlineRawTransactionData : Encodable {
 	
 	public func encode() -> Data? {
 		
-		let fields = [publicKey] as [Any]
+		let pub = Data(hex: publicKey.replacingOccurrences(of: "Mp", with: ""))
+		let fields = [pub] as [Any]
 		return RLP.encode(fields)
 	}
 	

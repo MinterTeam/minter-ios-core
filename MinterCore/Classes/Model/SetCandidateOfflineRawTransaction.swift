@@ -36,7 +36,8 @@ public struct SetCandidateOfflineRawTransactionData : Encodable {
 	
 	public func encode() -> Data? {
 		
-		let fields = [publicKey] as [Any]
+		let pub = Data(hex: publicKey.replacingOccurrences(of: "Mp", with: ""))
+		let fields = [pub] as [Any]
 		return RLP.encode(fields)
 	}
 	
