@@ -48,5 +48,51 @@ class SendCoinTransactionDataSpec: QuickSpec {
 			expect(model?.from).to(equal("Mxc17a3afd805eab5ef3f2bbbc5edd49c28efb4d8c"))
 			expect(model?.amount).to(equal(Decimal(123)))
 		}
+		
+		describe("ConvertTransactionDataMappable Model") {
+			it("ConvertTransactionDataMappable can be mapped") {
+				let json: [String : Any] = [
+					"coin_to_sell" : "MNT",
+					"coin_to_buy": "BELTCOIN",
+					"value" : Decimal(1.0),
+					"from" : "Mx228e5a68b847d169da439ec15f727f08233a7ca6"]
+				
+				let data = ConvertTransactionDataMappable(JSON: json)
+				expect(data?.fromCoin).to(equal("MNT"))
+				expect(data?.toCoin).to(equal("BELTCOIN"))
+				expect(data?.value).to(equal(Decimal(1.0)))
+				expect(data?.from).to(equal("Mx228e5a68b847d169da439ec15f727f08233a7ca6"))
+				
+			}
+			
+			it("ConvertTransactionDataMappable can be mapped") {
+				let json: [String : Any] = [
+					"coin_to_sell" : "MNT",
+					"coin_to_buy": "BELTCOIN",
+					"value" : "1.0",
+					"from" : "Mx228e5a68b847d169da439ec15f727f08233a7ca6"]
+				
+				let data = ConvertTransactionDataMappable(JSON: json)
+				expect(data?.fromCoin).to(equal("MNT"))
+				expect(data?.toCoin).to(equal("BELTCOIN"))
+				expect(data?.value).to(equal(Decimal(1.0)))
+				expect(data?.from).to(equal("Mx228e5a68b847d169da439ec15f727f08233a7ca6"))
+				
+			}
+		}
+		
+		describe("SellAllCoinsTransactionDataMappable Model") {
+			it("SellAllCoinsTransactionDataMappable can be mapped") {
+				let json: [String : Any] = [
+					"coin_to_sell" : "MNT",
+					"coin_to_buy": "BELTCOIN",
+					"from" : "Mx228e5a68b847d169da439ec15f727f08233a7ca6"]
+				
+				let data = SellAllCoinsTransactionDataMappable(JSON: json)
+				expect(data?.fromCoin).to(equal("MNT"))
+				expect(data?.toCoin).to(equal("BELTCOIN"))
+				expect(data?.from).to(equal("Mx228e5a68b847d169da439ec15f727f08233a7ca6"))
+			}
+		}
 	}
 }
