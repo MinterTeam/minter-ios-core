@@ -2,6 +2,7 @@ use_frameworks!
 
 target 'MinterCore_Example' do
 	pod 'MinterCore', :path => '../'
+	pod 'SVProgressHUD'
 
 	target 'MinterCore_Tests' do
 		inherit! :search_paths
@@ -9,5 +10,15 @@ target 'MinterCore_Example' do
 		pod 'Quick', '~> 1.2.0'
 		pod 'Nimble', '~> 7.0.2'
 		pod 'MinterCore', :path => '../'
+	end
+end
+
+post_install do |installer|
+	installer.pods_project.targets.each do |target|
+		if ['Nimble'].include? target.name
+			target.build_configurations.each do |config|
+				config.build_settings['SWIFT_VERSION'] = '3.2'
+			end
+		end
 	end
 end

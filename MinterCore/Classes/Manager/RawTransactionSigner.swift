@@ -49,9 +49,9 @@ public class RawTransactionSigner {
 		}
 		
 		/// Prepearing Tx to be sent to the Minter Network
-		tx.r = BigUInt(sign.r!)
-		tx.s = BigUInt(sign.s!)
-		tx.v = BigUInt(sign.v!)
+		tx.signatureData.r = BigUInt(sign.r!)
+		tx.signatureData.s = BigUInt(sign.s!)
+		tx.signatureData.v = BigUInt(sign.v!)
 		
 		return tx.encode(forSignature: false)?.toHexString()
 	}
@@ -62,7 +62,7 @@ public class RawTransactionSigner {
 	- data: Encoded raw tx data
 	- Precondition: `data` is RawTx RLP-encoded Data object
 	*/
-	private static func hashForSigning(data: Data) -> Data? {
+	public static func hashForSigning(data: Data) -> Data? {
 		let sha3 = SHA3(variant: .keccak256)
 		let hash = Data(bytes: sha3.calculate(for: data.bytes))
 		return hash
@@ -75,7 +75,7 @@ public class RawTransactionSigner {
 	- privateKey: PrivateKey Data object to be used to sign Tx
 	- Returns: R S V of signed data
 	*/
-	private static func sign(_ data: Data, privateKey: Data) -> (r: Data?, s: Data?, v: Data?) {
+	public static func sign(_ data: Data, privateKey: Data) -> (r: Data?, s: Data?, v: Data?) {
 		
 		let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY))!
 		defer { secp256k1_context_destroy(context) }
@@ -162,6 +162,10 @@ public class RawTransactionSigner {
 			return Data(bytes: publicKey)
 	}
 	
+	public static func seed(from mnemonic: String, passphrase: String = "", language: CKMnemonicLanguageType = .english) -> String? {
+		return try? CKMnemonic.deterministicSeedString(from: mnemonic, passphrase: passphrase, language: language)
+	}
+	
 	/**
 	Method retreives address
 	- Parameters:
@@ -172,4 +176,64 @@ public class RawTransactionSigner {
 		return Data(bytes: SHA3(variant: .keccak256).calculate(for: publicKey.bytes)).suffix(20).toHexString()
 	}
 	
+	public static func address(privateKey: String) -> String? {
+		guard let pubKey = RawTransactionSigner.publicKey(privateKey: Data(hex: privateKey), compressed: false)?.dropFirst() else {
+			return nil
+		}
+		
+		return RawTransactionSigner.address(publicKey: pubKey)
+		
+	}
+	
+	/**
+	Method signs Check Data with privateKey
+	- Parameters:
+	- data: CHeck Data to be signed
+	- privateKey: PrivateKey Data object to be used to sign Tx
+	- Returns: R S V of signed check
+	*/
+	public static func signCheck(_ data: Data, privateKey: Data) -> (r: Data?, s: Data?, v: Data?) {
+		
+		let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY))!
+		defer { secp256k1_context_destroy(context) }
+		
+		var signature = secp256k1_ecdsa_recoverable_signature()
+		let status = privateKey.withUnsafeBytes { (key: UnsafePointer<UInt8>) in
+			data.withUnsafeBytes { secp256k1_ecdsa_sign_recoverable(context, &signature, $0, key, nil, nil) }
+		}
+		
+		guard status == 1 else {
+			return (r: nil, s: nil, v: nil)
+		}
+		
+		var output = Data(count: 65)
+		var recid = 0 as Int32
+		_ = output.withUnsafeMutableBytes { (output: UnsafeMutablePointer<UInt8>) in
+			secp256k1_ecdsa_recoverable_signature_serialize_compact(context, output, &recid, &signature)
+		}
+		
+		return (
+			r: output[..<32],
+			s: output[32..<64],
+			v: Data(bytes: [UInt8(recid)])
+		)
+	}
+	
+	public static func proof(address: String, passphrase: String) -> Data? {
+		
+		let key = passphrase.sha256().dataWithHexString()
+		
+		guard let addr = RLP.encode(address)?.sha3(.keccak256) else {
+			return nil
+		}
+		
+		let sig = RawTransactionSigner.signCheck(addr, privateKey: key)
+		
+		guard nil != sig.r && nil != sig.s && nil != sig.v else {
+			return nil
+		}
+		
+		return sig.r! + sig.s! + sig.v!
+	}
+
 }

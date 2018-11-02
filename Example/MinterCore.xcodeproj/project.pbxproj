@@ -14,6 +14,10 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		A44E0E2E6FBE9017DCCB03EF /* Pods_MinterCore_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDCB773C91F4D68FC6055A3 /* Pods_MinterCore_Example.framework */; };
+		FA0E82682178822400883B67 /* CheckBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E82672178822400883B67 /* CheckBookViewController.swift */; };
+		FA0E826C2179EA5600883B67 /* CoinerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E826B2179EA5600883B67 /* CoinerViewController.swift */; };
+		FA13691621708F9A00CB74BE /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13691521708F9A00CB74BE /* WalletViewController.swift */; };
+		FA13691821709F3200CB74BE /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13691721709F3200CB74BE /* Session.swift */; };
 		FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */; };
 		FA47CCA921382FC1009C3F4B /* CoinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCA52138209D009C3F4B /* CoinTests.swift */; };
 		FA47D27721397FD7001A3E2F /* RawTransactionSignerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */; };
@@ -22,6 +26,8 @@
 		FA8F077C205BF273006BE885 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F077B205BF273006BE885 /* Data+Extensions.swift */; };
 		FA8F0781206BB44C006BE885 /* RLP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F0779205BF0B7006BE885 /* RLP.swift */; };
 		FA9BE30F21402EDD002160F3 /* PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */; };
+		FACB437D2179FF04004D0C53 /* MasternodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */; };
+		FACB437F217F2486004D0C53 /* DelegateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB437E217F2486004D0C53 /* DelegateViewController.swift */; };
 		FAE7AD94205811DC002F5D47 /* JSONRPCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE7AD93205811DC002F5D47 /* JSONRPCRequest.swift */; };
 		FAFCC7942139437E00955258 /* TransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */; };
 /* End PBXBuildFile section */
@@ -57,6 +63,10 @@
 		D55742130B59EFAA8B1922A5 /* Pods-MinterCore_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinterCore_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MinterCore_Example/Pods-MinterCore_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F3135CCB8FE48DFDCBBAA5BF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		FA0B6B9D2057C3AC00410652 /* Web3Signer+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Web3Signer+Helper.swift"; sourceTree = "<group>"; };
+		FA0E82672178822400883B67 /* CheckBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBookViewController.swift; sourceTree = "<group>"; };
+		FA0E826B2179EA5600883B67 /* CoinerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinerViewController.swift; sourceTree = "<group>"; };
+		FA13691521708F9A00CB74BE /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		FA13691721709F3200CB74BE /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataTests.swift; sourceTree = "<group>"; };
 		FA3ABB1820596B0E0040E7B8 /* LibSecp256K1Extension2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibSecp256K1Extension2.swift; sourceTree = "<group>"; };
 		FA47CCA52138209D009C3F4B /* CoinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTests.swift; sourceTree = "<group>"; };
@@ -69,6 +79,8 @@
 		FA8F077D206B8546006BE885 /* RLPSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLPSwift.swift; sourceTree = "<group>"; };
 		FA8F077F206B856E006BE885 /* Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hex.swift; sourceTree = "<group>"; };
 		FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyTests.swift; sourceTree = "<group>"; };
+		FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasternodeViewController.swift; sourceTree = "<group>"; };
+		FACB437E217F2486004D0C53 /* DelegateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateViewController.swift; sourceTree = "<group>"; };
 		FAE7AD93205811DC002F5D47 /* JSONRPCRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONRPCRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,7 +129,13 @@
 			isa = PBXGroup;
 			children = (
 				FA669B50206D263700AD110A /* String+Helper.swift */,
+				FA13691721709F3200CB74BE /* Session.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				FA0E82672178822400883B67 /* CheckBookViewController.swift */,
+				FA13691521708F9A00CB74BE /* WalletViewController.swift */,
+				FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */,
+				FA0E826B2179EA5600883B67 /* CoinerViewController.swift */,
+				FACB437E217F2486004D0C53 /* DelegateViewController.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -354,6 +372,7 @@
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/MinterCore/MinterCore.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 				"${BUILT_PRODUCTS_DIR}/secp256k1.swift/secp256k1.framework",
 			);
@@ -364,6 +383,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MinterCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1.framework",
 			);
@@ -433,7 +453,13 @@
 			files = (
 				FA8F0781206BB44C006BE885 /* RLP.swift in Sources */,
 				FA8F077C205BF273006BE885 /* Data+Extensions.swift in Sources */,
+				FA0E826C2179EA5600883B67 /* CoinerViewController.swift in Sources */,
+				FA13691621708F9A00CB74BE /* WalletViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				FACB437F217F2486004D0C53 /* DelegateViewController.swift in Sources */,
+				FA0E82682178822400883B67 /* CheckBookViewController.swift in Sources */,
+				FA13691821709F3200CB74BE /* Session.swift in Sources */,
+				FACB437D2179FF04004D0C53 /* MasternodeViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				FA669B51206D263800AD110A /* String+Helper.swift in Sources */,
 				FAE7AD94205811DC002F5D47 /* JSONRPCRequest.swift in Sources */,

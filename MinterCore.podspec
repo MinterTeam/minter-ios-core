@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MinterCore'
-  s.version          = '0.1.8'
+  s.version          = '0.1.9'
   s.summary          = 'A short description of MinterCore.'
 
   s.homepage         = 'https://github.com/MinterTeam'
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'MinterCore/Classes/**/*'
-  s.dependency 'Alamofire', '~> 4.7'
+	s.dependency 'Alamofire', '4.7.3'
   s.dependency 'ObjectMapper', '~> 3.1'
   s.dependency 'BigInt', '~> 3.0'
   s.dependency 'CryptoSwift', '~> 0.9'

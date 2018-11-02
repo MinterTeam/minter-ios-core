@@ -8,6 +8,9 @@
 import Foundation
 import Alamofire
 
+
+let APIClientDefaultHeaders: [String : String] = ["X-Minter-Chain-Id" : "odin"]
+
 /// APIClient
 public class APIClient {
 	
@@ -20,7 +23,11 @@ public class APIClient {
 	
 	//MARK: -
 	
-	public static let shared = APIClient()
+	private convenience init() {
+		self.init(headers: APIClientDefaultHeaders)
+	}
+	
+	public static let shared = APIClient(headers: APIClientDefaultHeaders)
 	
 	public init(headers: [String : String]? = nil) {
 		if nil != headers {
@@ -42,8 +49,15 @@ public class APIClient {
 
 	fileprivate class func updatedManager(_ headers: [AnyHashable: Any?]? = nil) -> SessionManager {
 		let defaultManager = SessionManager(configuration: APIClient.configuration)
-		let defaultHeaders = defaultManager.session.configuration.httpAdditionalHeaders
+		var defaultHeaders = defaultManager.session.configuration.httpAdditionalHeaders
 		var newHeaders = defaultHeaders ?? [:]
+		
+		APIClientDefaultHeaders.forEach({ (k, v) in
+			
+			
+			
+			newHeaders[k] = v
+		})
 		
 		if headers != nil {
 			for (key, value) in headers! {
@@ -130,4 +144,3 @@ extension APIClient : HTTPClient {
 	}
 	
 }
-

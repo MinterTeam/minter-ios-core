@@ -10,17 +10,14 @@ import Alamofire
 import BigInt
 
 
-public enum TransactionHTTPClientResponseStatusCode : Int {
-	case unknown = -1
-	case noError = 0
-	case coinNotFound = 200
-	case insufficientFundsForTransaction = 300
-	case nonceTooLow = 400
-	case nonceTooHigh = 401
-	case incorrenctSignture = 500
-	case incorrenctTransactionData = 600
-	case unknownError = 900
+public protocol RLPEncodable : Encodable {
+	func encode() -> Data?
 }
+
+public protocol SignatureRLPEncodable : RLPEncodable {
+	func encode(forSignature: Bool) -> Data?
+}
+
 
 //TODO: Change depend on network!
 let RawTransactionDefaultTransactionCoin = "MNT"
@@ -99,7 +96,43 @@ public enum RawTransactionType {
 }
 
 /// A base class for all RawTransactions
-open class RawTransaction : Encodable {
+open class RawTransaction : Encodable, SignatureRLPEncodable {
+	
+	public struct SignatureData : Encodable, RLPEncodable {
+		
+		public var v: BigUInt
+		public var s: BigUInt
+		public var r: BigUInt
+		
+		public init(v: BigUInt = BigUInt(1), r: BigUInt = BigUInt(0), s: BigUInt = BigUInt(0)) {
+			self.v = v
+			self.r = r
+			self.s = s
+		}
+		
+		// MARK: - RLPEncodable
+		
+		public func encode() -> Data? {
+			let fields = [self.v, self.r, self.s] as [Any]
+			return RLP.encode(fields)
+		}
+		
+		// MARK: - Encodable
+		
+		enum CodingKeys: String, CodingKey {
+			case v
+			case r
+			case s
+		}
+		
+		public func encode(to encoder: Encoder) throws {
+			var container = encoder.container(keyedBy: CodingKeys.self)
+			try container.encode(v, forKey: .v)
+			try container.encode(r, forKey: .r)
+			try container.encode(s, forKey: .s)
+		}
+		
+	}
 	
 	/// Used for prevent transaction reply
 	public var nonce: BigUInt
@@ -119,10 +152,14 @@ open class RawTransaction : Encodable {
 	/// Using this field requires an extra commission (about 1 pip per byte)
 	public var serviceData: Data
 	
-	/// ECDSA fields. Digital signature of TX
-	public var v: BigUInt = BigUInt(1)
-	public var r: BigUInt = BigUInt(0)
-	public var s: BigUInt = BigUInt(0)
+	public var signatureType: BigUInt
+	
+	public var signatureData: SignatureData
+	
+//	/// ECDSA fields. Digital signature of TX
+//	public var v: BigUInt = BigUInt(1)
+//	public var r: BigUInt = BigUInt(0)
+//	public var s: BigUInt = BigUInt(0)
 	
 	// MARK: -
 	
@@ -143,7 +180,7 @@ open class RawTransaction : Encodable {
 	- data: RLP-encoded data
 	- Returns: Signed RawTx hex string, which can be send to Minter Node
 	*/
-	public init(nonce: BigUInt, gasPrice: BigUInt, gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, v: BigUInt = BigUInt(1), r: BigUInt = BigUInt(0), s: BigUInt = BigUInt(0)) {
+	public init(nonce: BigUInt, gasPrice: BigUInt, gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: SignatureData = SignatureData()) {
 		self.nonce = nonce
 		self.gasPrice = gasPrice
 		self.gasCoin = gasCoin
@@ -151,9 +188,8 @@ open class RawTransaction : Encodable {
 		self.data = data
 		self.payload = payload
 		self.serviceData = serviceData
-		self.v = v
-		self.r = r
-		self.s = s
+		self.signatureType = signatureType
+		self.signatureData = signatureData
 	}
 	
 	// MARK: - Encodable
@@ -166,9 +202,8 @@ open class RawTransaction : Encodable {
 		case data
 		case payload
 		case serviceData
-		case v
-		case r
-		case s
+		case signatureType
+		case signatureData
 	}
 	
 	public func encode(to encoder: Encoder) throws {
@@ -180,22 +215,30 @@ open class RawTransaction : Encodable {
 		try container.encode(data, forKey: .data)
 		try container.encode(payload, forKey: .payload)
 		try container.encode(serviceData, forKey: .serviceData)
-		try container.encode(v, forKey: .v)
-		try container.encode(r, forKey: .r)
-		try container.encode(s, forKey: .s)
+		try container.encode(signatureType, forKey: .signatureType)
+		try container.encode(signatureData, forKey: .signatureData)
 	}
+	
+	//MARK: - SignatureRLPEncodable
 	
 	public func encode(forSignature: Bool = false) -> Data? {
 		
 		if (forSignature) {
 			
-			let fields = [self.nonce, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData] as [Any]
+			let fields = [self.nonce, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData, self.signatureType] as [Any]
 			return RLP.encode(fields)
 		}
 		else {
 			
-			let fields = [self.nonce, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData, self.v, self.r, self.s] as [Any]
+			let fields = [self.nonce, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData, self.signatureType, self.signatureData.encode() ?? Data()] as [Any]
 			return RLP.encode(fields)
 		}
 	}
+	
+	//MARK: - RLPEncodable
+	
+	public func encode() -> Data? {
+		return self.encode(forSignature: false)
+	}
+	
 }
