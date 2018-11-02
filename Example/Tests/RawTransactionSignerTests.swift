@@ -28,7 +28,6 @@ class RawTransactionSignerSpec: QuickSpec {
 				let seed = String.seedString(mnemonic)!
 				let pk = PrivateKey(seed: Data(hex: seed))
 				
-				
 				let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
 				
 				let pub = RawTransactionSigner.publicKey(privateKey: key.raw, compressed: true)

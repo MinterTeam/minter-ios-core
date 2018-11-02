@@ -23,12 +23,9 @@
 		FA47D27721397FD7001A3E2F /* RawTransactionSignerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */; };
 		FA47D27A213980AF001A3E2F /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47D279213980AF001A3E2F /* StringTests.swift */; };
 		FA669B51206D263800AD110A /* String+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA669B50206D263700AD110A /* String+Helper.swift */; };
-		FA8F077C205BF273006BE885 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F077B205BF273006BE885 /* Data+Extensions.swift */; };
-		FA8F0781206BB44C006BE885 /* RLP.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F0779205BF0B7006BE885 /* RLP.swift */; };
 		FA9BE30F21402EDD002160F3 /* PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */; };
 		FACB437D2179FF04004D0C53 /* MasternodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */; };
 		FACB437F217F2486004D0C53 /* DelegateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB437E217F2486004D0C53 /* DelegateViewController.swift */; };
-		FAE7AD94205811DC002F5D47 /* JSONRPCRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE7AD93205811DC002F5D47 /* JSONRPCRequest.swift */; };
 		FAFCC7942139437E00955258 /* TransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,26 +59,19 @@
 		D443E00DF73BE45E86780192 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D55742130B59EFAA8B1922A5 /* Pods-MinterCore_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MinterCore_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MinterCore_Example/Pods-MinterCore_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F3135CCB8FE48DFDCBBAA5BF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		FA0B6B9D2057C3AC00410652 /* Web3Signer+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Web3Signer+Helper.swift"; sourceTree = "<group>"; };
 		FA0E82672178822400883B67 /* CheckBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBookViewController.swift; sourceTree = "<group>"; };
 		FA0E826B2179EA5600883B67 /* CoinerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinerViewController.swift; sourceTree = "<group>"; };
 		FA13691521708F9A00CB74BE /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		FA13691721709F3200CB74BE /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataTests.swift; sourceTree = "<group>"; };
-		FA3ABB1820596B0E0040E7B8 /* LibSecp256K1Extension2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibSecp256K1Extension2.swift; sourceTree = "<group>"; };
 		FA47CCA52138209D009C3F4B /* CoinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTests.swift; sourceTree = "<group>"; };
 		FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTests.swift; sourceTree = "<group>"; };
 		FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawTransactionSignerTests.swift; sourceTree = "<group>"; };
 		FA47D279213980AF001A3E2F /* StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		FA669B50206D263700AD110A /* String+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Helper.swift"; path = "../../MinterCore/Classes/Helper/String+Helper.swift"; sourceTree = "<group>"; };
-		FA8F0779205BF0B7006BE885 /* RLP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLP.swift; sourceTree = "<group>"; };
-		FA8F077B205BF273006BE885 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
-		FA8F077D206B8546006BE885 /* RLPSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLPSwift.swift; sourceTree = "<group>"; };
-		FA8F077F206B856E006BE885 /* Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hex.swift; sourceTree = "<group>"; };
 		FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyTests.swift; sourceTree = "<group>"; };
 		FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasternodeViewController.swift; sourceTree = "<group>"; };
 		FACB437E217F2486004D0C53 /* DelegateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateViewController.swift; sourceTree = "<group>"; };
-		FAE7AD93205811DC002F5D47 /* JSONRPCRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONRPCRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,13 +131,6 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
-				FA0B6B9D2057C3AC00410652 /* Web3Signer+Helper.swift */,
-				FAE7AD93205811DC002F5D47 /* JSONRPCRequest.swift */,
-				FA3ABB1820596B0E0040E7B8 /* LibSecp256K1Extension2.swift */,
-				FA8F0779205BF0B7006BE885 /* RLP.swift */,
-				FA8F077B205BF273006BE885 /* Data+Extensions.swift */,
-				FA8F077D206B8546006BE885 /* RLPSwift.swift */,
-				FA8F077F206B856E006BE885 /* Hex.swift */,
 			);
 			name = "Example for MinterCore";
 			path = MinterCore;
@@ -451,8 +434,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8F0781206BB44C006BE885 /* RLP.swift in Sources */,
-				FA8F077C205BF273006BE885 /* Data+Extensions.swift in Sources */,
 				FA0E826C2179EA5600883B67 /* CoinerViewController.swift in Sources */,
 				FA13691621708F9A00CB74BE /* WalletViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
@@ -462,7 +443,6 @@
 				FACB437D2179FF04004D0C53 /* MasternodeViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				FA669B51206D263800AD110A /* String+Helper.swift in Sources */,
-				FAE7AD94205811DC002F5D47 /* JSONRPCRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
