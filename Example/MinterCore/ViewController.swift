@@ -24,20 +24,23 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		wallet.balance(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (resp, error) in
+		let accountManager = AccountManager.default
+		accountManager.balance(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (resp, error) in
 			print("Resp: \(String(describing: resp))")
 			print("Error: \(String(describing: error))")
 		}
 
+		let coinManager = CoinManager.default
 		coinManager.info(symbol: "SHSCOIN") { (coin, error) in
-			print("Coin: \(String(describing: coin))")
-			print("Error: \(String(describing: error))")
+			print("Coin: \(coin)")
+			print("Error: \(error)")
 		}
 
+		let transactionManager = TransactionManager.default
 		transactionManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
-			print("Value: \(String(describing: value))")
-			print("Commission: \(String(describing: commission))")
-			print("Error: \(String(describing: error))")
+			print("Value: \(value)")
+			print("Commission: \(commission)")
+			print("Error: \(error)")
 		}
 		
 		transactionManager.estimateCoinSell(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
@@ -79,14 +82,15 @@ class ViewController: UIViewController {
 		}
 		
 		// MARK: -
-		
-		transactionManager.transactionCount(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (count, error) in
-			print("Count: \(String(describing: count))")
-			print("Error: \(String(describing: error))")
+		transactionManager.transactionCount(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (nonce, error) in
+			print("Count: \(nonce)")
+			print("Error: \(error)")
 		}
 		
-		statusManager.status { (statusDict, error) in
-			print(statusDict)
+		let statusManager = StatusManager.default
+		
+		statusManager.status { (status, error) in
+			print(status)
 			print(error)
 		}
 		
@@ -95,14 +99,17 @@ class ViewController: UIViewController {
 			print(error)
 		}
 		
+		let candidateManager = CandidateManager.default
 		candidateManager.candidate(publicKey: "Mp740b1b0f0f4b29cb2fc73e53c8e4b34966a89a97d4e1b86903db6ca2cc1c1596") { (candidate, error) in
 			print(candidate)
 			print(error)
 		}
+
 		
+		let validatorManager = ValidatorManager.default
 		validatorManager.validators { (validators, error) in
 			print(validators)
-			print(error)			
+			print(error)
 		}
 		
 	}

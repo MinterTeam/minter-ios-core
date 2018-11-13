@@ -54,7 +54,8 @@ coinManager.info(symbol: "SHSCOIN") { (coin, error) in
 
 **Get estimate coin buy**
 ```swift
-coinManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
+let transactionManager = TransactionManager.default
+transactionManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
   print("Value: \(value)")
   print("Commission: \(commission)")
   print("Error: \(error)")
@@ -63,7 +64,7 @@ coinManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: Decimal(string:
 
 **Get estimate coin sell**
 ```swift
-coinManager.estimateCoinSell(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
+transactionManager.estimateCoinSell(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
   print("Value: \(value)")
   print("Commission: \(commission)")
   print("Error: \(error)")
@@ -72,7 +73,7 @@ coinManager.estimateCoinSell(from: "MNT", to: "BELTCOIN", amount: Decimal(string
 
 **Get transaction**
 ```swift
-let transactionManager = CoreTransactionManager.default
+let transactionManager = TransactionManager.default
 transactionManager.transaction(hash: "Mt6e59d0ad0286c1ec3539de71eb686cad42e7c741") { (transaction, error) in
   print("Transaction: \(transaction)")
 }
