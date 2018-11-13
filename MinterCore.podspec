@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MinterCore'
-  s.version          = '0.1.10'
+  s.version          = '0.1.11'
   s.summary          = 'A short description of MinterCore.'
 
   s.homepage         = 'https://github.com/MinterTeam'
@@ -16,6 +16,8 @@ Pod::Spec.new do |s|
   s.author           = { 'sidorov.panda' => 'ody344@gmail.com' }
   s.source           = { :git => 'https://github.com/MinterTeam/MinterCore-iOS.git', :tag => s.version.to_s }
   s.ios.deployment_target = '9.0'
+	s.tvos.deployment_target = '9.0'
+	s.watchos.deployment_target = '2.0'
 
   s.source_files = 'MinterCore/Classes/**/*'
 	s.dependency 'Alamofire', '4.7.3'

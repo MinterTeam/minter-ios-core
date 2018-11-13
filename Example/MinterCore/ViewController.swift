@@ -51,7 +51,8 @@ class ViewController: UIViewController {
 		}
 		
 		/// Making send transaction
-		let sendData = SendCoinRawTransactionData(to: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d", value: BigUInt(decimal: 1 * TransactionCoinFactorDecimal)!, coin: "MNT").encode()
+		let sendData = SendCoinRawTransactionData(to: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d", value:
+		BigUInt(decimal: 1 * TransactionCoinFactorDecimal)!, coin: "MNT").encode()
 		
 		let rawTransaction1 = SendCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", data: sendData!)
 		

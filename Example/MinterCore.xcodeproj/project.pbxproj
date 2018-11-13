@@ -22,7 +22,7 @@
 		FA47CCA921382FC1009C3F4B /* CoinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCA52138209D009C3F4B /* CoinTests.swift */; };
 		FA47D27721397FD7001A3E2F /* RawTransactionSignerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */; };
 		FA47D27A213980AF001A3E2F /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47D279213980AF001A3E2F /* StringTests.swift */; };
-		FA669B51206D263800AD110A /* String+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA669B50206D263700AD110A /* String+Helper.swift */; };
+		FA8027F6218C636000474A69 /* RLPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8027F5218C636000474A69 /* RLPTests.swift */; };
 		FA9BE30F21402EDD002160F3 /* PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */; };
 		FACB437D2179FF04004D0C53 /* MasternodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */; };
 		FACB437F217F2486004D0C53 /* DelegateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB437E217F2486004D0C53 /* DelegateViewController.swift */; };
@@ -68,7 +68,7 @@
 		FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTests.swift; sourceTree = "<group>"; };
 		FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawTransactionSignerTests.swift; sourceTree = "<group>"; };
 		FA47D279213980AF001A3E2F /* StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
-		FA669B50206D263700AD110A /* String+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Helper.swift"; path = "../../MinterCore/Classes/Helper/String+Helper.swift"; sourceTree = "<group>"; };
+		FA8027F5218C636000474A69 /* RLPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLPTests.swift; sourceTree = "<group>"; };
 		FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyTests.swift; sourceTree = "<group>"; };
 		FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasternodeViewController.swift; sourceTree = "<group>"; };
 		FACB437E217F2486004D0C53 /* DelegateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateViewController.swift; sourceTree = "<group>"; };
@@ -118,7 +118,6 @@
 		607FACD21AFB9204008FA782 /* Example for MinterCore */ = {
 			isa = PBXGroup;
 			children = (
-				FA669B50206D263700AD110A /* String+Helper.swift */,
 				FA13691721709F3200CB74BE /* Session.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				FA0E82672178822400883B67 /* CheckBookViewController.swift */,
@@ -217,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				FA47D279213980AF001A3E2F /* StringTests.swift */,
+				FA8027F5218C636000474A69 /* RLPTests.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -442,7 +442,6 @@
 				FA13691821709F3200CB74BE /* Session.swift in Sources */,
 				FACB437D2179FF04004D0C53 /* MasternodeViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				FA669B51206D263800AD110A /* String+Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +455,7 @@
 				FA47CCA921382FC1009C3F4B /* CoinTests.swift in Sources */,
 				FA47D27A213980AF001A3E2F /* StringTests.swift in Sources */,
 				FA9BE30F21402EDD002160F3 /* PrivateKeyTests.swift in Sources */,
+				FA8027F6218C636000474A69 /* RLPTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -71,6 +71,30 @@ class StringHelperSpec: QuickSpec {
 				expect(val).to(equal(base))
 			}
 			
+			it("Should strip Mc prefix") {
+				let base = "fsdfsdfdsfsdf"
+				let val = ("" + base).stripMinterCheckHexPrefix()
+				expect(val).to(equal(base))
+			}
+			
+			it("Should strip Mc prefix") {
+				let base = "fsdfsdfdsfsdf"
+				let val = ("Mc" + base).stripMinterCheckHexPrefix()
+				expect(val).to(equal(base))
+			}
+			
+			it("Should strip Mc prefix") {
+				let base = "fsdfsdfdsfsdf"
+				let val = ("MC" + base).stripMinterCheckHexPrefix()
+				expect(val).to(equal(base))
+			}
+			
+			it("Should strip Mc prefix") {
+				let base = "fsdfsdfdsfsdf"
+				let val = ("mC" + base).stripMinterCheckHexPrefix()
+				expect(val).to(equal(base))
+			}
+			
 		}
 		
 	}
