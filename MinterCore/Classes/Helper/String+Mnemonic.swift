@@ -10,11 +10,13 @@ import CryptoSwift
 
 public extension String {
 	
-	public static func seedString(_ mnemonic: String, passphrase: String = "", language: CKMnemonicLanguageType = .english) -> String? {
-		return try? CKMnemonic.deterministicSeedString(from: mnemonic, passphrase: passphrase, language: language)
+	public static func seedString(_ mnemonic: String, passphrase: String = "") -> String? {
+//		return Mnemonic.createSeed(mnemonic: mnemonic).toHexString()
+		return try? CKMnemonic.deterministicSeedString(from: mnemonic, passphrase: passphrase, language: .english)
 	}
 	
-	public static func generateMnemonicString(_ language: CKMnemonicLanguageType = .english) -> String? {
+	public static func generateMnemonicString() -> String? {
+//		return Mnemonic.create(strength: .normal, language: .english)
 		let language: CKMnemonicLanguageType = .english
 		return try? CKMnemonic.generateMnemonic(strength: 128, language: language)
 	}

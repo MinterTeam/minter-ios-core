@@ -18,9 +18,9 @@ public class SellCoinRawTransaction : RawTransaction {
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, coinFrom: String, coinTo: String, value: BigUInt) {
+	public convenience init(nonce: BigUInt, gasCoin: Data, coinFrom: String, coinTo: String, value: BigUInt, minimumValueToBuy: BigUInt) {
 		
-		let encodedData = SellCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value).encode() ?? Data()
+		let encodedData = SellCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValueToBuy).encode() ?? Data()
 		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
 	}
 
@@ -35,13 +35,16 @@ public struct SellCoinRawTransactionData: Encodable {
 	public var coinTo: String
 	/// Value in pip
 	public var value: BigUInt
+	/// Minimum value to buy
+	public var minimumValueToBuy: BigUInt
 	
 	// MARK: -
 	
-	public init(coinFrom: String, coinTo: String, value: BigUInt) {
+	public init(coinFrom: String, coinTo: String, value: BigUInt, minimumValueToBuy: BigUInt) {
 		self.coinFrom = coinFrom
 		self.coinTo = coinTo
 		self.value = value
+		self.minimumValueToBuy = minimumValueToBuy
 	}
 	
 	// MARK: - Encoding
@@ -50,6 +53,7 @@ public struct SellCoinRawTransactionData: Encodable {
 		case coinFrom
 		case coinTo
 		case value
+		case minimumValueToBuy
 	}
 	
 	public func encode(to encoder: Encoder) throws {
@@ -57,6 +61,7 @@ public struct SellCoinRawTransactionData: Encodable {
 		try container.encode(coinFrom, forKey: .coinFrom)
 		try container.encode(coinTo, forKey: .coinTo)
 		try container.encode(value, forKey: .value)
+		try container.encode(minimumValueToBuy, forKey: .minimumValueToBuy)
 	}
 	
 	public func encode() -> Data? {
@@ -64,7 +69,7 @@ public struct SellCoinRawTransactionData: Encodable {
 		let fromCoinData = coinFrom.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		let toCoinData = coinTo.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		
-		let fields = [fromCoinData, value, toCoinData] as [Any]
+		let fields = [fromCoinData, value, toCoinData, minimumValueToBuy] as [Any]
 		return RLP.encode(fields)
 	}
 }
@@ -80,9 +85,9 @@ public class SellAllCoinsRawTransaction : RawTransaction {
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, coinFrom: String, coinTo: String) {
+	public convenience init(nonce: BigUInt, gasCoin: Data, coinFrom: String, coinTo: String, minimumValueToBuy: BigUInt) {
 		
-		let encodedData = SellAllCoinsRawTransactionData(coinFrom: coinFrom, coinTo: coinTo).encode() ?? Data()
+		let encodedData = SellAllCoinsRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValueToBuy).encode() ?? Data()
 		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
 	}
 
@@ -97,12 +102,15 @@ public struct SellAllCoinsRawTransactionData: Encodable {
 	public var coinFrom: String
 	/// Coin you'd like to get
 	public var coinTo: String
+	/// Minimum value to sell
+	var minimumValueToBuy: BigUInt
 	
 	// MARK: -
 	
-	public init(coinFrom: String, coinTo: String) {
+	public init(coinFrom: String, coinTo: String, minimumValueToBuy: BigUInt) {
 		self.coinFrom = coinFrom
 		self.coinTo = coinTo
+		self.minimumValueToBuy = minimumValueToBuy
 	}
 	
 	// MARK: - Encoding
@@ -110,12 +118,14 @@ public struct SellAllCoinsRawTransactionData: Encodable {
 	enum CodingKeys: String, CodingKey {
 		case coinFrom
 		case coinTo
+		case minimumValueToBuy
 	}
 	
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(coinFrom, forKey: .coinFrom)
 		try container.encode(coinTo, forKey: .coinTo)
+		try container.encode(minimumValueToBuy, forKey: .minimumValueToBuy)
 	}
 	
 	public func encode() -> Data? {
@@ -123,7 +133,7 @@ public struct SellAllCoinsRawTransactionData: Encodable {
 		let fromCoinData = coinFrom.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		let toCoinData = coinTo.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		
-		let fields = [fromCoinData, toCoinData] as [Any]
+		let fields = [fromCoinData, toCoinData, minimumValueToBuy] as [Any]
 		return RLP.encode(fields)
 	}
 }

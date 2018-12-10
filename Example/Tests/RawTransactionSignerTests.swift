@@ -21,6 +21,14 @@ class RawTransactionSignerSpec: QuickSpec {
 	override func spec() {
 		describe("RawTransactionSigner") {
 			
+			it("RawTransactionSigner can get seed") {
+				let mnemonic = "speed clutch food anxiety also rain eager symptom autumn butter fortune strike"
+				let correctSeed = "9677142b43cdc9514634584bf8643e8c6ad80ec5e38fe00cf54ed12b29a2eec9a12d836dc096d1736d9c08111f666454c1ebc6604e62a43333599e6820f7a2e8"
+				
+				let seed = String.seedString(mnemonic)!
+				expect(seed).to(equal(correctSeed))
+			}
+			
 			it("RawTransactionSigner can retreive Public Key") {
 				
 				let mnemonic = "adjust correct photo fancy knee lion blur away coconut inform sun cancel"
@@ -31,8 +39,7 @@ class RawTransactionSignerSpec: QuickSpec {
 				let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
 				
 				let pub = RawTransactionSigner.publicKey(privateKey: key.raw, compressed: true)
-				
-				expect(pub?.toHexString()).to(equal("039f1a49aa7bb95c587486d671838466137243f27b808a9eac4726ef3a33d6771b"))
+					expect(pub?.toHexString()).to(equal("039f1a49aa7bb95c587486d671838466137243f27b808a9eac4726ef3a33d6771b"))
 				
 			}
 			
