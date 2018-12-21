@@ -36,7 +36,7 @@ public class BuyCoinRawTransaction : RawTransaction {
 }
 
 /// BuyCoinRawTransactionData
-public struct BuyCoinRawTransactionData : Encodable {
+public struct BuyCoinRawTransactionData : Encodable, Decodable {
 	
 	/// Coin you sell (e.g. "MNT")
 	public var coinFrom: String
@@ -57,6 +57,15 @@ public struct BuyCoinRawTransactionData : Encodable {
 		self.coinTo = coinTo
 		self.value = value
 		self.maximumValueToSell = maximumValueToSell
+	}
+	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.coinFrom = try values.decode(String.self, forKey: .coinFrom)
+		self.coinTo = try values.decode(String.self, forKey: .coinTo)
+		self.value = try values.decode(BigUInt.self, forKey: .value)
+		self.maximumValueToSell = try values.decode(BigUInt.self, forKey: .maximumValueToSell)
 	}
 	
 	//MARK: - Encoding

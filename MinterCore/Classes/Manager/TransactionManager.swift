@@ -28,9 +28,9 @@ public class TransactionManager : BaseManager {
 	*/
 	public func transaction(hash: String, completion: ((Transaction?, Error?) -> ())?) {
 		
-		let url = MinterAPIURL.transaction(hash: hash).url()
+		let url = MinterAPIURL.transaction.url()
 		
-		self.httpClient.getRequest(url, parameters: nil) { (response, error) in
+		self.httpClient.getRequest(url, parameters: ["hash" : hash]) { (response, error) in
 			
 			var transaction: Transaction?
 			var err: Error?
@@ -79,37 +79,6 @@ public class TransactionManager : BaseManager {
 			hash = data?["hash"] as? String
 			//TODO: migrate to TransactionManagerError
 			resultText = (err as? APIClient.APIClientResponseError)?.userData?["message"] as? String
-		}
-	}
-	
-	/**
-	Method to retreive transactions count from Minter Node
-	- Parameters:
-	- address: minter address (e.g. Mx228e5a68b847d169da439ec15f727f08233a7ca6)
-	- completion: Method which will be called after request finished, contains Tx count (nonce) and error if occured
-	- Precondition: `address` must contain "Mx" prefix
-	*/
-	public func transactionCount(address: String, completion: ((Int?, Error?) -> ())?) {
-		
-		let url = MinterAPIURL.transactionCount(address: address).url()
-		
-		self.httpClient.getRequest(url, parameters: nil) { (response, error) in
-			
-			var count: Int?
-			var err: Error?
-			
-			defer {
-				completion?(count, err)
-			}
-			
-			guard error == nil else {
-				err = error
-				return
-			}
-			
-			if let res = response.data as? [String : Any] {
-				count = res["count"] as? Int
-			}
 		}
 	}
 	
@@ -224,11 +193,13 @@ public class TransactionManager : BaseManager {
 	/// - Parameters:
 	///   - rawTx: Signed raw Tx
 	///   - completion: Method which will be called after request completed
-	public func estimateCommission(for rawTx: String, completion: ( (Decimal?, Error?) -> ())? ) {
+	public func estimateCommission(for rawTx: String, height: String = "0", completion: ( (Decimal?, Error?) -> ())? ) {
 		
 		let url = MinterAPIURL.estimateTxCommission.url()
 		
-		self.httpClient.getRequest(url, parameters: ["tx" : rawTx]) { (response, error) in
+		let tx = rawTx.stripMinterHexPrefix()
+		
+		self.httpClient.getRequest(url, parameters: ["tx" : "Mt" + tx, "height" : height]) { (response, error) in
 			
 			var comission: Decimal?
 			var err: Error?

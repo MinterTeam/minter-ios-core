@@ -11,6 +11,12 @@ import BigInt
 /// DelegateRawTransaction class
 public class DelegateRawTransaction : RawTransaction {
 	
+	/// Convenience initializer
+	///
+	/// - Parameters:
+	///   - nonce: Nonce
+	///   - gasCoin: Coin to spend fee from
+	///   - data: Encoded DelegateRawTransactionData instance
 	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
 		
 		let gasCoinData = gasCoin.data(using: .utf8)!.setLengthRight(10) ?? Data()
@@ -36,7 +42,7 @@ public class DelegateRawTransaction : RawTransaction {
 }
 
 /// DelegateRawTransactionData
-public struct DelegateRawTransactionData : Encodable {
+public struct DelegateRawTransactionData : Encodable, Decodable {
 	
 	/// Validator's public key
 	public var publicKey: String
@@ -55,6 +61,14 @@ public struct DelegateRawTransactionData : Encodable {
 		self.value = value
 	}
 	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.publicKey = try values.decode(String.self, forKey: .publicKey)
+		self.coin = try values.decode(String.self, forKey: .coin)
+		self.value = try values.decode(BigUInt.self, forKey: .value)
+	}
+	
 	//MARK: - Encoding
 	
 	enum CodingKeys: String, CodingKey {
@@ -70,9 +84,11 @@ public struct DelegateRawTransactionData : Encodable {
 		try container.encode(value, forKey: .value)
 	}
 	
+	//MARK: - RLPEncoding
+	
 	public func encode() -> Data? {
 		
-		let coinData = coin.replacingOccurrences(of: "Mp", with: "").data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		
 		let fields = [Data(hex: publicKey), coinData, value] as [Any]
 		return RLP.encode(fields)

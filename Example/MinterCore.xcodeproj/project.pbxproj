@@ -16,9 +16,29 @@
 		A44E0E2E6FBE9017DCCB03EF /* Pods_MinterCore_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDCB773C91F4D68FC6055A3 /* Pods_MinterCore_Example.framework */; };
 		FA0E82682178822400883B67 /* CheckBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E82672178822400883B67 /* CheckBookViewController.swift */; };
 		FA0E826C2179EA5600883B67 /* CoinerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E826B2179EA5600883B67 /* CoinerViewController.swift */; };
+		FA101E3321BFCF1900DB1D3A /* SellCoinRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA101E3221BFCF1900DB1D3A /* SellCoinRawTransactionTests.swift */; };
+		FA101E3521BFF3F500DB1D3A /* BuyCoinRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA101E3421BFF3F500DB1D3A /* BuyCoinRawTransactionTests.swift */; };
+		FA101E3821C1118600DB1D3A /* RawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA101E3721C1118600DB1D3A /* RawTransactionTests.swift */; };
+		FA101E3A21C29DAC00DB1D3A /* AddressTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA101E3921C29DAC00DB1D3A /* AddressTransformerTests.swift */; };
+		FA101E3C21C2A46500DB1D3A /* Base58Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA101E3B21C2A46500DB1D3A /* Base58Tests.swift */; };
 		FA13691621708F9A00CB74BE /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13691521708F9A00CB74BE /* WalletViewController.swift */; };
 		FA13691821709F3200CB74BE /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13691721709F3200CB74BE /* Session.swift */; };
 		FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */; };
+		FA4638FA21C7A1CC001846D9 /* SendCoinRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4638F921C7A1CC001846D9 /* SendCoinRawTransactionTests.swift */; };
+		FA4638FC21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4638FB21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift */; };
+		FA4638FE21C7DAFC001846D9 /* RedeemCheckRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4638FD21C7DAFC001846D9 /* RedeemCheckRawTransactionTests.swift */; };
+		FA46391221CA843E001846D9 /* AccountManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46391121CA843E001846D9 /* AccountManagerTests.swift */; };
+		FA46391421CA8CF4001846D9 /* CandidateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46391321CA8CF4001846D9 /* CandidateManagerTests.swift */; };
+		FA46391621CAA048001846D9 /* CoinManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46391521CAA048001846D9 /* CoinManagerTests.swift */; };
+		FA46391821CB8BAB001846D9 /* StatusManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46391721CB8BAB001846D9 /* StatusManagerTests.swift */; };
+		FA46391A21CB8DB2001846D9 /* ManagerDefaultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46391921CB8DB2001846D9 /* ManagerDefaultTests.swift */; };
+		FA46391C21CB8EA6001846D9 /* TransactionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46391B21CB8EA6001846D9 /* TransactionManagerTests.swift */; };
+		FA46391E21CBA04A001846D9 /* ValidatorManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46391D21CBA04A001846D9 /* ValidatorManagerTests.swift */; };
+		FA46392021CBA226001846D9 /* CreateCoinRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46391F21CBA226001846D9 /* CreateCoinRawTransactionTests.swift */; };
+		FA46392221CBC47F001846D9 /* DelegateRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46392121CBC47F001846D9 /* DelegateRawTransactionTests.swift */; };
+		FA46392421CBCE87001846D9 /* UnbondRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46392321CBCE87001846D9 /* UnbondRawTransactionTests.swift */; };
+		FA46392621CBDB48001846D9 /* DeclareCandidacyRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46392521CBDB48001846D9 /* DeclareCandidacyRawTransactionTests.swift */; };
+		FA46392821CBF804001846D9 /* SetCandidateRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46392721CBF804001846D9 /* SetCandidateRawTransactionTests.swift */; };
 		FA47CCA921382FC1009C3F4B /* CoinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCA52138209D009C3F4B /* CoinTests.swift */; };
 		FA47D27721397FD7001A3E2F /* RawTransactionSignerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */; };
 		FA47D27A213980AF001A3E2F /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47D279213980AF001A3E2F /* StringTests.swift */; };
@@ -61,9 +81,29 @@
 		F3135CCB8FE48DFDCBBAA5BF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		FA0E82672178822400883B67 /* CheckBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBookViewController.swift; sourceTree = "<group>"; };
 		FA0E826B2179EA5600883B67 /* CoinerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinerViewController.swift; sourceTree = "<group>"; };
+		FA101E3221BFCF1900DB1D3A /* SellCoinRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellCoinRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA101E3421BFF3F500DB1D3A /* BuyCoinRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyCoinRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA101E3721C1118600DB1D3A /* RawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawTransactionTests.swift; sourceTree = "<group>"; };
+		FA101E3921C29DAC00DB1D3A /* AddressTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTransformerTests.swift; sourceTree = "<group>"; };
+		FA101E3B21C2A46500DB1D3A /* Base58Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58Tests.swift; sourceTree = "<group>"; };
 		FA13691521708F9A00CB74BE /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		FA13691721709F3200CB74BE /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataTests.swift; sourceTree = "<group>"; };
+		FA4638F921C7A1CC001846D9 /* SendCoinRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA4638FB21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCheckRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA4638FD21C7DAFC001846D9 /* RedeemCheckRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemCheckRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA46391121CA843E001846D9 /* AccountManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerTests.swift; sourceTree = "<group>"; };
+		FA46391321CA8CF4001846D9 /* CandidateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateManagerTests.swift; sourceTree = "<group>"; };
+		FA46391521CAA048001846D9 /* CoinManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinManagerTests.swift; sourceTree = "<group>"; };
+		FA46391721CB8BAB001846D9 /* StatusManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusManagerTests.swift; sourceTree = "<group>"; };
+		FA46391921CB8DB2001846D9 /* ManagerDefaultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerDefaultTests.swift; sourceTree = "<group>"; };
+		FA46391B21CB8EA6001846D9 /* TransactionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManagerTests.swift; sourceTree = "<group>"; };
+		FA46391D21CBA04A001846D9 /* ValidatorManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorManagerTests.swift; sourceTree = "<group>"; };
+		FA46391F21CBA226001846D9 /* CreateCoinRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCoinRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA46392121CBC47F001846D9 /* DelegateRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA46392321CBCE87001846D9 /* UnbondRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnbondRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA46392521CBDB48001846D9 /* DeclareCandidacyRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclareCandidacyRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA46392721CBF804001846D9 /* SetCandidateRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCandidateRawTransactionTests.swift; sourceTree = "<group>"; };
 		FA47CCA52138209D009C3F4B /* CoinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTests.swift; sourceTree = "<group>"; };
 		FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTests.swift; sourceTree = "<group>"; };
 		FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawTransactionSignerTests.swift; sourceTree = "<group>"; };
@@ -200,6 +240,17 @@
 				FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */,
 				FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */,
 				FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */,
+				FA101E3221BFCF1900DB1D3A /* SellCoinRawTransactionTests.swift */,
+				FA101E3421BFF3F500DB1D3A /* BuyCoinRawTransactionTests.swift */,
+				FA101E3721C1118600DB1D3A /* RawTransactionTests.swift */,
+				FA4638F921C7A1CC001846D9 /* SendCoinRawTransactionTests.swift */,
+				FA4638FB21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift */,
+				FA4638FD21C7DAFC001846D9 /* RedeemCheckRawTransactionTests.swift */,
+				FA46391F21CBA226001846D9 /* CreateCoinRawTransactionTests.swift */,
+				FA46392121CBC47F001846D9 /* DelegateRawTransactionTests.swift */,
+				FA46392321CBCE87001846D9 /* UnbondRawTransactionTests.swift */,
+				FA46392521CBDB48001846D9 /* DeclareCandidacyRawTransactionTests.swift */,
+				FA46392721CBF804001846D9 /* SetCandidateRawTransactionTests.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -208,6 +259,12 @@
 			isa = PBXGroup;
 			children = (
 				FA47D27621397FD7001A3E2F /* RawTransactionSignerTests.swift */,
+				FA46391121CA843E001846D9 /* AccountManagerTests.swift */,
+				FA46391321CA8CF4001846D9 /* CandidateManagerTests.swift */,
+				FA46391521CAA048001846D9 /* CoinManagerTests.swift */,
+				FA46391721CB8BAB001846D9 /* StatusManagerTests.swift */,
+				FA46391B21CB8EA6001846D9 /* TransactionManagerTests.swift */,
+				FA46391D21CBA04A001846D9 /* ValidatorManagerTests.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -217,6 +274,9 @@
 			children = (
 				FA47D279213980AF001A3E2F /* StringTests.swift */,
 				FA8027F5218C636000474A69 /* RLPTests.swift */,
+				FA101E3921C29DAC00DB1D3A /* AddressTransformerTests.swift */,
+				FA101E3B21C2A46500DB1D3A /* Base58Tests.swift */,
+				FA46391921CB8DB2001846D9 /* ManagerDefaultTests.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -449,13 +509,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA46392421CBCE87001846D9 /* UnbondRawTransactionTests.swift in Sources */,
+				FA4638FE21C7DAFC001846D9 /* RedeemCheckRawTransactionTests.swift in Sources */,
+				FA101E3321BFCF1900DB1D3A /* SellCoinRawTransactionTests.swift in Sources */,
+				FA101E3521BFF3F500DB1D3A /* BuyCoinRawTransactionTests.swift in Sources */,
+				FA46392821CBF804001846D9 /* SetCandidateRawTransactionTests.swift in Sources */,
+				FA4638FC21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift in Sources */,
 				FAFCC7942139437E00955258 /* TransactionTests.swift in Sources */,
+				FA101E3A21C29DAC00DB1D3A /* AddressTransformerTests.swift in Sources */,
 				FA47D27721397FD7001A3E2F /* RawTransactionSignerTests.swift in Sources */,
 				FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */,
+				FA46391E21CBA04A001846D9 /* ValidatorManagerTests.swift in Sources */,
 				FA47CCA921382FC1009C3F4B /* CoinTests.swift in Sources */,
+				FA46392021CBA226001846D9 /* CreateCoinRawTransactionTests.swift in Sources */,
+				FA101E3C21C2A46500DB1D3A /* Base58Tests.swift in Sources */,
+				FA4638FA21C7A1CC001846D9 /* SendCoinRawTransactionTests.swift in Sources */,
 				FA47D27A213980AF001A3E2F /* StringTests.swift in Sources */,
+				FA46392221CBC47F001846D9 /* DelegateRawTransactionTests.swift in Sources */,
 				FA9BE30F21402EDD002160F3 /* PrivateKeyTests.swift in Sources */,
+				FA46392621CBDB48001846D9 /* DeclareCandidacyRawTransactionTests.swift in Sources */,
 				FA8027F6218C636000474A69 /* RLPTests.swift in Sources */,
+				FA46391621CAA048001846D9 /* CoinManagerTests.swift in Sources */,
+				FA101E3821C1118600DB1D3A /* RawTransactionTests.swift in Sources */,
+				FA46391821CB8BAB001846D9 /* StatusManagerTests.swift in Sources */,
+				FA46391221CA843E001846D9 /* AccountManagerTests.swift in Sources */,
+				FA46391C21CB8EA6001846D9 /* TransactionManagerTests.swift in Sources */,
+				FA46391421CA8CF4001846D9 /* CandidateManagerTests.swift in Sources */,
+				FA46391A21CB8DB2001846D9 /* ManagerDefaultTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

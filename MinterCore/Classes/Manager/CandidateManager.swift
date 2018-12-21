@@ -17,11 +17,11 @@ public class CandidateManager : BaseManager {
 	/// - Parameters:
 	///   - publicKey: public key with "Mp" prefix
 	///   - completion: method which will be called after request finished
-	public func candidate(publicKey: String, completion: (([String : Any]?, Error?) -> ())?) {
+	public func candidate(publicKey: String, height: String = "0", completion: (([String : Any]?, Error?) -> ())?) {
 		
-		let url = MinterAPIURL.candidate(publicKey: publicKey).url()
+		let url = MinterAPIURL.candidate.url()
 		
-		self.httpClient.getRequest(url, parameters: nil) { (response, err) in
+		self.httpClient.getRequest(url, parameters: ["pubkey" : publicKey, "height" : height]) { (response, err) in
 			
 			var res: [String : Any]?
 			var error: Error?
@@ -35,7 +35,7 @@ public class CandidateManager : BaseManager {
 				return
 			}
 			
-			res = (response.data as? [String : Any])?["candidate"] as? [String : Any]
+			res = (response.data as? [String : Any]) as? [String : Any]
 		}
 	}
 

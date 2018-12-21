@@ -67,7 +67,7 @@ class WalletViewController: UIViewController {
 
 		let address = Session.shared.address
 		
-		accountManager.balance(address: address) { [weak self] (resp, error) in
+		accountManager.address(address) { [weak self] (resp, error) in
 			
 			var coins = [String]()
 			if let balances = resp?["balance"] as? [String : String] {

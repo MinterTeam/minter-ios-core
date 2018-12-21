@@ -27,7 +27,7 @@ public class SellCoinRawTransaction : RawTransaction {
 }
 
 /// SellCoinRawTransactionData
-public struct SellCoinRawTransactionData: Encodable {
+public struct SellCoinRawTransactionData: Encodable, Decodable {
 	
 	/// Coin symbol (e.g. "MNT")
 	public var coinFrom: String
@@ -45,6 +45,15 @@ public struct SellCoinRawTransactionData: Encodable {
 		self.coinTo = coinTo
 		self.value = value
 		self.minimumValueToBuy = minimumValueToBuy
+	}
+	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.coinFrom = try values.decode(String.self, forKey: .coinFrom)
+		self.coinTo = try values.decode(String.self, forKey: .coinTo)
+		self.value = try values.decode(BigUInt.self, forKey: .value)
+		self.minimumValueToBuy = try values.decode(BigUInt.self, forKey: .minimumValueToBuy)
 	}
 	
 	// MARK: - Encoding
@@ -96,7 +105,7 @@ public class SellAllCoinsRawTransaction : RawTransaction {
 // MARK: - SellAllCoinsRawTransactionData
 
 /// SellAllCoinsRawTransactionData
-public struct SellAllCoinsRawTransactionData: Encodable {
+public struct SellAllCoinsRawTransactionData: Encodable, Decodable {
 	
 	/// Coin you'd like to sell
 	public var coinFrom: String
@@ -111,6 +120,14 @@ public struct SellAllCoinsRawTransactionData: Encodable {
 		self.coinFrom = coinFrom
 		self.coinTo = coinTo
 		self.minimumValueToBuy = minimumValueToBuy
+	}
+	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.coinFrom = try values.decode(String.self, forKey: .coinFrom)
+		self.coinTo = try values.decode(String.self, forKey: .coinTo)
+		self.minimumValueToBuy = try values.decode(BigUInt.self, forKey: .minimumValueToBuy)
 	}
 	
 	// MARK: - Encoding

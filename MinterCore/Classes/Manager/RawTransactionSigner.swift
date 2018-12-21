@@ -156,10 +156,10 @@ public class RawTransactionSigner {
 			&outputLength,
 			&publicKeyStructure,
 			(compressed ? UInt32(SECP256K1_EC_COMPRESSED) : UInt32(SECP256K1_EC_UNCOMPRESSED))
-			) == 1 else {
-				return nil
+		) == 1 else {
+			return nil
 		}
-			return Data(bytes: publicKey)
+		return Data(bytes: publicKey)
 	}
 	
 	public static func seed(from mnemonic: String, passphrase: String = "", language: CKMnemonicLanguageType = .english) -> String? {
@@ -212,10 +212,14 @@ public class RawTransactionSigner {
 			secp256k1_ecdsa_recoverable_signature_serialize_compact(context, output, &recid, &signature)
 		}
 		
+		var r = output[..<32]
+		var s = output[32..<64]
+		var v = Data(bytes: [UInt8(recid)])
+		
 		return (
-			r: output[..<32],
-			s: output[32..<64],
-			v: Data(bytes: [UInt8(recid)])
+			r: r,
+			s: s,
+			v: v
 		)
 	}
 	
@@ -223,7 +227,9 @@ public class RawTransactionSigner {
 		
 		let key = passphrase.sha256().dataWithHexString()
 		
-		guard let addr = RLP.encode(address)?.sha3(.keccak256) else {
+		let rlp = RLP.encode([Data(hex: address.stripMinterHexPrefix())])
+		
+		guard let addr = rlp?.sha3(.keccak256) else {
 			return nil
 		}
 		

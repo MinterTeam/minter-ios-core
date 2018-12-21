@@ -23,14 +23,15 @@ public class CoinManager : BaseManager {
 	Method retreives coin info
 	- Parameters:
 	- symbol: Coin symbol e.g. MNT
+	- height: Height for what to get info
 	- completion: Method which will be called after request finished
 	- Precondition: symbol must be uppercased (e.g. MNT)
 	*/
-	public func info(symbol: String, completion: ((Coin?, Error?) -> ())?) {
+	public func info(symbol: String, height: String = "0", completion: ((Coin?, Error?) -> ())?) {
 		
-		let url = MinterAPIURL.coinInfo(coin: symbol).url()
+		let url = MinterAPIURL.coinInfo.url()
 		
-		self.httpClient.getRequest(url, parameters: nil) { (response, error) in
+		self.httpClient.getRequest(url, parameters: ["symbol" : symbol, "height" : height]) { (response, error) in
 			
 			var coin: Coin?
 			var err: Error?

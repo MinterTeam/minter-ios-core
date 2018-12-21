@@ -10,7 +10,7 @@ import BigInt
 import CryptoSwift
 
 
-public struct IssueCheckRawTransaction : Encodable {
+public struct IssueCheckRawTransaction : Encodable, Decodable {
 	
 	public var nonce: BigUInt
 	
@@ -44,6 +44,17 @@ public struct IssueCheckRawTransaction : Encodable {
 		self.passPhrase = passPhrase
 	}
 	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.nonce = try values.decode(BigUInt.self, forKey: .nonce)
+		self.dueBlock = try values.decode(BigUInt.self, forKey: .dueBlock)
+		self.coin = try values.decode(String.self, forKey: .coin)
+		self.value = try values.decode(BigUInt.self, forKey: .value)
+		self.passPhrase = try values.decode(String.self, forKey: .passPhrase)
+	}
+	
+	//MARK: -
 	
 	public mutating func serialize(privateKey: String, passphrase: String) -> String? {
 		
@@ -117,6 +128,10 @@ public struct IssueCheckRawTransaction : Encodable {
 			fields = [nonce, dueBlock, coinData, value] as [Any]
 		}
 		else {
+			guard nil != lock else {
+				return nil
+			}
+			
 			if nil != v && nil != r && nil != s {
 				fields = [nonce, dueBlock, coinData, value, lock!, v!, r!, s!] as [Any]
 			}
@@ -124,7 +139,6 @@ public struct IssueCheckRawTransaction : Encodable {
 				fields = [nonce, dueBlock, coinData, value, lock!] as [Any]
 			}
 		}
-		
 		return RLP.encode(fields)
 	}
 	

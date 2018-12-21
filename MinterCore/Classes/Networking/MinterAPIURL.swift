@@ -14,26 +14,22 @@ let MinterAPIBaseURL: String! = MinterCoreSDK.shared.url?.absoluteString
 
 public enum MinterAPIURL {
 	
-	case balance(address: String)
+	case address
 	
-	case transaction(hash: String)
-	case transactionCount(address: String)
+	case transaction
 	
-	case coinInfo(coin: String)
+	case coinInfo
 	case estimateCoinBuy
 	case estimateCoinSell
 	case estimateTxCommission
-	
 	
 	case blockNumber
 	
 	case status
 	
-	case bipVolume
-	
 	case sendTransaction
 	
-	case candidate(publicKey: String)
+	case candidate
 	
 	case validators
 	
@@ -47,43 +43,37 @@ public enum MinterAPIURL {
 		switch self {
 			
 		case .status:
-			return URL(string: MinterAPIBaseURL + "status/")!
+			return URL(string: MinterAPIBaseURL + "status")!
 			
-		case .bipVolume:
-			return URL(string: MinterAPIBaseURL + "bipVolume/")!
+		case .address:
+			return URL(string: MinterAPIBaseURL + "address")!
 			
-		case .balance(let address):
-			return URL(string: MinterAPIBaseURL + "balance/" + address.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
+		case .coinInfo:
+			return URL(string: MinterAPIBaseURL + "coin_info")!
 			
-		case .transactionCount(let address):
-			return URL(string: MinterAPIBaseURL + "transactionCount/" + address.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
-			
-		case .coinInfo(let coin):
-			return URL(string: MinterAPIBaseURL + "coinInfo/" + coin.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
-			
-		case .transaction(let hash):
-			return URL(string: MinterAPIBaseURL + "transaction/" + hash.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
+		case .transaction:
+			return URL(string: MinterAPIBaseURL + "transaction")!
 			
 		case .sendTransaction:
-			return URL(string: MinterAPIBaseURL + "sendTransaction")!
+			return URL(string: MinterAPIBaseURL + "send_transaction")!
 
 		case .blockNumber:
 			return URL(string: MinterAPIBaseURL + "status")!
 			
 		case .estimateCoinSell:
-			return URL(string: MinterAPIBaseURL + "estimateCoinSell")!
+			return URL(string: MinterAPIBaseURL + "estimate_coin_sell")!
 			
 		case .estimateCoinBuy:
-			return URL(string: MinterAPIBaseURL + "estimateCoinBuy")!
+			return URL(string: MinterAPIBaseURL + "estimate_coin_buy")!
 			
-		case .candidate(let publicKey):
-			return URL(string: MinterAPIBaseURL + "candidate/" + publicKey.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!
+		case .candidate:
+			return URL(string: MinterAPIBaseURL + "candidate")!
 			
 		case .validators:
-			return URL(string: MinterAPIBaseURL + "validators/")!
+			return URL(string: MinterAPIBaseURL + "validators")!
 			
 		case .estimateTxCommission:
-			return URL(string: MinterAPIBaseURL + "estimateTxCommission")!
+			return URL(string: MinterAPIBaseURL + "estimate_tx_commission")!
 			
 		}
 	}

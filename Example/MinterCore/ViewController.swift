@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 		
 		let accountManager = AccountManager.default
-		accountManager.balance(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (resp, error) in
+		accountManager.address("Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (resp, error) in
 			print("Resp: \(String(describing: resp))")
 			print("Error: \(String(describing: error))")
 		}
@@ -82,20 +82,11 @@ class ViewController: UIViewController {
 		}
 		
 		// MARK: -
-		transactionManager.transactionCount(address: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d") { (nonce, error) in
-			print("Count: \(nonce)")
-			print("Error: \(error)")
-		}
 		
 		let statusManager = StatusManager.default
 		
 		statusManager.status { (status, error) in
 			print(status)
-			print(error)
-		}
-		
-		statusManager.baseCoinVolume(height: 2) { (volume, error) in
-			print(volume)
 			print(error)
 		}
 		

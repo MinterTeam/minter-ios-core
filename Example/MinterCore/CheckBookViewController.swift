@@ -57,8 +57,8 @@ class CheckBookViewController: UIViewController {
 		
 		let data = RedeemCheckRawTransactionData(rawCheck: rawCheck, proof: proof!)
 		
-		let gasCoin = "MNT".data(using: .utf8)!.setLengthRight(10)
-		let tx = RedeemCheckRawTransaction(nonce: BigUInt(1), gasPrice: BigUInt(1), gasCoin: gasCoin!, type: BigUInt(9), payload: Data(), serviceData: Data())
+		let gasCoin = "MNT"
+		let tx = RedeemCheckRawTransaction(gasCoin: gasCoin, rawCheck: rawCheck, proof: proof!)!
 		tx.data = data.encode()!
 		
 		let result = RawTransactionSigner.sign(rawTx: tx, privateKey: pk)

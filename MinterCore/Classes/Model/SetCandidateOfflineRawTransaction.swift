@@ -9,10 +9,25 @@ import Foundation
 import BigInt
 
 /// SetCandidateOnlineRawTransaction
-public class SetCandidateOfflineRawTransaction : SetCandidateOnlineRawTransaction {}
+public class SetCandidateOfflineRawTransaction : RawTransaction {
+	
+	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
+		
+		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: coinData, type: RawTransactionType.setCandidateOffline.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.data = data
+	}
+	
+	public convenience init(nonce: BigUInt, gasCoin: String, publicKey: String) {
+		
+		let encodedData = SetCandidateOfflineRawTransactionData(publicKey: publicKey).encode() ?? Data()
+		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
+	}
+	
+}
 
 /// SetCandidateOfflineRawTransactionData
-public struct SetCandidateOfflineRawTransactionData : Encodable {
+public struct SetCandidateOfflineRawTransactionData : Encodable, Decodable {
 	
 	/// Validator's public key
 	public var publicKey: String
@@ -21,6 +36,12 @@ public struct SetCandidateOfflineRawTransactionData : Encodable {
 	
 	public init(publicKey: String) {
 		self.publicKey = publicKey
+	}
+	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.publicKey = try values.decode(String.self, forKey: .publicKey)
 	}
 	
 	//MARK: - Encoding
@@ -36,10 +57,10 @@ public struct SetCandidateOfflineRawTransactionData : Encodable {
 	
 	public func encode() -> Data? {
 		
-		let pub = Data(hex: publicKey.replacingOccurrences(of: "Mp", with: ""))
+		let pk = publicKey.stripMinterHexPrefix()
+		let pub = Data(hex: pk)
 		let fields = [pub] as [Any]
 		return RLP.encode(fields)
 	}
 	
 }
-

@@ -15,6 +15,14 @@ public extension String {
 			let indexStart = self.index(self.startIndex, offsetBy: 2)
 			return String(self[indexStart...])
 		}
+		else if self.hasPrefix("Mt") || self.hasPrefix("mt") || self.hasPrefix("MT") || self.hasPrefix("mT") {
+			let indexStart = self.index(self.startIndex, offsetBy: 2)
+			return String(self[indexStart...])
+		}
+		else if self.hasPrefix("Mp") || self.hasPrefix("mp") || self.hasPrefix("MP") || self.hasPrefix("mP") {
+			let indexStart = self.index(self.startIndex, offsetBy: 2)
+			return String(self[indexStart...])
+		}
 		return self
 	}
 	

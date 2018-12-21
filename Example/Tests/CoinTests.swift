@@ -26,6 +26,12 @@ class CoinSpec: QuickSpec {
 				expect(model?.symbol).to(beNil())
 			}
 			
+			it("Base Coin exists") {
+				let model = Coin.baseCoin()
+				expect(model).toNot(beNil())
+			}
+
+			
 			it("can be mapped with Dict") {
 				let json: [String : Any] = [
 					"reserve_balance" : "395005853441855252801391",

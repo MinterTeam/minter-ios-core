@@ -35,7 +35,7 @@ public class SendCoinRawTransaction : RawTransaction {
 }
 
 /// SendCoinRawTransactionData
-public struct SendCoinRawTransactionData : Encodable {
+public struct SendCoinRawTransactionData : Encodable, Decodable {
 	
 	/// Address to whom you'd like to send coins
 	public var to: String
@@ -50,6 +50,14 @@ public struct SendCoinRawTransactionData : Encodable {
 		self.to = to
 		self.value = value
 		self.coin = coin
+	}
+	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.to = try values.decode(String.self, forKey: .to)
+		self.value = try values.decode(BigUInt.self, forKey: .value)
+		self.coin = try values.decode(String.self, forKey: .coin)
 	}
 	
 	// MARK: - Encoding

@@ -717,43 +717,5 @@ public class SECP256k1Helper: NSObject {
 				throw nonceError.nonceGenerationError
 			}
 		}
-
-	
-//	public var privateKey: PrivateKey
-	
-//	init(privateKey: PrivateKey) {
-//		self.privateKey = privateKey
-//	}
-
-//	public func privateKeyTweakAdd(tweak: Data) {
-//
-//		if tweak.count != 32 {
-////			throw keyError.tweakFailedWrongTweakSize
-//			return
-//		}
-//
-////		print(secp256k1.BYTE_ORDER)
-//
-//		let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_NONE))
-//
-//		defer {
-//			secp256k1_context_destroy(context)
-//		}
-//
-//		var pk = UnsafeMutablePointer<UInt8>(mutating: self.privateKey.raw.bytes)
-//
-//		var result = NSNumber.init(value: 0)
-////		_ = tweak.withUnsafeBytes { uint8Pointer in
-//
-//		secp256k1_ec_privkey_tweak_add(context!, UnsafeMutablePointer<UInt8>(mutating: tweak.bytes), pk)
-//
-////			result = Int(secp256k1_ec_privkey_tweak_add(context!, UnsafeMutablePointer<UInt8>.init(mutating: pk), uint8Pointer)) as NSNumber
-////		}
-//		if !result.boolValue {
-////			throw keyError.tweakFailed
-//			return
-//		}
-//
-//	}
 	
 }

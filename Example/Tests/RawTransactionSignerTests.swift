@@ -12,22 +12,15 @@ import Nimble
 @testable import MinterCore
 import ObjectMapper
 import BigInt
+import CryptoSwift
 
 class RawTransactionSignerSpec: QuickSpec {
 	
-	let privateKey = "5fa3a8b186f6cc2d748ee2d8c0eb7a905a7b73de0f2c34c5e7857c3b46f187da"
-	let address = "Mx7633980c000139dd3bd24a3f54e06474fa941e16"
+	let privateKey = "07bc17abdcee8b971bb8723e36fe9d2523306d5ab2d683631693238e0f9df142"
+	let address = "Mx31e61a05adbd13c6b625262704bc305bf7725026"
 	
 	override func spec() {
 		describe("RawTransactionSigner") {
-			
-			it("RawTransactionSigner can get seed") {
-				let mnemonic = "speed clutch food anxiety also rain eager symptom autumn butter fortune strike"
-				let correctSeed = "9677142b43cdc9514634584bf8643e8c6ad80ec5e38fe00cf54ed12b29a2eec9a12d836dc096d1736d9c08111f666454c1ebc6604e62a43333599e6820f7a2e8"
-				
-				let seed = String.seedString(mnemonic)!
-				expect(seed).to(equal(correctSeed))
-			}
 			
 			it("RawTransactionSigner can retreive Public Key") {
 				
@@ -39,7 +32,7 @@ class RawTransactionSignerSpec: QuickSpec {
 				let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
 				
 				let pub = RawTransactionSigner.publicKey(privateKey: key.raw, compressed: true)
-					expect(pub?.toHexString()).to(equal("039f1a49aa7bb95c587486d671838466137243f27b808a9eac4726ef3a33d6771b"))
+				expect(pub?.toHexString()).to(equal("039f1a49aa7bb95c587486d671838466137243f27b808a9eac4726ef3a33d6771b"))
 				
 			}
 			
@@ -72,24 +65,75 @@ class RawTransactionSignerSpec: QuickSpec {
 				
 				expect(address).to(equal("33bd6a537e8ad987b234ea3098c992f158df7b0f"))
 			}
+		}
+		
+		describe("RawTransactionSigner can sign tx") {
+
+			let validSign = "f88301018a4d4e540000000000000001aae98a4d4e5400000000000000941b685a7c1e78726c48f619c497a07ed75fe00483880de0b6b3a7640000808001b845f8431ba05163017775fefa4d56f71ae50a8ddf361628fddc1101365b2eb6fd9b5dbdc250a02fbdc56b6cf963206f807e2899f05e4fac71f43c9adfd11ea6baa7585b8b8115"
+
+			let nonce = BigUInt(1)
+			let gasCoin = "MNT".data(using: .utf8)?.setLengthRight(10)
+			let sendTx = SendCoinRawTransaction(nonce: nonce, gasCoin: gasCoin!, to: "Mx1b685a7c1e78726c48f619c497a07ed75fe00483", value: BigUInt(1000000000000000000), coin: "MNT")
+			let sig = RawTransactionSigner.sign(rawTx: sendTx, privateKey: privateKey)
+
+			expect(sig).to(equal(validSign))
 			
 		}
 		
-//		describe("RawTransactionSigner can sign") {
-//
-//			let validSign = "f88e01018a4d4e540000000000000001aae98a4d4e540000000000000094376615b9a3187747dc7c32e51723515ee62e37dc880de0b6b3a76400008b637573746f6d20746578748001b845f8431ba0dfd42ab59e68e6494d4e29f12520e7cd5a90c6d11b25599e868c2aac52440028a069f5f4085e1fe20b3e04701377a6d0320bb21f3162819ae3311318432aa332ea"
-//
-//			let params = SendCoinRawTransactionData(to: "Mx376615B9A3187747dC7c32e51723515Ee62e37Dc", value: BigUInt(1000000000000000000), coin: "MNT")
-//			let payload = "custom text".data(using: .utf8)
-//
-//			let coin = "MNT".data(using: .utf8)?.setLengthRight(10)
-//			let sendTx = SendCoinRawTransaction(nonce: BigUInt(1), gasCoin: coin!, to: "Mx376615B9A3187747dC7c32e51723515Ee62e37Dc", value: BigUInt(1000000000000000000), coin: "MNT")
-//			sendTx.payload = payload!
-//
-//			let sig = RawTransactionSigner.sign(sendTx.encode(forSignature: true)!, privateKey: Data(hex: privateKey))
-//
-//			expect((sig.r! + sig.s! + sig.v!).toHexString()).to(equal(validSign))
-//		}
+		describe("RawTransactionSigner can sign check") {
+			
+			let address = "Mxa7bc33954f1ce855ed1a8c768fdd32ed927def47"
+			let pk = "64e27afaab363f21eec05291084367f6f1297a7b280d69d672febecda94a09ea"
+			let pass = "pass"
+			
+			let validSign = "Mcf89f01830f423f8a4d4e5400000000000000888ac7230489e80000b841ada7ad273bef8a1d22f3e314fdfad1e19b90b1fe8dc7eeb30bd1d391e89af8642af029c138c2e379b95d6bc71b26c531ea155d9435e156a3d113a14c912dfebf001ba0eb3d47f227c3da3b29e09234ad24c49296f177234f3c9700d780712a656c338ba05726e0ed31ab98c07869a99f22e84165fe4a777b0bac7bcf287532210cae1bba"
+			
+			let nonce = BigUInt(1)
+			var check = IssueCheckRawTransaction(nonce: nonce, dueBlock: BigUInt(999999), coin: "MNT", value: BigUInt("10000000000000000000")!, passPhrase: pass)
+			let signed = check.serialize(privateKey: pk, passphrase: pass)
+			
+			expect(signed).to(equal(validSign))
+
+			
+		}
+		
+		describe("RawTransactionSigner Proof") {
+			it("Can make a proof") {
+				let proof = "7f8b6d3ed18d2fe131bbdc9f9bce3b96724ac354ce2cfb49b4ffc4bd71aabf580a8dfed407a34122e45d290941d855d744a62110fa1c11448078b13d3117bdfc01"
+				let address = RawTransactionSigner.address(privateKey: "5a34ec45e683c5254f6ef11723b9fd859f14677e04e4a8bb7768409eff12f07d")!
+				let pass = "123456"
+				let prf = RawTransactionSigner.proof(address: address.stripMinterHexPrefix(), passphrase: pass)?.toHexString()
+				expect(prf).to(equal(proof))
+			}
+		}
+		
+		describe("RawTransactionSigner can verify private key") {
+			let data = Data(hex: privateKey)
+			let sig = RawTransactionSigner.verify(privateKey: data)
+			
+			expect(sig).to(beTrue())
+		}
+		
+		describe("RawTransactionSigner Seed") {
+			it("Can generate seed") {
+				
+				let mnemonic = "speed clutch food anxiety also rain eager symptom autumn butter fortune strike"
+				let res = RawTransactionSigner.seed(from: mnemonic, passphrase: "", language: .english)				
+				expect(res).to(equal("9677142b43cdc9514634584bf8643e8c6ad80ec5e38fe00cf54ed12b29a2eec9a12d836dc096d1736d9c08111f666454c1ebc6604e62a43333599e6820f7a2e8"))
+				
+			}
+			
+			it("RawTransactionSigner can get seed") {
+				let mnemonic = "speed clutch food anxiety also rain eager symptom autumn butter fortune strike"
+				let correctSeed = "9677142b43cdc9514634584bf8643e8c6ad80ec5e38fe00cf54ed12b29a2eec9a12d836dc096d1736d9c08111f666454c1ebc6604e62a43333599e6820f7a2e8"
+				
+				let seed = String.seedString(mnemonic)!
+				expect(seed).to(equal(correctSeed))
+			}
+			
+		}
+		
+		
 		
 	}
 	

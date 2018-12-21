@@ -37,32 +37,4 @@ public class StatusManager : BaseManager {
 		}
 	}
 	
-	/// Method retreives amount of base coin (BIP or MNT) existing in the network. It counts block rewards, premine and relayed rewards.
-	///
-	/// - Parameters:
-	///   - height: block height
-	///   - completion: methods which will be called after request finished. Completion optionally contains volume (in pips) string and error if occured.
-	public func baseCoinVolume(height: Int, completion: ((String?, Error?) -> ())?) {
-		
-		let url = MinterAPIURL.bipVolume.url()
-		
-		self.httpClient.getRequest(url, parameters: ["height" : height]) { (response, err) in
-			
-			var res: String?
-			var error: Error?
-			
-			defer {
-				completion?(res, error)
-			}
-			
-			guard nil == err else {
-				error = err
-				return
-			}
-			
-			res = (response.data as? [String : Any])?["volume"] as? String
-			
-		}
-	}
-	
 }

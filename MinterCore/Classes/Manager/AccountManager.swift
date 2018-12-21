@@ -22,11 +22,11 @@ public class AccountManager : BaseManager {
 			- completion: Method which will be called after request finished. Balance is in PIPs
 		- Precondition: `address` must contain "Mx" prefix
 	*/
-	public func balance(address: String, with completion: (([String : Any]?, Error?) -> ())?) {
+	public func address(_ address: String, height: String = "0", with completion: (([String : Any]?, Error?) -> ())?) {
 		
-		let balanceURL = MinterAPIURL.balance(address: address).url()
+		let balanceURL = MinterAPIURL.address.url()
 		
-		self.httpClient.getRequest(balanceURL, parameters: nil) { (response, error) in
+		self.httpClient.getRequest(balanceURL, parameters: ["address" : address, "height" : height]) { (response, error) in
 			
 			var res: [String : Any]?
 			var err: Error?

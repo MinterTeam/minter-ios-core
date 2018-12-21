@@ -28,8 +28,9 @@ public class DeclareCandidacyRawTransaction : RawTransaction {
 }
 
 /// DeclareCandidacyRawTransactionData
-public struct DeclareCandidacyRawTransactionData : Encodable {
+public struct DeclareCandidacyRawTransactionData : Encodable, Decodable {
 	
+	/// Address to get reward to
 	public var address: String
 	
 	/// Validator's public key
@@ -53,6 +54,16 @@ public struct DeclareCandidacyRawTransactionData : Encodable {
 		self.stake = stake
 	}
 	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.address = try values.decode(String.self, forKey: .address)
+		self.publicKey = try values.decode(String.self, forKey: .publicKey)
+		self.commission = try values.decode(BigUInt.self, forKey: .commission)
+		self.coin = try values.decode(String.self, forKey: .coin)
+		self.stake = try values.decode(BigUInt.self, forKey: .stake)
+	}
+	
 	//MARK: - Encoding
 	
 	enum CodingKeys: String, CodingKey {
@@ -72,14 +83,16 @@ public struct DeclareCandidacyRawTransactionData : Encodable {
 		try container.encode(stake, forKey: .stake)
 	}
 	
+	// MARK: - RLPEncoding
+	
 	public func encode() -> Data? {
 		
 		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		
-		let pub = Data(hex: publicKey.replacingOccurrences(of: "Mp", with: ""))
-		let fields = [Data(hex: address.stripMinterHexPrefix()), pub, commission, coinData, stake] as [Any]
+		let pub = Data(hex: publicKey.stripMinterHexPrefix())
+		let adrs = Data(hex: address.stripMinterHexPrefix())
+		let fields = [adrs, pub, commission, coinData, stake] as [Any]
 		return RLP.encode(fields)
 	}
-	
-}
 
+}

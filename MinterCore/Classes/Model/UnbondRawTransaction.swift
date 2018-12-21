@@ -27,14 +27,14 @@ public class UnbondRawTransaction : RawTransaction {
 	///   - value: How much you'd like to unbond
 	public convenience init(nonce: BigUInt, gasCoin: Data, publicKey: String, coin: String, value: BigUInt) {
 		
-		let encodedData = DelegateRawTransactionData(publicKey: publicKey, coin: coin, value: value).encode() ?? Data()
+		let encodedData = UnbondRawTransactionData(publicKey: publicKey, coin: coin, value: value).encode() ?? Data()
 		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
 	}
 	
 }
 
 /// UnbondRawTransactionData
-public struct UnbondRawTransactionData : Encodable {
+public struct UnbondRawTransactionData : Encodable, Decodable {
 	
 	/// Validator's public key
 	public var publicKey: String
@@ -53,6 +53,14 @@ public struct UnbondRawTransactionData : Encodable {
 		self.value = value
 	}
 	
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.publicKey = try values.decode(String.self, forKey: .publicKey)
+		self.coin = try values.decode(String.self, forKey: .coin)
+		self.value = try values.decode(BigUInt.self, forKey: .value)
+	}
+	
 	//MARK: - Encoding
 	
 	enum CodingKeys: String, CodingKey {
@@ -68,11 +76,13 @@ public struct UnbondRawTransactionData : Encodable {
 		try container.encode(value, forKey: .value)
 	}
 	
+	//MARK: - RLPEncoding
+	
 	public func encode() -> Data? {
 		
 		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		
-		let fields = [publicKey, coinData, value] as [Any]
+		let fields = [Data(hex: publicKey), coinData, value] as [Any]
 		return RLP.encode(fields)
 	}
 	

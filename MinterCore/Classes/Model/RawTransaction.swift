@@ -20,9 +20,9 @@ public protocol SignatureRLPEncodable : RLPEncodable {
 
 
 //TODO: Change depend on network!
-let RawTransactionDefaultTransactionCoin = "MNT"
+public let RawTransactionDefaultTransactionCoin = Coin.baseCoin().symbol ?? "MNT"
 
-let RawTransactionDefaultGasPrice = BigUInt("1000000000", radix: 10)!
+public let RawTransactionDefaultGasPrice = BigUInt("1000000000", radix: 10)!
 
 /// Transaction type
 /// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/transactions.html#types
@@ -91,14 +91,12 @@ public enum RawTransactionType {
 		case .setCandidateOffline: return 0.1 * TransactionCoinFactorDecimal
 		}
 	}
-
-
 }
 
 /// A base class for all RawTransactions
-open class RawTransaction : Encodable, SignatureRLPEncodable {
+open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 	
-	public struct SignatureData : Encodable, RLPEncodable {
+	public struct SignatureData : Encodable, Decodable, RLPEncodable {
 		
 		public var v: BigUInt
 		public var s: BigUInt
@@ -108,6 +106,14 @@ open class RawTransaction : Encodable, SignatureRLPEncodable {
 			self.v = v
 			self.r = r
 			self.s = s
+		}
+		
+		public init(from decoder: Decoder) throws {
+			let values = try decoder.container(keyedBy: CodingKeys.self)
+			
+			self.v = try values.decode(BigUInt.self, forKey: .v)
+			self.s = try values.decode(BigUInt.self, forKey: .s)
+			self.r = try values.decode(BigUInt.self, forKey: .r)
 		}
 		
 		// MARK: - RLPEncodable
@@ -131,7 +137,6 @@ open class RawTransaction : Encodable, SignatureRLPEncodable {
 			try container.encode(r, forKey: .r)
 			try container.encode(s, forKey: .s)
 		}
-		
 	}
 	
 	/// Used for prevent transaction reply
@@ -156,11 +161,6 @@ open class RawTransaction : Encodable, SignatureRLPEncodable {
 	
 	public var signatureData: SignatureData
 	
-//	/// ECDSA fields. Digital signature of TX
-//	public var v: BigUInt = BigUInt(1)
-//	public var r: BigUInt = BigUInt(0)
-//	public var s: BigUInt = BigUInt(0)
-	
 	// MARK: -
 	
 	/**
@@ -180,7 +180,7 @@ open class RawTransaction : Encodable, SignatureRLPEncodable {
 	- data: RLP-encoded data
 	- Returns: Signed RawTx hex string, which can be send to Minter Node
 	*/
-	public init(nonce: BigUInt, gasPrice: BigUInt, gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: SignatureData = SignatureData()) {
+	public init(nonce: BigUInt, gasPrice: BigUInt = RawTransactionDefaultGasPrice, gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: SignatureData = SignatureData()) {
 		self.nonce = nonce
 		self.gasPrice = gasPrice
 		self.gasCoin = gasCoin
@@ -190,6 +190,34 @@ open class RawTransaction : Encodable, SignatureRLPEncodable {
 		self.serviceData = serviceData
 		self.signatureType = signatureType
 		self.signatureData = signatureData
+	}
+
+	/// Convenience initializer
+	///
+	/// - Parameters:
+	///   - nonce: Nonce
+	///   - gasCoin: Coin to spend fee from
+	///   - data: Encoded data
+	public convenience init(nonce: BigUInt, type: BigUInt, gasCoin: String, data: Data) {
+		
+		let gasCoinData = gasCoin.data(using: .utf8)!.setLengthRight(10) ?? Data()
+		
+		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoinData, type: type, payload: Data(), serviceData: Data())
+		self.data = data
+	}
+	
+	required public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		
+		self.nonce = try values.decode(BigUInt.self, forKey: .nonce)
+		self.gasPrice = try values.decode(BigUInt.self, forKey: .gasPrice)
+		self.gasCoin = try values.decode(Data.self, forKey: .gasCoin)
+		self.type = try values.decode(BigUInt.self, forKey: .type)
+		self.data = try values.decode(Data.self, forKey: .data)
+		self.payload = try values.decode(Data.self, forKey: .payload)
+		self.serviceData = try values.decode(Data.self, forKey: .serviceData)
+		self.signatureType = try values.decode(BigUInt.self, forKey: .signatureType)
+		self.signatureData = try values.decode(SignatureData.self, forKey: .signatureData)
 	}
 	
 	// MARK: - Encodable
@@ -240,5 +268,5 @@ open class RawTransaction : Encodable, SignatureRLPEncodable {
 	public func encode() -> Data? {
 		return self.encode(forSignature: false)
 	}
-	
+
 }
