@@ -73,7 +73,7 @@ class RawTransactionSignerSpec: QuickSpec {
 
 			let nonce = BigUInt(1)
 			let gasCoin = "MNT".data(using: .utf8)?.setLengthRight(10)
-			let sendTx = SendCoinRawTransaction(nonce: nonce, gasCoin: gasCoin!, to: "Mx1b685a7c1e78726c48f619c497a07ed75fe00483", value: BigUInt(1000000000000000000), coin: "MNT")
+			let sendTx = SendCoinRawTransaction(nonce: nonce, gasCoin: gasCoin!, to: "Mx1b685a7c1e78726c48f619c497a07ed75fe00483", value: BigUInt("1000000000000000000")!, coin: "MNT")
 			let sig = RawTransactionSigner.sign(rawTx: sendTx, privateKey: privateKey)
 
 			expect(sig).to(equal(validSign))
