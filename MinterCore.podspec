@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MinterCore'
-  s.version          = '0.1.12'
+  s.version          = '0.1.13'
   s.summary          = 'A short description of MinterCore.'
 
   s.homepage         = 'https://github.com/MinterTeam'
