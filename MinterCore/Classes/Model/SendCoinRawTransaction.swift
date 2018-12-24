@@ -25,10 +25,11 @@ public class SendCoinRawTransaction : RawTransaction {
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, to: String, value: BigUInt, coin: String) {
+	public convenience init(nonce: BigUInt, gasCoin: String, to: String, value: BigUInt, coin: String) {
+		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		
 		let encodedData = SendCoinRawTransactionData(to: to, value: value, coin: coin).encode() ?? Data()
-		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
+		self.init(nonce: nonce, gasCoin: coinData, data: encodedData)
 	}
 	
 	

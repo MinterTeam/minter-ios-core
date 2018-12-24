@@ -135,14 +135,6 @@ statusManager.status { (status, error) in
 }
 ```
 
-**Get base coin volume**
-```swift
-statusManager.baseCoinVolume(height: 2) { (volume, error) in
-  print(volume)
-  print(error)
-}
-```
-
 ****
 
 ## Author
