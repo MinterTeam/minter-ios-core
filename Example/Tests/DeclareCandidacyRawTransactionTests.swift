@@ -14,7 +14,7 @@ import ObjectMapper
 import BigInt
 
 
-class DeclareCandidacyRawTransactionTestsSpec: QuickSpec {
+class DeclareCandidacyRawTransactionTestsSpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("DeclareCandidacyRawTransaction Model") {
@@ -102,9 +102,6 @@ class DeclareCandidacyRawTransactionTestsSpec: QuickSpec {
 				expect(decoded?.coin).to(equal(coin))
 				expect(decoded?.stake).to(equal(stake))
 			}
-			
-			
-			
 		}
 	}
 }

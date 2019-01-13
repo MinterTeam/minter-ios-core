@@ -14,7 +14,7 @@ import ObjectMapper
 import BigInt
 
 
-class SetCandidateRawTransactionTestsSpec: QuickSpec {
+class SetCandidateRawTransactionTestsSpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("SetCandidateOfflineRawTransaction Model") {

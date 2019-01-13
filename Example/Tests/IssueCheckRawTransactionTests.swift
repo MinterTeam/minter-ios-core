@@ -14,7 +14,7 @@ import ObjectMapper
 import BigInt
 
 
-class IssueCheckRawTransactionSpec: QuickSpec {
+class IssueCheckRawTransactionSpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("IssueCheckRawTransaction Model") {

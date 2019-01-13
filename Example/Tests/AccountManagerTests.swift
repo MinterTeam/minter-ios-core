@@ -13,8 +13,7 @@ import Nimble
 import ObjectMapper
 
 
-
-class AccountManagerTestsSpec : QuickSpec {
+class AccountManagerTestsSpec : BaseQuickSpec {
 	
 	let http = APIClient()
 	
@@ -22,7 +21,7 @@ class AccountManagerTestsSpec : QuickSpec {
 	
 	
 	override func spec() {
-		MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841/")
+		super.spec()
 		
 		describe("AccountManagerTests") {
 			it("AccountManager") {
@@ -62,7 +61,6 @@ class AccountManagerTestsSpec : QuickSpec {
 					})
 				}
 			}
-			
 		}
 	}
 	

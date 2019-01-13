@@ -12,13 +12,13 @@ import Nimble
 @testable import MinterCore
 
 
-class StatusManagerTestsSpec : QuickSpec {
+class StatusManagerTestsSpec : BaseQuickSpec {
 	
 	let http = APIClient()
 	var manager: StatusManager?
 	
 	override func spec() {
-		MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841/")
+		super.spec()
 		
 		describe("StatusManager") {
 			it("StatusManager can be initialized") {

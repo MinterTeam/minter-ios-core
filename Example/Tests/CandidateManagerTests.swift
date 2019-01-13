@@ -12,13 +12,13 @@ import Nimble
 @testable import MinterCore
 
 
-class CandidateManagerTestsSpec : QuickSpec {
+class CandidateManagerTestsSpec : BaseQuickSpec {
 	
 	let http = APIClient()
 	var manager: CandidateManager?
 	
 	override func spec() {
-		MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841/")
+		super.spec()
 		
 		describe("CandidateManager") {
 			it("CandidateManager can be initialized") {

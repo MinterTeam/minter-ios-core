@@ -12,7 +12,7 @@ import Nimble
 @testable import MinterCore
 import BigInt
 
-class BuyCoinRawTransactionTestsSpec: QuickSpec {
+class BuyCoinRawTransactionTestsSpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("Can be initialized") {

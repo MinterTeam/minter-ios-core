@@ -15,7 +15,7 @@ import Nimble
 @testable import MinterCore
 import ObjectMapper
 
-class SendCoinTransactionDataSpec: QuickSpec {
+class SendCoinTransactionDataSpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("SendCoinTransactionData Model") {
@@ -62,7 +62,6 @@ class SendCoinTransactionDataSpec: QuickSpec {
 				expect(data?.toCoin).to(equal("BELTCOIN"))
 				expect(data?.value).to(equal(Decimal(1.0)))
 				expect(data?.from).to(equal("Mx228e5a68b847d169da439ec15f727f08233a7ca6"))
-				
 			}
 			
 			it("ConvertTransactionDataMappable can be mapped") {
@@ -77,7 +76,6 @@ class SendCoinTransactionDataSpec: QuickSpec {
 				expect(data?.toCoin).to(equal("BELTCOIN"))
 				expect(data?.value).to(equal(Decimal(1.0)))
 				expect(data?.from).to(equal("Mx228e5a68b847d169da439ec15f727f08233a7ca6"))
-				
 			}
 		}
 		

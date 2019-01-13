@@ -12,7 +12,7 @@ import Nimble
 @testable import MinterCore
 import ObjectMapper
 
-class PrivateKeySpec: QuickSpec {
+class PrivateKeySpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("Can be initialized") {

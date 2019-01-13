@@ -1,0 +1,54 @@
+//
+//  CreateMultisigAddressRawTransaction.swift
+//  MinterCore
+//
+//  Created by Alexey Sidorov on 11/01/2019.
+//
+
+import Foundation
+import BigInt
+
+/// SetCandidateOnlineRawTransaction
+public class CreateMultisigAddressRawTransaction : RawTransaction {
+	
+	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
+		
+		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+		self.init(nonce: nonce, gasPrice: RawTransactionDefaultGasPrice, gasCoin: coinData, type: RawTransactionType.createMultisigAddress.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.data = data
+	}
+	
+}
+
+/// SetCandidateOnlineRawTransactionData
+public struct CreateMultisigAddressRawTransactionData {
+	
+	public var threshold: BigUInt
+	
+	public var weights: [BigUInt]
+	
+	public var addresses: [String]
+	
+	//MARK: -
+	
+	public init(threshold: BigUInt, weights: [BigUInt], addresses: [String]) {
+		self.threshold = threshold
+		self.weights = weights
+		self.addresses = addresses
+	}
+	
+	//MARK: - RLPEncoding
+	
+	public func encode() -> Data? {
+		
+		let newAddresses = self.addresses.map { (str) -> Data? in
+			return Data(hex: str.stripMinterHexPrefix())
+			}.filter { (data) -> Bool in
+				return data != nil
+		} as! [Data]
+		
+		let fields = [self.threshold, self.weights, newAddresses] as [Any]
+		return RLP.encode(fields)
+	}
+	
+}

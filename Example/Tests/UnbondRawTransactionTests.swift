@@ -14,7 +14,7 @@ import ObjectMapper
 import BigInt
 
 
-class UnbondRawTransactionTestsSpec: QuickSpec {
+class UnbondRawTransactionTestsSpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("UnbondRawTransaction Model") {

@@ -38,6 +38,9 @@ public enum RawTransactionType {
 	case redeemCheck
 	case setCandidateOnline
 	case setCandidateOffline
+	case createMultisigAddress
+	case multisend(addreessesCount: Int)
+	case editCandidate
 	
 	public func BigUIntValue() -> BigUInt {
 		switch self {
@@ -73,6 +76,16 @@ public enum RawTransactionType {
 			
 		case .setCandidateOffline:
 			return BigUInt(11)
+			
+		case .createMultisigAddress:
+			return BigUInt(12)
+			
+		case .multisend(let _):
+			return BigUInt(13)
+			
+		case .editCandidate:
+			return BigUInt(14)
+			
 		}
 	}
 	
@@ -89,6 +102,9 @@ public enum RawTransactionType {
 		case .redeemCheck: return 0.01 * TransactionCoinFactorDecimal
 		case .setCandidateOnline: return 0.1 * TransactionCoinFactorDecimal
 		case .setCandidateOffline: return 0.1 * TransactionCoinFactorDecimal
+		case .createMultisigAddress: return 0.1 * TransactionCoinFactorDecimal
+		case .multisend(let number): return (0.1 + Decimal(max(0, number - 1)) * 0.05) * TransactionCoinFactorDecimal
+		case .editCandidate: return 0.1 * TransactionCoinFactorDecimal
 		}
 	}
 }

@@ -12,7 +12,7 @@ import Nimble
 @testable import MinterCore
 import ObjectMapper
 
-class TransactionSpec: QuickSpec {
+class TransactionSpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("Transaction Model") {

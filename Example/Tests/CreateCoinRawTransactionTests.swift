@@ -14,7 +14,7 @@ import ObjectMapper
 import BigInt
 
 
-class CreateCoinRawTransactionTestsSpec: QuickSpec {
+class CreateCoinRawTransactionTestsSpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("CreateCoinRawTransaction Model") {

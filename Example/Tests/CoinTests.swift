@@ -12,7 +12,7 @@ import Nimble
 @testable import MinterCore
 import ObjectMapper
 
-class CoinSpec: QuickSpec {
+class CoinSpec: BaseQuickSpec {
 	
 	override func spec() {
 		describe("Coin Model") {

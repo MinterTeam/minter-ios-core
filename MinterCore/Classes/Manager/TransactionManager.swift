@@ -51,7 +51,7 @@ public class TransactionManager : BaseManager {
 	}
 	
 	/**
-	Method to send raw transaction to Minter Node
+	Method to send raw transaction to a Minter Node
 	- Parameters:
 	- tx: Raw Transaction hex (e.g. f869220103a0df8a4d4e54000000000000008805120d17260727768a5355504552434f494e0080801ca0b2f7c98ae6d7eeb1bcf66e6339cb19d402b7ee824890fb65ff998d9ebf279af5a0616a6319a416a47ecb2c36d97b02f1867456f5551d38f76eeb29b70b79bdf0e6)
 	- completion: Method which will be called after request finished, contains Tx hash, status text and error if occured
@@ -60,7 +60,7 @@ public class TransactionManager : BaseManager {
 		
 		let url = MinterAPIURL.sendTransaction.url()
 		
-		self.httpClient.postRequest(url, parameters: ["transaction" : tx]) { (response, error) in
+		self.httpClient.getRequest(url, parameters: ["tx" : tx]) { (response, error) in
 			
 			var hash: String?
 			var err: Error?
@@ -84,7 +84,7 @@ public class TransactionManager : BaseManager {
 	
 	
 	/**
-	Method retreives buy coin estimate data from the Minter node
+	Method retreives buy coin estimate data from a Minter node
 	- Parameters:
 	- from: Coin symbol which you'd like to sell (e.g. MNT)
 	- to: Coin symbol you'd like to buy (e.g. BELTCOIN)
@@ -136,7 +136,7 @@ public class TransactionManager : BaseManager {
 	}
 	
 	/**
-	Method retreives sell coin estimate data from the Minter node
+	Method retreives sell coin estimate data from a Minter node
 	- Parameters:
 	- from: Coin symbol which you'd like to sell (e.g. MNT)
 	- to: Coin symbol you'd like to buy (e.g. BELTCOIN)

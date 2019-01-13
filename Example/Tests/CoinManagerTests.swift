@@ -12,13 +12,13 @@ import Nimble
 @testable import MinterCore
 
 
-class CoinManagerTestsSpec : QuickSpec {
+class CoinManagerTestsSpec : BaseQuickSpec {
 	
 	let http = APIClient()
 	var manager: CoinManager?
 	
 	override func spec() {
-		MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841/")
+		super.spec()
 		
 		describe("CoinManager") {
 			it("CoinManager can be initialized") {
@@ -55,8 +55,6 @@ class CoinManagerTestsSpec : QuickSpec {
 					})
 				}
 			}
-			
-			
 		}
 	}
 }

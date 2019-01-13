@@ -14,7 +14,7 @@ import ObjectMapper
 import BigInt
 
 
-class RawTransactionSpec: QuickSpec {
+class RawTransactionSpec: BaseQuickSpec {
 
 	override func spec() {
 		describe("RawTransaction Model Init") {

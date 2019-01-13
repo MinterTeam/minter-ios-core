@@ -12,13 +12,13 @@ import Nimble
 @testable import MinterCore
 
 
-class ValidatorManagerTestsSpec : QuickSpec {
+class ValidatorManagerTestsSpec : BaseQuickSpec {
 	
 	let http = APIClient()
 	var manager: ValidatorManager?
 	
 	override func spec() {
-		MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841/")
+		super.spec()
 		
 		describe("ValidatorManager") {
 			it("ValidatorManager can be initialized") {

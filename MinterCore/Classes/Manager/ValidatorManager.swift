@@ -18,7 +18,7 @@ public class ValidatorManager : BaseManager {
 		
 		let url = MinterAPIURL.validators.url()
 		
-		self.httpClient.getRequest(url, parameters: nil) { (response, err) in
+		self.httpClient.getRequest(url, parameters: ["height" : 0]) { (response, err) in
 			
 			var res: [[String : Any]]?
 			var error: Error?

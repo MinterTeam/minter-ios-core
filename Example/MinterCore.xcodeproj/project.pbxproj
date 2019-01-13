@@ -23,6 +23,8 @@
 		FA101E3C21C2A46500DB1D3A /* Base58Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA101E3B21C2A46500DB1D3A /* Base58Tests.swift */; };
 		FA13691621708F9A00CB74BE /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13691521708F9A00CB74BE /* WalletViewController.swift */; };
 		FA13691821709F3200CB74BE /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13691721709F3200CB74BE /* Session.swift */; };
+		FA197B1A21EA197F00264CE6 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		FA197B1E21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */; };
 		FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */; };
 		FA4638FA21C7A1CC001846D9 /* SendCoinRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4638F921C7A1CC001846D9 /* SendCoinRawTransactionTests.swift */; };
 		FA4638FC21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4638FB21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift */; };
@@ -88,6 +90,7 @@
 		FA101E3B21C2A46500DB1D3A /* Base58Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58Tests.swift; sourceTree = "<group>"; };
 		FA13691521708F9A00CB74BE /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		FA13691721709F3200CB74BE /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCandidateRawTransactionTests.swift; sourceTree = "<group>"; };
 		FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataTests.swift; sourceTree = "<group>"; };
 		FA4638F921C7A1CC001846D9 /* SendCoinRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinRawTransactionTests.swift; sourceTree = "<group>"; };
 		FA4638FB21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCheckRawTransactionTests.swift; sourceTree = "<group>"; };
@@ -251,6 +254,7 @@
 				FA46392321CBCE87001846D9 /* UnbondRawTransactionTests.swift */,
 				FA46392521CBDB48001846D9 /* DeclareCandidacyRawTransactionTests.swift */,
 				FA46392721CBF804001846D9 /* SetCandidateRawTransactionTests.swift */,
+				FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -530,6 +534,8 @@
 				FA46392621CBDB48001846D9 /* DeclareCandidacyRawTransactionTests.swift in Sources */,
 				FA8027F6218C636000474A69 /* RLPTests.swift in Sources */,
 				FA46391621CAA048001846D9 /* CoinManagerTests.swift in Sources */,
+				FA197B1A21EA197F00264CE6 /* Tests.swift in Sources */,
+				FA197B1E21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift in Sources */,
 				FA101E3821C1118600DB1D3A /* RawTransactionTests.swift in Sources */,
 				FA46391821CB8BAB001846D9 /* StatusManagerTests.swift in Sources */,
 				FA46391221CA843E001846D9 /* AccountManagerTests.swift in Sources */,
