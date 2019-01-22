@@ -34,7 +34,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 				self.manager = TransactionManager.default
 				
 				waitUntil(timeout: 10) { done in
-					self.manager?.transaction(hash: "Mtb181f0185dfbda5f6ed497581dce1bf4cbac2a427374bf45018343c7af6471b8", completion: { (transaction, error) in
+					self.manager?.transaction(hash: "Mte74b8a1cadfc6464fa0d8f4d0bd51fcb5035ced7a9bc2c055b59a65d3f9566c2", completion: { (transaction, error) in
 						
 						expect(error).to(beNil())
 						expect(transaction).toNot(beNil())
