@@ -47,7 +47,6 @@ class AccountManagerTestsSpec : BaseQuickSpec {
 			}
 			
 			it("Can request for balance") {
-				MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841/")
 				
 				self.account = AccountManager(httpClient: self.http)
 				

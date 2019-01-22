@@ -73,3 +73,25 @@ public extension ValidatorManager {
 		}
 	}
 }
+
+public extension BlockManager {
+	
+	class var `default` : BlockManager {
+		get {
+			let httpClient = APIClient.shared
+			let manager = self.init(httpClient: httpClient)
+			return manager
+		}
+	}
+}
+
+public extension EventManager {
+	
+	class var `default` : EventManager {
+		get {
+			let httpClient = APIClient.shared
+			let manager = self.init(httpClient: httpClient)
+			return manager
+		}
+	}
+}

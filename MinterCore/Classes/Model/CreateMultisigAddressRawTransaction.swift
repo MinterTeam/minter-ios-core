@@ -8,7 +8,7 @@
 import Foundation
 import BigInt
 
-/// SetCandidateOnlineRawTransaction
+/// CreateMultisigAddressRawTransaction Class
 public class CreateMultisigAddressRawTransaction : RawTransaction {
 	
 	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
@@ -20,7 +20,7 @@ public class CreateMultisigAddressRawTransaction : RawTransaction {
 	
 }
 
-/// SetCandidateOnlineRawTransactionData
+/// CreateMultisigAddressRawTransactionData class
 public struct CreateMultisigAddressRawTransactionData {
 	
 	public var threshold: BigUInt

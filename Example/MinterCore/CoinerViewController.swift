@@ -56,7 +56,7 @@ class CoinerViewController: UIViewController {
 					SVProgressHUD.showSuccess(withStatus: res ?? "Done")
 				}
 				else {
-					SVProgressHUD.showError(withStatus: (err as? APIClient.APIClientResponseError)?.userData?.description)
+					SVProgressHUD.showError(withStatus: (err as? HTTPClientError)?.userData?.description)
 				}
 			}
 		}

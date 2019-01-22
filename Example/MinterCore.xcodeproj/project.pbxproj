@@ -23,6 +23,8 @@
 		FA101E3C21C2A46500DB1D3A /* Base58Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA101E3B21C2A46500DB1D3A /* Base58Tests.swift */; };
 		FA13691621708F9A00CB74BE /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13691521708F9A00CB74BE /* WalletViewController.swift */; };
 		FA13691821709F3200CB74BE /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13691721709F3200CB74BE /* Session.swift */; };
+		FA17817521F20DCE00FECDED /* BlockManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17817421F20DCE00FECDED /* BlockManagerTests.swift */; };
+		FA17817921F2180700FECDED /* EventManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17817821F2180700FECDED /* EventManagerTests.swift */; };
 		FA197B1A21EA197F00264CE6 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		FA197B1E21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */; };
 		FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */; };
@@ -90,6 +92,8 @@
 		FA101E3B21C2A46500DB1D3A /* Base58Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58Tests.swift; sourceTree = "<group>"; };
 		FA13691521708F9A00CB74BE /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		FA13691721709F3200CB74BE /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		FA17817421F20DCE00FECDED /* BlockManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockManagerTests.swift; sourceTree = "<group>"; };
+		FA17817821F2180700FECDED /* EventManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManagerTests.swift; sourceTree = "<group>"; };
 		FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCandidateRawTransactionTests.swift; sourceTree = "<group>"; };
 		FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataTests.swift; sourceTree = "<group>"; };
 		FA4638F921C7A1CC001846D9 /* SendCoinRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinRawTransactionTests.swift; sourceTree = "<group>"; };
@@ -269,6 +273,8 @@
 				FA46391721CB8BAB001846D9 /* StatusManagerTests.swift */,
 				FA46391B21CB8EA6001846D9 /* TransactionManagerTests.swift */,
 				FA46391D21CBA04A001846D9 /* ValidatorManagerTests.swift */,
+				FA17817421F20DCE00FECDED /* BlockManagerTests.swift */,
+				FA17817821F2180700FECDED /* EventManagerTests.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -518,6 +524,7 @@
 				FA101E3321BFCF1900DB1D3A /* SellCoinRawTransactionTests.swift in Sources */,
 				FA101E3521BFF3F500DB1D3A /* BuyCoinRawTransactionTests.swift in Sources */,
 				FA46392821CBF804001846D9 /* SetCandidateRawTransactionTests.swift in Sources */,
+				FA17817521F20DCE00FECDED /* BlockManagerTests.swift in Sources */,
 				FA4638FC21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift in Sources */,
 				FAFCC7942139437E00955258 /* TransactionTests.swift in Sources */,
 				FA101E3A21C29DAC00DB1D3A /* AddressTransformerTests.swift in Sources */,
@@ -538,6 +545,7 @@
 				FA197B1E21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift in Sources */,
 				FA101E3821C1118600DB1D3A /* RawTransactionTests.swift in Sources */,
 				FA46391821CB8BAB001846D9 /* StatusManagerTests.swift in Sources */,
+				FA17817921F2180700FECDED /* EventManagerTests.swift in Sources */,
 				FA46391221CA843E001846D9 /* AccountManagerTests.swift in Sources */,
 				FA46391C21CB8EA6001846D9 /* TransactionManagerTests.swift in Sources */,
 				FA46391421CA8CF4001846D9 /* CandidateManagerTests.swift in Sources */,

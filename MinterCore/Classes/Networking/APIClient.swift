@@ -9,17 +9,17 @@ import Foundation
 import Alamofire
 
 
-let APIClientDefaultHeaders: [String : String] = ["X-Minter-Chain-Id" : "dva"]
+let APIClientDefaultHeaders: [String : String] = ["X-Minter-Chain-Id" : "odin"]
 
 /// APIClient
 public class APIClient {
 	
-	public struct APIClientResponseError : Error {
-		
-		public init() {}
-		
-		public var userData: [String : Any]?
-	}
+//	public struct APIClientResponseError : Error {
+//		
+//		public init() {}
+//		
+//		public var userData: [String : Any]?
+//	}
 	
 	//MARK: -
 	
@@ -96,12 +96,19 @@ public class APIClient {
 			}
 			
 			if let err = result["error"] as? [String : Any] {
-				var apiError = APIClientResponseError()
-				apiError.userData = err
-				error = apiError
+				if let code = result["code"] as? Int, let errorMessage = result["log"] as? String {
+					let apiError = HTTPClientError()
+					apiError.userData = ["code" : code, "message" : errorMessage]
+					error = apiError
+				}
+				else {
+					let apiError = HTTPClientError()
+					apiError.userData = err
+					error = apiError
+				}
 			}
 			else if let code = result["code"] as? Int, let errorMessage = result["log"] as? String {
-				var apiError = APIClientResponseError()
+				let apiError = HTTPClientError()
 				apiError.userData = ["code" : code, "message" : errorMessage]
 				error = apiError
 			}

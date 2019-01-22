@@ -74,6 +74,21 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 				}
 			}
 			
+			it("TransactionManager can get unconfirmed transactions") {
+				
+				self.manager = TransactionManager.default
+				
+				waitUntil(timeout: 10) { done in
+					self.manager?.unconfirmedTransaction(limit: "20000000000000", completion: { (transactions, error) in
+						
+						expect(error).to(beNil())
+						expect(transactions).toNot(beNil())
+						
+						done()
+					})
+				}
+			}
+			
 			//Estimates
 			
 			it("TransactionManager can get estimate") {
@@ -200,6 +215,27 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 				expect(tx).toNot(beNil())
 				expect(tx.encode()?.toHexString()).to(equal(correctTx))
 			}
+			
+			it("Can create custom coin") {
+				
+				let mnemonic = "dial script notice debris supreme game crisp taste place web gesture execute"
+				let seed = String.seedString(mnemonic)!
+				let pk = PrivateKey(seed: Data(hex: seed))
+				
+				let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
+				
+				let newCoin = CreateCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", name: "TESTCOIN", symbol: "TESTCOIN", initialAmount: BigUInt(1), initialReserve: BigUInt(100), reserveRatio: BigUInt(15))
+				
+				
+				let signed = RawTransactionSigner.sign(rawTx: newCoin, privateKey: key.raw.toHexString())
+				
+				self.manager?.send(tx: "Mt" + signed!, completion: { (res1, res2, error) in
+					
+				})
+				
+				
+			}
+			
 		}
 	}
 }

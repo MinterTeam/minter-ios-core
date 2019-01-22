@@ -46,7 +46,7 @@ class MasternodeViewController: UIViewController {
 						SVProgressHUD.showSuccess(withStatus: res ?? "Done")
 					}
 					else {
-						SVProgressHUD.showError(withStatus: (error as? APIClient.APIClientResponseError)?.userData?.description)
+						SVProgressHUD.showError(withStatus: (error as? HTTPClientError)?.userData?.description)
 					}
 				}
 			}
@@ -68,7 +68,7 @@ class MasternodeViewController: UIViewController {
 						SVProgressHUD.showSuccess(withStatus: res ?? "Done")
 					}
 					else {
-						SVProgressHUD.showError(withStatus: (error as? APIClient.APIClientResponseError)?.userData?.description)
+						SVProgressHUD.showError(withStatus: (error as? HTTPClientError)?.userData?.description)
 					}
 				}
 			}
@@ -89,7 +89,7 @@ class MasternodeViewController: UIViewController {
 						SVProgressHUD.showSuccess(withStatus: res ?? "Done")
 					}
 					else {
-						SVProgressHUD.showError(withStatus: (error as? APIClient.APIClientResponseError)?.userData?.description)
+						SVProgressHUD.showError(withStatus: (error as? HTTPClientError)?.userData?.description)
 					}
 				}
 			}

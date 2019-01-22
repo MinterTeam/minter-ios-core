@@ -50,6 +50,55 @@ public class TransactionManager : BaseManager {
 		}
 	}
 	
+	public func transaction(query: String, completion: (([Transaction]?, Error?) -> ())?) {
+		
+		let url = MinterAPIURL.transactions.url()
+		
+		self.httpClient.getRequest(url, parameters: ["query" : query]) { (response, error) in
+			
+			var transactions: [Transaction]?
+			var err: Error?
+			
+			defer {
+				completion?(transactions, err)
+			}
+			
+			guard error == nil else {
+				err = error
+				return
+			}
+			
+			if let res = response.data as? [[String : Any]] {
+				transactions = Mapper<TransactionMappable>().mapArray(JSONArray: res)
+			}
+		}
+	}
+	
+	
+	public func unconfirmedTransaction(limit: String = "0", completion: (([String : Any]?, Error?) -> ())?) {
+		
+		let url = MinterAPIURL.unconfirmedTransactions.url()
+		
+		self.httpClient.getRequest(url, parameters: ["limit" : limit]) { (response, error) in
+			
+			var transactions: [String : Any]?
+			var err: Error?
+			
+			defer {
+				completion?(transactions, err)
+			}
+			
+			guard error == nil else {
+				err = error
+				return
+			}
+			
+			if let res = response.data as? [String : Any] {
+				transactions = res
+			}
+		}
+	}
+	
 	/**
 	Method to send raw transaction to a Minter Node
 	- Parameters:
@@ -78,7 +127,7 @@ public class TransactionManager : BaseManager {
 			let data = response.data as? [String : Any]
 			hash = data?["hash"] as? String
 			//TODO: migrate to TransactionManagerError
-			resultText = (err as? APIClient.APIClientResponseError)?.userData?["message"] as? String
+			resultText = (err as? HTTPClientError)?.userData?["message"] as? String
 		}
 	}
 	

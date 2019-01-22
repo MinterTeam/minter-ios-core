@@ -38,5 +38,28 @@ public class CandidateManager : BaseManager {
 			res = (response.data as? [String : Any]) as? [String : Any]
 		}
 	}
+	
+	public func candidates(height: String = "0", completion: (([[String : Any]]?, Error?) -> ())?) {
+		
+		let url = MinterAPIURL.candidates.url()
+		
+		self.httpClient.getRequest(url, parameters: ["height" : height]) { (response, err) in
+			
+			var res: [[String : Any]]?
+			var error: Error?
+			
+			defer {
+				completion?(res, error)
+			}
+			
+			guard nil == err else {
+				error = err
+				return
+			}
+			
+			res = response.data as? [[String : Any]]
+		}
+		
+	}
 
 }
