@@ -14,13 +14,6 @@ let APIClientDefaultHeaders: [String : String] = ["X-Minter-Chain-Id" : "odin"]
 /// APIClient
 public class APIClient {
 	
-//	public struct APIClientResponseError : Error {
-//		
-//		public init() {}
-//		
-//		public var userData: [String : Any]?
-//	}
-	
 	//MARK: -
 	
 	private convenience init() {
@@ -53,9 +46,6 @@ public class APIClient {
 		var newHeaders = defaultHeaders ?? [:]
 		
 		APIClientDefaultHeaders.forEach({ (k, v) in
-			
-			
-			
 			newHeaders[k] = v
 		})
 		

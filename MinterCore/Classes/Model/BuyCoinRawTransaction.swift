@@ -9,12 +9,19 @@ import Foundation
 import BigInt
 
 
-/// BuyCoinRawTransaction
+/// `BuyCoinRawTransaction` is a transaction for buing a coin paying another coin (owned by sender).
+/// - SeeAlso: https://docs.minter.network/#section/Transactions/Buy-coin-transaction
 public class BuyCoinRawTransaction : RawTransaction {
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {
+	/// Convenience initializer
+	///
+	/// - Parameters:
+	///   - nonce: Nonce
+	///   - gasCoin: Coin to spend fee from
+	///		- data: Encoded data to be send (Can be obtained by encoding BuyCoinRawTransactionData instance)
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, data: Data) {
 		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoin, type: RawTransactionType.buyCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce, gasPrice: BigUInt(gasPrice), gasCoin: gasCoin, type: RawTransactionType.buyCoin.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
@@ -27,10 +34,10 @@ public class BuyCoinRawTransaction : RawTransaction {
 	///   - coinTo: Coin which you'd like to buy
 	///   - value: How much you'd like to buy
 	///   - maximumValueToSell: Maximum value of coins to sell.
-	public convenience init(nonce: BigUInt, gasCoin: Data, coinFrom: String, coinTo: String, value: BigUInt, maximumValueToSell: BigUInt) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, coinFrom: String, coinTo: String, value: BigUInt, maximumValueToSell: BigUInt) {
 		
 		let encodedData = BuyCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value, maximumValueToSell: maximumValueToSell).encode() ?? Data()
-		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
+		self.init(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, data: encodedData)
 	}
 	
 }

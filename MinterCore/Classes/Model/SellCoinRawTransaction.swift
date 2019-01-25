@@ -9,24 +9,26 @@ import Foundation
 import BigInt
 
 
-/// SellCoinRawTransaction
+/// `SellCoinRawTransaction` is a transaction for selling one coin (owned by sender) in favour of another coin
+/// in a system.
+/// - SeeAlso: https://docs.minter.network/#section/Transactions/Sell-coin-transaction
 public class SellCoinRawTransaction : RawTransaction {
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, data: Data) {
 		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoin, type: RawTransactionType.sellCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce, gasPrice: BigUInt(gasPrice), gasCoin: gasCoin, type: RawTransactionType.sellCoin.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, coinFrom: String, coinTo: String, value: BigUInt, minimumValueToBuy: BigUInt) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, coinFrom: String, coinTo: String, value: BigUInt, minimumValueToBuy: BigUInt) {
 		
 		let encodedData = SellCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValueToBuy).encode() ?? Data()
-		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
+		self.init(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, data: encodedData)
 	}
 
 }
 
-/// SellCoinRawTransactionData
+/// `SellCoinRawTransactionData` class
 public struct SellCoinRawTransactionData: Encodable, Decodable {
 	
 	/// Coin symbol (e.g. "MNT")
@@ -85,16 +87,18 @@ public struct SellCoinRawTransactionData: Encodable, Decodable {
 
 
 
-/// SellAllCoinsRawTransaction
+/// `SellAllCoinsRawTransaction` is a transaction for selling all existing coins of one type (owned by sender)
+/// in favour of another coin in a system.
+/// - SeeAlso: https://docs.minter.network/#section/Transactions/Sell-all-coin-transaction
 public class SellAllCoinsRawTransaction : RawTransaction {
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, data: Data) {
 		
 		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoin, type: RawTransactionType.sellAllCoins.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, coinFrom: String, coinTo: String, minimumValueToBuy: BigUInt) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, coinFrom: String, coinTo: String, minimumValueToBuy: BigUInt) {
 		
 		let encodedData = SellAllCoinsRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValueToBuy).encode() ?? Data()
 		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
@@ -102,9 +106,7 @@ public class SellAllCoinsRawTransaction : RawTransaction {
 
 }
 
-// MARK: - SellAllCoinsRawTransactionData
-
-/// SellAllCoinsRawTransactionData
+/// SellAllCoinsRawTransactionData class
 public struct SellAllCoinsRawTransactionData: Encodable, Decodable {
 	
 	/// Coin you'd like to sell

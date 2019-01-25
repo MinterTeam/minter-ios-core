@@ -14,7 +14,7 @@ public class CreateMultisigAddressRawTransaction : RawTransaction {
 	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
 		
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		self.init(nonce: nonce, gasPrice: RawTransactionDefaultGasPrice, gasCoin: coinData, type: RawTransactionType.createMultisigAddress.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce, gasPrice: BigUInt(RawTransactionDefaultGasPrice), gasCoin: coinData, type: RawTransactionType.createMultisigAddress.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	

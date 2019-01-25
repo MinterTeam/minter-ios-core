@@ -22,7 +22,7 @@ public protocol SignatureRLPEncodable : RLPEncodable {
 //TODO: Change depend on network!
 public let RawTransactionDefaultTransactionCoin = Coin.baseCoin().symbol ?? "MNT"
 
-public let RawTransactionDefaultGasPrice = BigUInt("1000000000", radix: 10)!
+public let RawTransactionDefaultGasPrice = 1
 
 /// Transaction type
 /// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/transactions.html#types
@@ -158,7 +158,7 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 	/// Used for prevent transaction reply
 	public var nonce: BigUInt
 	/// Used for managing transaction fees
-	public var gasPrice: BigUInt = RawTransactionDefaultGasPrice
+	public var gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice)
 	/// Coin which will be used to get commission from
 	public var gasCoin: Data
 	/// Transaction type
@@ -196,7 +196,7 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 	- data: RLP-encoded data
 	- Returns: Signed RawTx hex string, which can be send to Minter Node
 	*/
-	public init(nonce: BigUInt, gasPrice: BigUInt = RawTransactionDefaultGasPrice, gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: SignatureData = SignatureData()) {
+	public init(nonce: BigUInt, gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice), gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: SignatureData = SignatureData()) {
 		self.nonce = nonce
 		self.gasPrice = gasPrice
 		self.gasCoin = gasCoin

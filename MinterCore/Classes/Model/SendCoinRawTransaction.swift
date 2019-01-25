@@ -8,31 +8,31 @@
 import Foundation
 import BigInt
 
-/// SendCoinRawTransaction
+/// `SendCoinRawTransaction` is a transaction for sending arbitrary coin.
+/// - SeeAlso: https://docs.minter.network/#section/Transactions/Send-transaction
 public class SendCoinRawTransaction : RawTransaction {
 	
-	public convenience init(nonce: BigUInt, gasCoin: Data, data: Data) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = 1, gasCoin: Data, data: Data) {
 		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoin, type: RawTransactionType.sendCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce, gasPrice: BigUInt(gasPrice), gasCoin: gasCoin, type: RawTransactionType.sendCoin.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = 1, gasCoin: String, data: Data) {
 		
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: coinData, type: RawTransactionType.sendCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce, gasPrice: BigUInt(gasPrice), gasCoin: coinData, type: RawTransactionType.sendCoin.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, gasCoin: String, to: String, value: BigUInt, coin: String) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = 1, gasCoin: String, to: String, value: BigUInt, coin: String) {
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		
 		let encodedData = SendCoinRawTransactionData(to: to, value: value, coin: coin).encode() ?? Data()
-		self.init(nonce: nonce, gasCoin: coinData, data: encodedData)
+		self.init(nonce: nonce, gasPrice: gasPrice, gasCoin: coinData, data: encodedData)
 	}
-	
-	
+
 }
 
 /// SendCoinRawTransactionData

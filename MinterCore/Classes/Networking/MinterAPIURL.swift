@@ -9,7 +9,7 @@ import Foundation
 
 
 
-let MinterAPIBaseURL: String! = MinterCoreSDK.shared.url?.absoluteString
+let MinterAPIBaseURL: String! = MinterCoreSDK.shared.url!.absoluteString + "/api/"
 
 
 public enum MinterAPIURL {
