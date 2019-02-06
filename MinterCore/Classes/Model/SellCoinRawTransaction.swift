@@ -14,14 +14,14 @@ import BigInt
 /// - SeeAlso: https://docs.minter.network/#section/Transactions/Sell-coin-transaction
 public class SellCoinRawTransaction : RawTransaction {
 	
-	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, data: Data) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: String, data: Data) {
 		
-		self.init(nonce: nonce, gasPrice: BigUInt(gasPrice), gasCoin: gasCoin, type: RawTransactionType.sellCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+		self.init(nonce: nonce, gasPrice: BigUInt(gasPrice), gasCoin: coinData, type: RawTransactionType.sellCoin.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, coinFrom: String, coinTo: String, value: BigUInt, minimumValueToBuy: BigUInt) {
-		
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: String, coinFrom: String, coinTo: String, value: BigUInt, minimumValueToBuy: BigUInt) {
 		let encodedData = SellCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValueToBuy).encode() ?? Data()
 		self.init(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, data: encodedData)
 	}
@@ -92,16 +92,17 @@ public struct SellCoinRawTransactionData: Encodable, Decodable {
 /// - SeeAlso: https://docs.minter.network/#section/Transactions/Sell-all-coin-transaction
 public class SellAllCoinsRawTransaction : RawTransaction {
 	
-	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, data: Data) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: String, data: Data) {
 		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoin, type: RawTransactionType.sellAllCoins.BigUIntValue(), payload: Data(), serviceData: Data())
+		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+		self.init(nonce: nonce, gasPrice: BigUInt(gasPrice), gasCoin: coinData, type: RawTransactionType.sellAllCoins.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
-	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: Data, coinFrom: String, coinTo: String, minimumValueToBuy: BigUInt) {
+	public convenience init(nonce: BigUInt, gasPrice: Int = RawTransactionDefaultGasPrice, gasCoin: String, coinFrom: String, coinTo: String, minimumValueToBuy: BigUInt) {
 		
 		let encodedData = SellAllCoinsRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValueToBuy).encode() ?? Data()
-		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
+		self.init(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, data: encodedData)
 	}
 
 }
