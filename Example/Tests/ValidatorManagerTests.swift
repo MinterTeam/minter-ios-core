@@ -29,9 +29,9 @@ class ValidatorManagerTestsSpec : BaseQuickSpec {
 			it("ValidatorManager can be initialized") {
 				self.manager = ValidatorManager(httpClient: self.http)
 				
-				waitUntil(timeout: 10.0) { done in
+				waitUntil(timeout: 30.0) { done in
 					
-					self.manager?.validators(with: { (validators, error) in
+					self.manager?.validators(height: 1, with: { (validators, error) in
 						expect(validators).toNot(beNil())
 						expect(error).to(beNil())
 						done()

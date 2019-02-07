@@ -98,7 +98,7 @@ class ViewController: UIViewController {
 
 		
 		let validatorManager = ValidatorManager.default
-		validatorManager.validators { (validators, error) in
+		validatorManager.validators(height: 1) { (validators, error) in
 			print(validators)
 			print(error)
 		}

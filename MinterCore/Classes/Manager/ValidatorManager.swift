@@ -14,11 +14,11 @@ public class ValidatorManager : BaseManager {
 	/// Method retreives list of active validators
 	///
 	/// - Parameter completion: method which will be called after request finished.
-	public func validators(with completion: (([[String : Any]]?, Error?) -> ())?) {
+	public func validators(height: Int, with completion: (([[String : Any]]?, Error?) -> ())?) {
 		
 		let url = MinterAPIURL.validators.url()
 		
-		self.httpClient.getRequest(url, parameters: ["height" : 0]) { (response, err) in
+		self.httpClient.getRequest(url, parameters: ["height" : height]) { (response, err) in
 			
 			var res: [[String : Any]]?
 			var error: Error?

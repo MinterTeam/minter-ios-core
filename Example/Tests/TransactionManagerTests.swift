@@ -28,13 +28,12 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 			}
 			
 			//Transaction info
-			
 			it("TransactionManager can get transaction info") {
 				
 				self.manager = TransactionManager.default
 				
 				waitUntil(timeout: 10) { done in
-					self.manager?.transaction(hash: "Mte74b8a1cadfc6464fa0d8f4d0bd51fcb5035ced7a9bc2c055b59a65d3f9566c2", completion: { (transaction, error) in
+					self.manager?.transaction(hash: "Mt928f473c42c1c278b176ff6171d026d025374c201397b05f2a76899132705118", completion: { (transaction, error) in
 						
 						expect(error).to(beNil())
 						expect(transaction).toNot(beNil())
@@ -200,7 +199,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 				}
 			}
 			
-			it("Can send create multisig transaction") {
+			it("Can create multisig transaction") {
 				
 				let correctTx = "f84701018a4d4e54000000000000000cb0ef01c20101ea9433bd6a537e8ad987b234ea3098c992f158df7b0f9433bd6a537e8ad987b234ea3098c992f158df7b0f80800184c3018080"
 				
