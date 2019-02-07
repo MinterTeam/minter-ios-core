@@ -49,7 +49,7 @@ class CoinerViewController: UIViewController {
 		
 		let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
 		
-		TransactionManager.default.send(tx: signed!) { (res, res1, err) in
+		TransactionManager.default.send(tx: "Mt" + signed!) { (res, res1, err) in
 			DispatchQueue.main.async {
 				
 				if nil == err {

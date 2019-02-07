@@ -92,7 +92,7 @@ let rawTransaction = SendCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", d
 /// Sign raw transaction with private key
 let signedTx = RawTransactionSigner.sign(rawTx: rawTransaction, privateKey: "8da1c947b489399a5b07b6bd3d9bb41f7647bb01a28303431b6993a8092f0bed")!
 /// Send raw transaction
-transactionManager.send(tx: signedTx) { (txHash, resultText, error) in
+transactionManager.send(tx: "Mt" + signedTx) { (txHash, resultText, error) in
   print(txHash)
   print(resultText)
   print(error)

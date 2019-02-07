@@ -75,7 +75,7 @@ class ViewController: UIViewController {
 		let signedTx = RawTransactionSigner.sign(rawTx: rawTransaction, privateKey: key.raw.toHexString())!
 		
 		/// Sending raw transaction
-		transactionManager.send(tx: signedTx) { (txHash, resultText, error) in
+		transactionManager.send(tx: "Mt" + signedTx) { (txHash, resultText, error) in
 			print(txHash)
 			print(resultText)
 			print(error)

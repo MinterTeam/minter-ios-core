@@ -63,7 +63,7 @@ class CheckBookViewController: UIViewController {
 		
 		let result = RawTransactionSigner.sign(rawTx: tx, privateKey: pk)
 		
-		TransactionManager.default.send(tx: result!) { (res, ress, err) in
+		TransactionManager.default.send(tx: "Mt" + result!) { (res, ress, err) in
 			
 			guard nil == err else {
 				SVProgressHUD.showError(withStatus: err.debugDescription ?? "")

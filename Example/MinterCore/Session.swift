@@ -29,15 +29,13 @@ class Session {
 			fatalError("Should contain seed")
 		}
 		
-		let privateKey = PrivateKey(seed: seed.data(using: .utf8)!)
+		let privateKey = PrivateKey(seed: Data(hex: seed))
 		
 		let key = privateKey.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
 		return key
 	}
 	
 	var address: String {
-		
-
 		
 		let publicKey = RawTransactionSigner.publicKey(privateKey: privateKey.raw, compressed: false)!.dropFirst()
 		

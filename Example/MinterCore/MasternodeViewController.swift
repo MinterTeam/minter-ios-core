@@ -38,7 +38,7 @@ class MasternodeViewController: UIViewController {
 			
 			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
 			
-			TransactionManager.default.send(tx: signed!) { (res, res1, error) in
+			TransactionManager.default.send(tx: "Mt" + signed!) { (res, res1, error) in
 				
 				DispatchQueue.main.async {
 					
@@ -61,7 +61,7 @@ class MasternodeViewController: UIViewController {
 			let tx = SetCandidateOnlineRawTransaction(nonce: BigUInt(2), gasCoin: "MNT", publicKey: self.publicKeyTextField.text ?? "")
 			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
 			
-			TransactionManager.default.send(tx: signed!) { res, res1, error in
+			TransactionManager.default.send(tx: "Mt" + signed!) { res, res1, error in
 				DispatchQueue.main.async {
 					
 					if nil == error {
@@ -79,10 +79,10 @@ class MasternodeViewController: UIViewController {
 		
 		SVProgressHUD.showProgress(0.5)
 		DispatchQueue.global().async {
-			let tx = SetCandidateOfflineRawTransaction(nonce: BigUInt(3), gasCoin: "MNT", publicKey: self.publicKeyTextField.text ?? "")
+			let tx = SetCandidateOfflineRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", publicKey: self.publicKeyTextField.text ?? "")
 			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
 			
-			TransactionManager.default.send(tx: signed!) { res, res1, error in
+			TransactionManager.default.send(tx: "Mt" + signed!) { res, res1, error in
 				DispatchQueue.main.async {
 					
 					if nil == error {
