@@ -12,7 +12,7 @@ import BigInt
 import SVProgressHUD
 
 
-class CheckBookViewController: UIViewController {
+class CheckBookViewController: BaseViewController {
 	
 	//MARK: - IBOutlet
 
@@ -32,14 +32,29 @@ class CheckBookViewController: UIViewController {
 	
 	
 	@IBAction func issueButtonDidTap(_ sender: Any) {
-		let check = makeIssueTransaction(nonce: nonceTextField.text ?? "1", dueBlock: dueBlockTextField.text ?? "999999", amount: amountTextField.text ?? "0", coin: coinTextField.text ?? "MNT", passPhrase: passPhraseTextField.text ?? "pass")
-		if let check = check {
-			checkTextField.text = check
+		
+		let dueBlock = dueBlockTextField.text ?? "999999"
+		let amount = amountTextField.text ?? "0"
+		let coin = coinTextField.text ?? "MNT"
+		let passPhrase = passPhraseTextField.text ?? "pass"
+		
+		getNonce { (nonce) in
 			
-			SVProgressHUD.showSuccess(withStatus: check)
-		}
-		else {
-			SVProgressHUD.showError(withStatus: "Can't create check")
+			guard let nonce = nonce else {
+				SVProgressHUD.showError(withStatus: "Can't get nonce")
+				return
+			}
+			
+			let check = self.makeIssueTransaction(nonce: nonce, dueBlock: dueBlock, amount: amount, coin: coin, passPhrase: passPhrase)
+			DispatchQueue.main.async {
+				if let check = check {
+					self.checkTextField.text = check
+					SVProgressHUD.showSuccess(withStatus: check)
+				}
+				else {
+					SVProgressHUD.showError(withStatus: "Can't create check")
+				}
+			}
 		}
 	}
 	
@@ -58,20 +73,29 @@ class CheckBookViewController: UIViewController {
 		let data = RedeemCheckRawTransactionData(rawCheck: rawCheck, proof: proof!)
 		
 		let gasCoin = "MNT"
-		let tx = RedeemCheckRawTransaction(gasCoin: gasCoin, rawCheck: rawCheck, proof: proof!)!
-		tx.data = data.encode()!
 		
-		let result = RawTransactionSigner.sign(rawTx: tx, privateKey: pk)
-		
-		TransactionManager.default.send(tx: "Mt" + result!) { (res, ress, err) in
+		getNonce { (nonce) in
 			
-			guard nil == err else {
-				SVProgressHUD.showError(withStatus: err.debugDescription ?? "")
+			guard let nonce = nonce else {
+				SVProgressHUD.showError(withStatus: "Can't get nonce")
 				return
 			}
+		
+			let tx = RedeemCheckRawTransaction(nonce: nonce, gasCoin: gasCoin, rawCheck: rawCheck, proof: proof!)!
+			tx.data = data.encode()!
 			
-			SVProgressHUD.showError(withStatus: "Check has been redeemed")
+			let result = RawTransactionSigner.sign(rawTx: tx, privateKey: pk)
 			
+			TransactionManager.default.send(tx: "Mt" + result!) { (res, ress, err) in
+				
+				guard nil == err else {
+					SVProgressHUD.showError(withStatus: err.debugDescription ?? "")
+					return
+				}
+				
+				SVProgressHUD.showError(withStatus: "Check has been redeemed")
+				
+			}
 		}
 		
 	}
@@ -84,9 +108,8 @@ class CheckBookViewController: UIViewController {
 
 	//MARK: -
 	
-	func makeIssueTransaction(nonce: String = "0", dueBlock: String = "999999", amount: String, coin: String, passPhrase: String) -> String? {
+	func makeIssueTransaction(nonce: BigUInt, dueBlock: String = "999999", amount: String, coin: String, passPhrase: String) -> String? {
 		
-		let nonce = BigUInt(nonce) ?? BigUInt(0)
 		let due = BigUInt(dueBlock) ?? BigUInt(0)
 		let val = BigUInt(amount) ?? BigUInt(0)
 		

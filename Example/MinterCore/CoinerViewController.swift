@@ -12,7 +12,7 @@ import BigInt
 import SVProgressHUD
 
 
-class CoinerViewController: UIViewController {
+class CoinerViewController: BaseViewController {
 	
 	//MARK: -
 
@@ -43,20 +43,28 @@ class CoinerViewController: UIViewController {
 			return
 		}
 		
-		let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio)
-		
-		let tx = CreateCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", data: data.encode()!)
-		
-		let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
-		
-		TransactionManager.default.send(tx: "Mt" + signed!) { (res, res1, err) in
-			DispatchQueue.main.async {
-				
-				if nil == err {
-					SVProgressHUD.showSuccess(withStatus: res ?? "Done")
-				}
-				else {
-					SVProgressHUD.showError(withStatus: (err as? HTTPClientError)?.userData?.description)
+		getNonce { (nonce) in
+			
+			guard let nonce = nonce else {
+				SVProgressHUD.showError(withStatus: "Can't get nonce")
+				return
+			}
+			
+			let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio)
+			
+			let tx = CreateCoinRawTransaction(nonce: nonce, gasCoin: "MNT", data: data.encode()!)
+			
+			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
+			
+			TransactionManager.default.send(tx: "Mt" + signed!) { (res, res1, err) in
+				DispatchQueue.main.async {
+					
+					if nil == err {
+						SVProgressHUD.showSuccess(withStatus: res ?? "Done")
+					}
+					else {
+						SVProgressHUD.showError(withStatus: (err as? HTTPClientError)?.userData?.description)
+					}
 				}
 			}
 		}

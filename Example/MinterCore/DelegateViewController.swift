@@ -12,7 +12,7 @@ import SVProgressHUD
 import BigInt
 
 
-class DelegateViewController: UIViewController {
+class DelegateViewController: BaseViewController {
 
 	//MARK: -
 	
@@ -25,19 +25,28 @@ class DelegateViewController: UIViewController {
 	@IBAction func didTapDelegateButton(_ sender: Any) {
 		
 		let amount = (Decimal(string: amountTextField.text ?? "0") ?? 0) * TransactionCoinFactorDecimal
+		let coin = coinTextField.text ?? "MNT"
+		let publicKey = publicKeyTextField.text ?? ""
 		
-		let tx = DelegateRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", publicKey: publicKeyTextField.text ?? "", coin: coinTextField.text ?? "MNT", value: BigUInt(decimal: amount)!)
-		
-		let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
-		
-		TransactionManager.default.send(tx: "Mt" + signed!) { (res, res1, err) in
-			DispatchQueue.main.async {
-				
-				if nil == err {
-					SVProgressHUD.showSuccess(withStatus: res ?? "Done")
-				}
-				else {
-					SVProgressHUD.showError(withStatus: (err as? HTTPClientError)?.userData?.description)
+		getNonce { (nonce) in
+			
+			guard let nonce = nonce else {
+				return
+			}
+			
+			let tx = DelegateRawTransaction(nonce: nonce, gasCoin: "MNT", publicKey: publicKey, coin: coin, value: BigUInt(decimal: amount)!)
+			
+			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
+			
+			TransactionManager.default.send(tx: "Mt" + signed!) { (res, res1, err) in
+				DispatchQueue.main.async {
+					
+					if nil == err {
+						SVProgressHUD.showSuccess(withStatus: res ?? "Done")
+					}
+					else {
+						SVProgressHUD.showError(withStatus: (err as? HTTPClientError)?.userData?.description)
+					}
 				}
 			}
 		}

@@ -11,7 +11,7 @@ import MinterCore
 import Alamofire
 
 
-class WalletViewController: UIViewController {
+class WalletViewController: BaseViewController {
 	
 	//MARK: -
 	

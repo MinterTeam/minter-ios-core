@@ -25,6 +25,7 @@
 		FA13691821709F3200CB74BE /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13691721709F3200CB74BE /* Session.swift */; };
 		FA17817521F20DCE00FECDED /* BlockManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17817421F20DCE00FECDED /* BlockManagerTests.swift */; };
 		FA17817921F2180700FECDED /* EventManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17817821F2180700FECDED /* EventManagerTests.swift */; };
+		FA1835A4220D119900310CAF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1835A3220D119900310CAF /* BaseViewController.swift */; };
 		FA197B1A21EA197F00264CE6 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		FA197B1E21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */; };
 		FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */; };
@@ -94,6 +95,7 @@
 		FA13691721709F3200CB74BE /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FA17817421F20DCE00FECDED /* BlockManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockManagerTests.swift; sourceTree = "<group>"; };
 		FA17817821F2180700FECDED /* EventManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManagerTests.swift; sourceTree = "<group>"; };
+		FA1835A3220D119900310CAF /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCandidateRawTransactionTests.swift; sourceTree = "<group>"; };
 		FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataTests.swift; sourceTree = "<group>"; };
 		FA4638F921C7A1CC001846D9 /* SendCoinRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinRawTransactionTests.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 			children = (
 				FA13691721709F3200CB74BE /* Session.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				FA1835A3220D119900310CAF /* BaseViewController.swift */,
 				FA0E82672178822400883B67 /* CheckBookViewController.swift */,
 				FA13691521708F9A00CB74BE /* WalletViewController.swift */,
 				FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */,
@@ -509,6 +512,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				FACB437F217F2486004D0C53 /* DelegateViewController.swift in Sources */,
 				FA0E82682178822400883B67 /* CheckBookViewController.swift in Sources */,
+				FA1835A4220D119900310CAF /* BaseViewController.swift in Sources */,
 				FA13691821709F3200CB74BE /* Session.swift in Sources */,
 				FACB437D2179FF04004D0C53 /* MasternodeViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
