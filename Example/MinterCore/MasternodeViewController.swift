@@ -120,11 +120,7 @@ class MasternodeViewController: BaseViewController {
 				}
 			})
 		}
-		
 	}
-	
-	
-	
 	
 	//MARK: -
 

@@ -37,8 +37,6 @@ class StringHelperSpec: QuickSpec {
 			
 		}
 		
-		
-		
 		describe("String Helper Tests") {
 			
 			it("Should strip Mx prefix") {
@@ -58,6 +56,13 @@ class StringHelperSpec: QuickSpec {
 				let val = ("mX" + base).stripMinterHexPrefix()
 				expect(val).to(equal(base))
 			}
+			
+			it("Should strip Mx prefix") {
+				let base = "mxMxMXmxmXfsdfsdfdsfsdf"
+				let val = ("mX" + base).stripMinterHexPrefix()
+				expect(val).to(equal(base))
+			}
+
 			
 			it("Should strip Mx prefix") {
 				let base = "fsdfsdfdsfsdf"
