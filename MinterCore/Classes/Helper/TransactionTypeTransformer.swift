@@ -9,7 +9,9 @@ import Foundation
 import ObjectMapper
 
 /// TransactionTypeTransformer class
-open class TransactionTypeTransformer : TransformType {
+public class TransactionTypeTransformer : TransformType {
+	
+	public init() {}
 
 	public typealias Object = TransactionType
 
