@@ -23,12 +23,13 @@ public enum MinterAPIURL {
 	case unconfirmedTransactions
 	case transaction
 	case transactions
-	
+
 	case coinInfo
 	case estimateCoinBuy
 	case estimateCoinSell
+	case estimateCoinSellAll
 	case estimateTxCommission
-	
+
 	case blockNumber
 	
 	case status
@@ -82,6 +83,9 @@ public enum MinterAPIURL {
 			
 		case .estimateCoinSell:
 			return URL(string: MinterAPIBaseURL + "/estimate_coin_sell")!
+
+		case .estimateCoinSellAll:
+			return URL(string: MinterAPIBaseURL + "/estimate_coin_sell_all")!
 			
 		case .estimateCoinBuy:
 			return URL(string: MinterAPIBaseURL + "/estimate_coin_buy")!

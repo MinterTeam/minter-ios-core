@@ -26,7 +26,7 @@ class DelegateRawTransactionTestsSpec: BaseQuickSpec {
 				
 				let gasCoin = coin.data(using: .utf8)!.setLengthRight(10)!
 				
-				let model = DelegateRawTransaction(nonce: nonce, gasCoin: coin, data: data)
+				let model = DelegateRawTransaction(nonce: nonce, chainId: 2, gasCoin: coin, data: data)
 				
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))
@@ -44,7 +44,7 @@ class DelegateRawTransactionTestsSpec: BaseQuickSpec {
 				
 				let data = RLP.encode([Data(hex: publicKey), gasCoin, value])
 				
-				let model = DelegateRawTransaction(nonce: nonce, gasCoin: coin, publicKey: publicKey, coin: coin, value: value)
+				let model = DelegateRawTransaction(nonce: nonce, chainId: 2, gasCoin: coin, publicKey: publicKey, coin: coin, value: value)
 				
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))

@@ -52,7 +52,7 @@ class CoinerViewController: BaseViewController {
 			
 			let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio)
 			
-			let tx = CreateCoinRawTransaction(nonce: nonce, gasCoin: "MNT", data: data.encode()!)
+			let tx = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", data: data.encode()!)
 			
 			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
 			

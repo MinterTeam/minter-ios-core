@@ -26,7 +26,7 @@ class UnbondRawTransactionTestsSpec: BaseQuickSpec {
 				
 				let gasCoin = coin.data(using: .utf8)!.setLengthRight(10)!
 				
-				let model = UnbondRawTransaction(nonce: nonce, gasCoin: gasCoin, data: data)
+				let model = UnbondRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, data: data)
 				
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))
@@ -44,7 +44,7 @@ class UnbondRawTransactionTestsSpec: BaseQuickSpec {
 				
 				let data = RLP.encode([Data(hex: publicKey), gasCoin, value])
 				
-				let model = UnbondRawTransaction(nonce: nonce, gasCoin: gasCoin, publicKey: publicKey, coin: coin, value: value)
+				let model = UnbondRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, publicKey: publicKey, coin: coin, value: value)
 				
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))

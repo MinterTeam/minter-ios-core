@@ -39,7 +39,7 @@ class EditCandidateRawTransactionTestsSpec: BaseQuickSpec {
 				
 				let data = EditCandidateRawTransactionData(publicKey: pk, rewardAddress: address, ownerAddress: address)?.encode()
 				
-				let model = EditCandidateRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", publicKey: pk, rewardAddress: address, ownerAddress: address)
+				let model = EditCandidateRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoin: "MNT", publicKey: pk, rewardAddress: address, ownerAddress: address)
 				
 				expect(model).toNot(beNil())
 				expect(model?.data).to(equal(data))

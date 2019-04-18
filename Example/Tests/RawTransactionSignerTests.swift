@@ -70,29 +70,31 @@ class RawTransactionSignerSpec: BaseQuickSpec {
 		}
 		
 		describe("RawTransactionSigner can sign tx") {
+			it("Should be equal to valid sign") {
+				let validSign = "f8840102018a4d4e540000000000000001aae98a4d4e5400000000000000941b685a7c1e78726c48f619c497a07ed75fe00483880de0b6b3a7640000808001b845f8431ca01f36e51600baa1d89d2bee64def9ac5d88c518cdefe45e3de66a3cf9fe410de4a01bc2228dc419a97ded0efe6848de906fbe6c659092167ef0e7dcb8d15024123a"
 
-			let validSign = "f88301018a4d4e540000000000000001aae98a4d4e5400000000000000941b685a7c1e78726c48f619c497a07ed75fe00483880de0b6b3a7640000808001b845f8431ba05163017775fefa4d56f71ae50a8ddf361628fddc1101365b2eb6fd9b5dbdc250a02fbdc56b6cf963206f807e2899f05e4fac71f43c9adfd11ea6baa7585b8b8115"
+				let nonce = BigUInt(1)
+				let gasCoin = "MNT"
+				let sendTx = SendCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, to: "Mx1b685a7c1e78726c48f619c497a07ed75fe00483", value: BigUInt("1000000000000000000")!, coin: "MNT")
+				let sig = RawTransactionSigner.sign(rawTx: sendTx, privateKey: self.privateKey)
 
-			let nonce = BigUInt(1)
-			let gasCoin = "MNT"
-			let sendTx = SendCoinRawTransaction(nonce: nonce, gasCoin: gasCoin, to: "Mx1b685a7c1e78726c48f619c497a07ed75fe00483", value: BigUInt("1000000000000000000")!, coin: "MNT")
-			let sig = RawTransactionSigner.sign(rawTx: sendTx, privateKey: privateKey)
-
-			expect(sig).to(equal(validSign))
+				expect(sig).to(equal(validSign))
+			}
 		}
 		
 		describe("RawTransactionSigner can sign check") {
-			
-			let pk = "64e27afaab363f21eec05291084367f6f1297a7b280d69d672febecda94a09ea"
-			let pass = "pass"
-			
-			let validSign = "Mcf89f01830f423f8a4d4e5400000000000000888ac7230489e80000b841ada7ad273bef8a1d22f3e314fdfad1e19b90b1fe8dc7eeb30bd1d391e89af8642af029c138c2e379b95d6bc71b26c531ea155d9435e156a3d113a14c912dfebf001ba0eb3d47f227c3da3b29e09234ad24c49296f177234f3c9700d780712a656c338ba05726e0ed31ab98c07869a99f22e84165fe4a777b0bac7bcf287532210cae1bba"
-			
-			let nonce = BigUInt(1)
-			var check = IssueCheckRawTransaction(nonce: nonce, dueBlock: BigUInt(999999), coin: "MNT", value: BigUInt("10000000000000000000")!, passPhrase: pass)
-			let signed = check.serialize(privateKey: pk, passphrase: pass)
-			
-			expect(signed).to(equal(validSign))
+			it ("Should equal to check") {
+				let pk = "64e27afaab363f21eec05291084367f6f1297a7b280d69d672febecda94a09ea"
+				let pass = "pass"
+				
+				let validSign = "Mcf89f01830f423f8a4d4e5400000000000000888ac7230489e80000b841ada7ad273bef8a1d22f3e314fdfad1e19b90b1fe8dc7eeb30bd1d391e89af8642af029c138c2e379b95d6bc71b26c531ea155d9435e156a3d113a14c912dfebf001ba0eb3d47f227c3da3b29e09234ad24c49296f177234f3c9700d780712a656c338ba05726e0ed31ab98c07869a99f22e84165fe4a777b0bac7bcf287532210cae1bba"
+				
+				let nonce = BigUInt(1)
+				var check = IssueCheckRawTransaction(nonce: nonce, dueBlock: BigUInt(999999), coin: "MNT", value: BigUInt("10000000000000000000")!, passPhrase: pass)
+				let signed = check.serialize(privateKey: pk, passphrase: pass)
+				
+				expect(signed).to(equal(validSign))
+			}
 		}
 		
 		describe("RawTransactionSigner Proof") {
@@ -130,5 +132,4 @@ class RawTransactionSignerSpec: BaseQuickSpec {
 			}
 		}
 	}
-	
 }

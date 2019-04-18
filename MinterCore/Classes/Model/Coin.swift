@@ -68,8 +68,8 @@ public extension Coin {
 			coin.symbol = "MNT"
 		}
 		else {
-			coin.name = "MINT"
-			coin.symbol = "MNT"
+			coin.name = "BIP"
+			coin.symbol = "BIP"
 		}
 		return coin
 	}

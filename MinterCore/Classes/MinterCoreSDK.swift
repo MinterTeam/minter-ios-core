@@ -9,23 +9,27 @@ import Foundation
 
 public class MinterCoreSDK {
 
-	public enum Network {
-		case mainnet
-		case testnet
+	public enum Network : Int {
+		case mainnet = 1
+		case testnet = 2
 	}
 
 	private init() {}
 
 	public static let shared = MinterCoreSDK()
+	
+	public var network: Network {
+		return self._network
+	}
 
 	/// Node url
 	internal var url: URL? = nil
-	internal var network: Network = .testnet
+	internal var _network: Network = .testnet
 
 	/// MinterCore SDK initializer
 	public class func initialize(urlString: String, network: Network = .testnet) {
 		shared.url = URL(string: urlString)
-		shared.network = network
+		shared._network = network
 	}
 
 }

@@ -81,7 +81,7 @@ class CheckBookViewController: BaseViewController {
 				return
 			}
 		
-			let tx = RedeemCheckRawTransaction(nonce: nonce, gasCoin: gasCoin, rawCheck: rawCheck, proof: proof!)!
+			let tx = RedeemCheckRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, rawCheck: rawCheck, proof: proof!)!
 			tx.data = data.encode()!
 			
 			let result = RawTransactionSigner.sign(rawTx: tx, privateKey: pk)

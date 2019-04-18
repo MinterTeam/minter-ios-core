@@ -14,13 +14,17 @@ public class RedeemCheckRawTransaction : RawTransaction {
 	//MARK: -
 	
 	///
-	public init?(nonce: BigUInt = BigUInt(1), gasCoin: String, rawCheck: Data, proof: Data) {
+	public init?(nonce: BigUInt = BigUInt(1),
+							 chainId: Int = MinterCoreSDK.shared.network.rawValue,
+							 gasCoin: String,
+							 rawCheck: Data,
+							 proof: Data) {
 		
 		guard let gsCoin = gasCoin.data(using: .utf8)?.setLengthRight(10), let data = RedeemCheckRawTransactionData(rawCheck: rawCheck, proof: proof).encode() else {
 			return nil
 		}
 		
-		super.init(nonce: nonce, gasCoin: gsCoin, type: RawTransactionType.redeemCheck.BigUIntValue(), payload: Data(), serviceData: Data())
+		super.init(nonce: nonce, chainId: chainId, gasCoin: gsCoin, type: RawTransactionType.redeemCheck.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	

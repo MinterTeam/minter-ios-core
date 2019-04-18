@@ -20,7 +20,7 @@ class SellCoinRawTransactionTestsSpec: BaseQuickSpec {
 				let gasCoin = "gasCoin"
 				let data = "data".data(using: .utf8)!
 				let nonce = BigUInt(1)
-				let tx = SellCoinRawTransaction(nonce: nonce, gasCoin: gasCoin, data: data)
+				let tx = SellCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, data: data)
 				
 				let correctGasCoin = gasCoin.data(using: .utf8)!.setLengthRight(10)
 				
@@ -39,7 +39,7 @@ class SellCoinRawTransactionTestsSpec: BaseQuickSpec {
 				let coinTo = "BPM"
 				let value = BigUInt(1)
 				let minimumValue = BigUInt(0)
-				let tx = SellCoinRawTransaction(nonce: nonce, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValue)
+				let tx = SellCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValue)
 				
 				let data = SellCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValue).encode()!
 				
@@ -84,7 +84,7 @@ class SellAllCoinRawTransactionTestsSpec: QuickSpec {
 				let gasCoin = "gasCoin"
 				let data = "data".data(using: .utf8)!
 				let nonce = BigUInt(1)
-				let tx = SellAllCoinsRawTransaction(nonce: nonce, gasCoin: gasCoin, data: data)
+				let tx = SellAllCoinsRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, data: data)
 				
 				let correctGasCoin = gasCoin.data(using: .utf8)!.setLengthRight(10)
 				
@@ -103,7 +103,7 @@ class SellAllCoinRawTransactionTestsSpec: QuickSpec {
 				let coinTo = "BPM"
 				let minimumValue = BigUInt(0)
 				
-				let tx = SellAllCoinsRawTransaction(nonce: nonce, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValue)
+				let tx = SellAllCoinsRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValue)
 				
 				let data = SellAllCoinsRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValue).encode()!
 				

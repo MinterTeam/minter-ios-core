@@ -24,7 +24,7 @@ class DeclareCandidacyRawTransactionTestsSpec: BaseQuickSpec {
 				let gasCoin = "gasCoin".data(using: .utf8)
 				let data = "data".data(using: .utf8)
 				
-				let model = DeclareCandidacyRawTransaction(nonce: nonce, gasCoin: gasCoin!, data: data!)
+				let model = DeclareCandidacyRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin!, data: data!)
 				
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))
@@ -51,7 +51,7 @@ class DeclareCandidacyRawTransactionTestsSpec: BaseQuickSpec {
 				
 				
 				
-				let model = DeclareCandidacyRawTransaction(nonce: nonce, gasCoin: gasCoin, address: address, publicKey: publicKey, commission: commission, coin: coin, stake: stake)
+				let model = DeclareCandidacyRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, address: address, publicKey: publicKey, commission: commission, coin: coin, stake: stake)
 				
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))

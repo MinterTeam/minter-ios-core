@@ -25,7 +25,7 @@ class SendCoinRawTransactionSpec: BaseQuickSpec {
 				let gasCoin = "MNT".data(using: .utf8)!.setLengthRight(10)!
 				
 				let txData = SendCoinRawTransactionData(to: to, value: value, coin: "MNT").encode()!
-				let tx = SendCoinRawTransaction(nonce: nonce, gasCoin: "MNT", to: to, value: value, coin: "MNT")
+				let tx = SendCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", to: to, value: value, coin: "MNT")
 				
 				expect(tx).toNot(beNil())
 				expect(tx.nonce).to(equal(nonce))
@@ -41,7 +41,7 @@ class SendCoinRawTransactionSpec: BaseQuickSpec {
 				let gasCoin = rawCoin.data(using: .utf8)!.setLengthRight(10)!
 				
 				let txData = SendCoinRawTransactionData(to: to, value: value, coin: rawCoin).encode()!
-				let tx = SendCoinRawTransaction(nonce: nonce, gasCoin: rawCoin, data: txData)
+				let tx = SendCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: rawCoin, data: txData)
 				
 				expect(tx).toNot(beNil())
 				expect(tx.nonce).to(equal(nonce))

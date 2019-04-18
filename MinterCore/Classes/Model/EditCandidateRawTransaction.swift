@@ -11,12 +11,12 @@ import BigInt
 /// EditCandidateRawTransaction class
 public class EditCandidateRawTransaction : RawTransaction {
 	
-	public convenience init?(nonce: BigUInt, gasCoin: String, data: Data) {
+	public convenience init?(nonce: BigUInt, chainId: Int, gasCoin: String, data: Data) {
 		
 		guard let gsCoin = gasCoin.data(using: .utf8)?.setLengthRight(10) else {
 			return nil
 		}
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gsCoin, type: RawTransactionType.editCandidate.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(1), gasCoin: gsCoin, type: RawTransactionType.editCandidate.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
@@ -28,10 +28,10 @@ public class EditCandidateRawTransaction : RawTransaction {
 	///   - publicKey: Candidate's public key
 	///   - rewardAddress: Address to send reward to (e.g. Mx228e5a68b847d169da439ec15f727f08233a7ca6)
 	///   - ownerAddress:
-	public convenience init?(nonce: BigUInt, gasCoin: String, publicKey: String, rewardAddress: String, ownerAddress: String) {
+	public convenience init?(nonce: BigUInt, chainId: Int, gasCoin: String, publicKey: String, rewardAddress: String, ownerAddress: String) {
 		
 		let encodedData = EditCandidateRawTransactionData(publicKey: publicKey, rewardAddress: rewardAddress, ownerAddress: ownerAddress)?.encode() ?? Data()
-		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
+		self.init(nonce: nonce, chainId: chainId, gasCoin: gasCoin, data: encodedData)
 	}
 
 }
@@ -91,4 +91,3 @@ public struct EditCandidateRawTransactionData {
 	}
 	
 }
-

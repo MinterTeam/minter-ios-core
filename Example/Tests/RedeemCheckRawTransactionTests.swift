@@ -22,7 +22,7 @@ class RedeemCheckRawTransactionSpec: BaseQuickSpec {
 				
 				let check = "check".data(using: .utf8)
 				let proof = "proof".data(using: .utf8)
-				let tx = RedeemCheckRawTransaction(gasCoin: "MNT", rawCheck: check!, proof: proof!)
+				let tx = RedeemCheckRawTransaction(chainId: 2, gasCoin: "MNT", rawCheck: check!, proof: proof!)
 				
 				let rlp = RLP.encode([check, proof])
 				
@@ -33,7 +33,7 @@ class RedeemCheckRawTransactionSpec: BaseQuickSpec {
 				
 				let check = "check".data(using: .utf8)
 				let proof = "proof".data(using: .utf8)
-				let tx = RedeemCheckRawTransaction(gasCoin: "MNT", rawCheck: check!, proof: proof!)
+				let tx = RedeemCheckRawTransaction(chainId: 2, gasCoin: "MNT", rawCheck: check!, proof: proof!)
 				
 				let encoded = try? JSONEncoder().encode(tx)
 				expect(encoded).toNot(beNil())

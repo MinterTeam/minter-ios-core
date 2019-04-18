@@ -170,7 +170,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 			
 			it("Can estimate comission") {
 				
-				let sendTX = SendCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", to: "Mx5974a5121cf6bd54118fad788f7d1ae47b33e198", value: BigUInt(1), coin: "MNT")
+				let sendTX = SendCoinRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoin: "MNT", to: "Mx5974a5121cf6bd54118fad788f7d1ae47b33e198", value: BigUInt(1), coin: "MNT")
 				let tx = RawTransactionSigner.sign(rawTx: sendTX, privateKey: "8da1c947b489399a5b07b6bd3d9bb41f7647bb01a28303431b6993a8092f0bed")!
 				
 				self.manager = TransactionManager.default
@@ -223,7 +223,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 				
 				let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
 				
-				let newCoin = CreateCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", name: "TESTCOIN", symbol: "TESTCOIN", initialAmount: BigUInt(1), initialReserve: BigUInt(100), reserveRatio: BigUInt(15))
+				let newCoin = CreateCoinRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoin: "MNT", name: "TESTCOIN", symbol: "TESTCOIN", initialAmount: BigUInt(1), initialReserve: BigUInt(100), reserveRatio: BigUInt(15))
 				
 				
 				let signed = RawTransactionSigner.sign(rawTx: newCoin, privateKey: key.raw.toHexString())

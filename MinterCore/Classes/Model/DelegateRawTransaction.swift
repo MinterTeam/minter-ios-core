@@ -17,11 +17,11 @@ public class DelegateRawTransaction : RawTransaction {
 	///   - nonce: Nonce
 	///   - gasCoin: Coin to spend fee from
 	///   - data: Encoded DelegateRawTransactionData instance
-	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
+	public convenience init(nonce: BigUInt, chainId: Int, gasCoin: String, data: Data) {
 		
 		let gasCoinData = gasCoin.data(using: .utf8)!.setLengthRight(10) ?? Data()
 		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoinData, type: RawTransactionType.delegate.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(1), gasCoin: gasCoinData, type: RawTransactionType.delegate.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
 	
@@ -33,10 +33,10 @@ public class DelegateRawTransaction : RawTransaction {
 	///   - publicKey: Validator's public key
 	///   - coin: Coin which you'd like to delegate
 	///   - value: How much you'd like to delegate
-	public convenience init(nonce: BigUInt, gasCoin: String, publicKey: String, coin: String, value: BigUInt) {
+	public convenience init(nonce: BigUInt, chainId: Int, gasCoin: String, publicKey: String, coin: String, value: BigUInt) {
 		
 		let encodedData = DelegateRawTransactionData(publicKey: publicKey, coin: coin, value: value).encode() ?? Data()
-		self.init(nonce: nonce, gasCoin: gasCoin, data: encodedData)
+		self.init(nonce: nonce, chainId: chainId, gasCoin: gasCoin, data: encodedData)
 	}
 
 }

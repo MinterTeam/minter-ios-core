@@ -57,9 +57,9 @@ class ViewController: UIViewController {
 		let sendData = SendCoinRawTransactionData(to: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d", value:
 		BigUInt(decimal: 1 * TransactionCoinFactorDecimal)!, coin: "MNT").encode()
 		
-		let rawTransaction1 = SendCoinRawTransaction(nonce: BigUInt(1), gasCoin: "MNT", data: sendData!)
+		let rawTransaction1 = SendCoinRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoin: "MNT", data: sendData!)
 		
-		let rawTransaction = CreateCoinRawTransaction(nonce: BigUInt(4), gasCoin: "MNT", name: "BELT COIN3", symbol: "BELTCOIN3", initialAmount: BigUInt(decimal: 1000 * TransactionCoinFactorDecimal)!, initialReserve: BigUInt(decimal: 100 * TransactionCoinFactorDecimal)!, reserveRatio: BigUInt(10))
+		let rawTransaction = CreateCoinRawTransaction(nonce: BigUInt(4), chainId: 2, gasCoin: "MNT", name: "BELT COIN3", symbol: "BELTCOIN3", initialAmount: BigUInt(decimal: 1000 * TransactionCoinFactorDecimal)!, initialReserve: BigUInt(decimal: 100 * TransactionCoinFactorDecimal)!, reserveRatio: BigUInt(10))
 		
 		let mnemonic = "adjust correct photo fancy knee lion blur away coconut inform sun cancel"
 		

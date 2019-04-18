@@ -10,45 +10,48 @@ import BigInt
 
 /// CreateMultisigAddressRawTransaction Class
 public class CreateMultisigAddressRawTransaction : RawTransaction {
-	
-	public convenience init(nonce: BigUInt, gasCoin: String, data: Data) {
-		
+
+	public convenience init(nonce: BigUInt,
+													chainId: Int = MinterCoreSDK.shared.network.rawValue,
+													gasCoin: String,
+													data: Data) {
+
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		self.init(nonce: nonce, gasPrice: BigUInt(RawTransactionDefaultGasPrice), gasCoin: coinData, type: RawTransactionType.createMultisigAddress.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(RawTransactionDefaultGasPrice), gasCoin: coinData, type: RawTransactionType.createMultisigAddress.BigUIntValue(), payload: Data(), serviceData: Data())
 		self.data = data
 	}
-	
+
 }
 
 /// CreateMultisigAddressRawTransactionData class
 public struct CreateMultisigAddressRawTransactionData {
-	
+
 	public var threshold: BigUInt
-	
+
 	public var weights: [BigUInt]
-	
+
 	public var addresses: [String]
-	
-	//MARK: -
-	
+
+	// MARK: -
+
 	public init(threshold: BigUInt, weights: [BigUInt], addresses: [String]) {
 		self.threshold = threshold
 		self.weights = weights
 		self.addresses = addresses
 	}
-	
-	//MARK: - RLPEncoding
-	
+
+	// MARK: - RLPEncoding
+
 	public func encode() -> Data? {
-		
+
 		let newAddresses = self.addresses.map { (str) -> Data? in
 			return Data(hex: str.stripMinterHexPrefix())
 			}.filter { (data) -> Bool in
 				return data != nil
 		} as! [Data]
-		
+
 		let fields = [self.threshold, self.weights, newAddresses] as [Any]
 		return RLP.encode(fields)
 	}
-	
+
 }

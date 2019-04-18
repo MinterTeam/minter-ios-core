@@ -9,7 +9,6 @@ import Foundation
 import Alamofire
 import BigInt
 
-
 public protocol RLPEncodable : Encodable {
 	func encode() -> Data?
 }
@@ -17,7 +16,6 @@ public protocol RLPEncodable : Encodable {
 public protocol SignatureRLPEncodable : RLPEncodable {
 	func encode(forSignature: Bool) -> Data?
 }
-
 
 //TODO: Change depend on network!
 public let RawTransactionDefaultTransactionCoin = Coin.baseCoin().symbol ?? "MNT"
@@ -41,54 +39,54 @@ public enum RawTransactionType {
 	case createMultisigAddress
 	case multisend(addreessesCount: Int)
 	case editCandidate
-	
+
 	public func BigUIntValue() -> BigUInt {
 		switch self {
 		case .sendCoin:
 			return BigUInt(1)
-			
+
 		case .sellCoin:
 			return BigUInt(2)
-			
+
 		case .sellAllCoins:
 			return BigUInt(3)
-			
+
 		case .buyCoin:
 			return BigUInt(4)
-			
+
 		case .createCoin:
 			return BigUInt(5)
-			
+
 		case .declareCandidacy:
 			return BigUInt(6)
-			
+
 		case .delegate:
 			return BigUInt(7)
-			
+
 		case .unbond:
 			return BigUInt(8)
-			
+
 		case .redeemCheck:
 			return BigUInt(9)
-			
+
 		case .setCandidateOnline:
 			return BigUInt(10)
-			
+
 		case .setCandidateOffline:
 			return BigUInt(11)
-			
+
 		case .createMultisigAddress:
 			return BigUInt(12)
-			
+
 		case .multisend(let _):
 			return BigUInt(13)
-			
+
 		case .editCandidate:
 			return BigUInt(14)
-			
+
 		}
 	}
-	
+
 	/// Comission for a transaction in pips
 	/// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/commissions.html
 	public func commission() -> Decimal {
@@ -111,42 +109,42 @@ public enum RawTransactionType {
 
 /// A base class for all RawTransactions
 open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
-	
+
 	public struct SignatureData : Encodable, Decodable, RLPEncodable {
-		
+
 		public var v: BigUInt
 		public var s: BigUInt
 		public var r: BigUInt
-		
+
 		public init(v: BigUInt = BigUInt(1), r: BigUInt = BigUInt(0), s: BigUInt = BigUInt(0)) {
 			self.v = v
 			self.r = r
 			self.s = s
 		}
-		
+
 		public init(from decoder: Decoder) throws {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
-			
+
 			self.v = try values.decode(BigUInt.self, forKey: .v)
 			self.s = try values.decode(BigUInt.self, forKey: .s)
 			self.r = try values.decode(BigUInt.self, forKey: .r)
 		}
-		
+
 		// MARK: - RLPEncodable
-		
+
 		public func encode() -> Data? {
 			let fields = [self.v, self.r, self.s] as [Any]
 			return RLP.encode(fields)
 		}
-		
+
 		// MARK: - Encodable
-		
+
 		enum CodingKeys: String, CodingKey {
 			case v
 			case r
 			case s
 		}
-		
+
 		public func encode(to encoder: Encoder) throws {
 			var container = encoder.container(keyedBy: CodingKeys.self)
 			try container.encode(v, forKey: .v)
@@ -154,9 +152,11 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 			try container.encode(s, forKey: .s)
 		}
 	}
-	
+
 	/// Used for prevent transaction reply
 	public var nonce: BigUInt
+	/// Chain Id, 1 - mainnet, 2 - testnet
+	public var chainId: Int = MinterCoreSDK.shared.network.rawValue
 	/// Used for managing transaction fees
 	public var gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice)
 	/// Coin which will be used to get commission from
@@ -172,17 +172,18 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 	/// Reserved field
 	/// Using this field requires an extra commission (about 1 pip per byte)
 	public var serviceData: Data
-	
+
 	public var signatureType: BigUInt
-	
+
 	public var signatureData: SignatureData
-	
+
 	// MARK: -
-	
+
 	/**
 	RawTransaction initializer
 	- Parameters:
 	- nonce: BigUInt value of nonce
+	- chainId: 1 - mainnet, 2 - testnet
 	- gasPrice: BigUInt value of price
 	- gasCoin: Data
 	- type: BigUInt value of transaction type
@@ -196,8 +197,9 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 	- data: RLP-encoded data
 	- Returns: Signed RawTx hex string, which can be send to Minter Node
 	*/
-	public init(nonce: BigUInt, gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice), gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: SignatureData = SignatureData()) {
+	public init(nonce: BigUInt, chainId: Int = 2, gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice), gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: SignatureData = SignatureData()) {
 		self.nonce = nonce
+		self.chainId = chainId
 		self.gasPrice = gasPrice
 		self.gasCoin = gasCoin
 		self.type = type
@@ -212,20 +214,22 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 	///
 	/// - Parameters:
 	///   - nonce: Nonce
+	///   - chainId, 1 - mainnet, 2 - testnet
 	///   - gasCoin: Coin to spend fee from
 	///   - data: Encoded data
-	public convenience init(nonce: BigUInt, type: BigUInt, gasCoin: String, data: Data) {
-		
+	public convenience init(nonce: BigUInt, chainId: Int = 2, type: BigUInt, gasCoin: String, data: Data) {
+
 		let gasCoinData = gasCoin.data(using: .utf8)!.setLengthRight(10) ?? Data()
-		
-		self.init(nonce: nonce, gasPrice: BigUInt(1), gasCoin: gasCoinData, type: type, payload: Data(), serviceData: Data())
+
+		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(1), gasCoin: gasCoinData, type: type, payload: Data(), serviceData: Data())
 		self.data = data
 	}
-	
+
 	required public init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		
+
 		self.nonce = try values.decode(BigUInt.self, forKey: .nonce)
+		self.chainId = try values.decode(Int.self, forKey: .chainId)
 		self.gasPrice = try values.decode(BigUInt.self, forKey: .gasPrice)
 		self.gasCoin = try values.decode(Data.self, forKey: .gasCoin)
 		self.type = try values.decode(BigUInt.self, forKey: .type)
@@ -235,11 +239,12 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 		self.signatureType = try values.decode(BigUInt.self, forKey: .signatureType)
 		self.signatureData = try values.decode(SignatureData.self, forKey: .signatureData)
 	}
-	
+
 	// MARK: - Encodable
-	
+
 	enum CodingKeys: String, CodingKey {
 		case nonce
+		case chainId
 		case gasPrice
 		case gasCoin
 		case type
@@ -249,10 +254,11 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 		case signatureType
 		case signatureData
 	}
-	
+
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(nonce, forKey: .nonce)
+		try container.encode(chainId, forKey: .chainId)
 		try container.encode(gasPrice, forKey: .gasPrice)
 		try container.encode(gasCoin, forKey: .gasCoin)
 		try container.encode(type, forKey: .type)
@@ -262,25 +268,22 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 		try container.encode(signatureType, forKey: .signatureType)
 		try container.encode(signatureData, forKey: .signatureData)
 	}
-	
-	//MARK: - SignatureRLPEncodable
-	
+
+	// MARK: - SignatureRLPEncodable
+
 	public func encode(forSignature: Bool = false) -> Data? {
-		
-		if (forSignature) {
-			
-			let fields = [self.nonce, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData, self.signatureType] as [Any]
+
+		if forSignature {
+			let fields = [self.nonce, self.chainId, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData, self.signatureType] as [Any]
 			return RLP.encode(fields)
-		}
-		else {
-			
-			let fields = [self.nonce, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData, self.signatureType, self.signatureData.encode() ?? Data()] as [Any]
+		} else {
+			let fields = [self.nonce, self.chainId, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData, self.signatureType, self.signatureData.encode() ?? Data()] as [Any]
 			return RLP.encode(fields)
 		}
 	}
-	
-	//MARK: - RLPEncodable
-	
+
+	// MARK: - RLPEncodable
+
 	public func encode() -> Data? {
 		return self.encode(forSignature: false)
 	}

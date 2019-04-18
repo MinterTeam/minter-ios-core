@@ -26,7 +26,7 @@ class SetCandidateRawTransactionTestsSpec: BaseQuickSpec {
 				let publicKey = "Mpeadea542b99de3b414806b362910cc518a177f8217b8452a8385a18d1687a80b"
 				let data = RLP.encode([Data(hex: publicKey.stripMinterHexPrefix())])
 				
-				let model = SetCandidateOfflineRawTransaction(nonce: nonce, gasCoin: gasCoin, publicKey: publicKey)
+				let model = SetCandidateOfflineRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, publicKey: publicKey)
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))
 				expect(model.data).to(equal(data))
@@ -41,7 +41,7 @@ class SetCandidateRawTransactionTestsSpec: BaseQuickSpec {
 				let data = RLP.encode([Data(hex: publicKey.stripMinterHexPrefix())])
 				
 				
-				let model = SetCandidateOnlineRawTransaction(nonce: nonce, gasCoin: gasCoin, publicKey: publicKey)
+				let model = SetCandidateOnlineRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, publicKey: publicKey)
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))
 				expect(model.data).to(equal(data))

@@ -34,7 +34,7 @@ class DelegateViewController: BaseViewController {
 				return
 			}
 			
-			let tx = DelegateRawTransaction(nonce: nonce, gasCoin: "MNT", publicKey: publicKey, coin: coin, value: BigUInt(decimal: amount)!)
+			let tx = DelegateRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", publicKey: publicKey, coin: coin, value: BigUInt(decimal: amount)!)
 			
 			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
 			

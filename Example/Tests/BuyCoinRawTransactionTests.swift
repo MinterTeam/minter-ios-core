@@ -19,7 +19,7 @@ class BuyCoinRawTransactionTestsSpec: BaseQuickSpec {
 			let gasCoin = "gasCoin".data(using: .utf8)!
 			let data = "data".data(using: .utf8)!
 			let nonce = BigUInt(1)
-			let tx = BuyCoinRawTransaction(nonce: nonce, gasCoin: gasCoin, data: data)
+			let tx = BuyCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, data: data)
 			
 			expect(tx).toNot(beNil())
 			expect(tx.nonce).to(equal(nonce))
@@ -34,7 +34,7 @@ class BuyCoinRawTransactionTestsSpec: BaseQuickSpec {
 			let coinTo = "BPM"
 			let value = BigUInt(1)
 			let maximumValue = BigUInt(0)
-			let tx = BuyCoinRawTransaction(nonce: nonce, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, value: value, maximumValueToSell: maximumValue)
+			let tx = BuyCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, value: value, maximumValueToSell: maximumValue)
 			
 			let data = BuyCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value, maximumValueToSell: maximumValue).encode()!
 			

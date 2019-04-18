@@ -17,9 +17,9 @@ public enum TransactionManagerError : Error {
 
 ///Transaction Manager class
 public class TransactionManager : BaseManager {
-	
+
 	//MARK: -
-	
+
 	/**
 	Method retreives transaction info from Minter Node
 	- Parameters:
@@ -49,7 +49,7 @@ public class TransactionManager : BaseManager {
 			}
 		}
 	}
-	
+
 	public func transaction(query: String, completion: (([Transaction]?, Error?) -> ())?) {
 		
 		let url = MinterAPIURL.transactions.url()
@@ -73,8 +73,7 @@ public class TransactionManager : BaseManager {
 			}
 		}
 	}
-	
-	
+
 	public func unconfirmedTransaction(limit: String = "0", completion: (([String : Any]?, Error?) -> ())?) {
 		
 		let url = MinterAPIURL.unconfirmedTransactions.url()
@@ -98,7 +97,7 @@ public class TransactionManager : BaseManager {
 			}
 		}
 	}
-	
+
 	/**
 	Method to send raw transaction to a Minter Node
 	- Parameters:
@@ -130,8 +129,7 @@ public class TransactionManager : BaseManager {
 			resultText = (err as? HTTPClientError)?.userData?["message"] as? String
 		}
 	}
-	
-	
+
 	/**
 	Method retreives buy coin estimate data from a Minter node
 	- Parameters:
@@ -183,7 +181,7 @@ public class TransactionManager : BaseManager {
 			}
 		}
 	}
-	
+
 	/**
 	Method retreives sell coin estimate data from a Minter node
 	- Parameters:
@@ -235,8 +233,7 @@ public class TransactionManager : BaseManager {
 			}
 		}
 	}
-	
-	
+
 	/// Method to calculate comission depend on signed rawTx
 	///
 	/// - Parameters:
@@ -266,5 +263,57 @@ public class TransactionManager : BaseManager {
 			
 		}
 	}
-	
+
+	/**
+	Method retreives sell coin estimate data from a Minter node
+	- Parameters:
+	- from: Coin symbol which you'd like to sell (e.g. MNT)
+	- to: Coin symbol you'd like to buy (e.g. BELTCOIN)
+	- gasPrice: Gas Price
+	- amount: How many coins you'd like to sell in pip (e.g. 1000000000000000000)
+	- completion: Method which will be called after request finished. Completion method contans: How many coins you will get, estimate commission, error if occured.
+	- Precondition: `from` and `to` should be uppercased (e.g. MNT, BLTCOIN, etc.)
+	*/
+	public func estimateCoinSellAll(from: String, to: String, gasPrice: Int = 1, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
+		
+		let url = MinterAPIURL.estimateCoinSell.url()
+		
+		guard let value = BigUInt(decimal: amount) else {
+			completion?(nil, nil, CoinManagerError.wrongAmount)
+			return
+		}
+		
+		self.httpClient.getRequest(url, parameters: ["coin_to_sell" : from, "coin_to_buy" : to, "value_to_sell" : value, "gas_price" : gasPrice]) { (response, error) in
+			
+			var value: Decimal?
+			var comission: Decimal?
+			var err: Error?
+			
+			defer {
+				completion?(value, comission, err)
+			}
+			
+			guard error == nil else {
+				err = error
+				return
+			}
+			
+			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_get"] as? String, let commission = estimatePayload["commission"] as? String {
+				
+				let willGet = Decimal(string: willGet)
+				let com = Decimal(string: commission)
+				
+				guard nil != willGet, nil != com else {
+					err = CoinManagerError.noEstimate
+					return
+				}
+				
+				value = willGet
+				comission = com
+			}
+			else {
+				err = BaseManagerError.badResponse
+			}
+		}
+	}
 }
