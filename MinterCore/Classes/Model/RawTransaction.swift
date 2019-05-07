@@ -95,8 +95,8 @@ public enum RawTransactionType {
 		case .sellCoin, .buyCoin, .sellAllCoins: return 0.1 * TransactionCoinFactorDecimal
 		case .createCoin: return 1 * TransactionCoinFactorDecimal
 		case .declareCandidacy: return 10  * TransactionCoinFactorDecimal
-		case .delegate: return 0.1 * TransactionCoinFactorDecimal
-		case .unbond: return 0.1 * TransactionCoinFactorDecimal
+		case .delegate: return 0.2 * TransactionCoinFactorDecimal
+		case .unbond: return 0.2 * TransactionCoinFactorDecimal
 		case .redeemCheck: return 0.01 * TransactionCoinFactorDecimal
 		case .setCandidateOnline: return 0.1 * TransactionCoinFactorDecimal
 		case .setCandidateOffline: return 0.1 * TransactionCoinFactorDecimal
