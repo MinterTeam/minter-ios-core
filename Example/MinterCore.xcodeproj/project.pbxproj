@@ -28,6 +28,7 @@
 		FA1835A4220D119900310CAF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1835A3220D119900310CAF /* BaseViewController.swift */; };
 		FA197B1A21EA197F00264CE6 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		FA197B1E21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */; };
+		FA2148E3228DB10200E54E51 /* CKMnemonicsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2148E1228D9A7300E54E51 /* CKMnemonicsTests.swift */; };
 		FA2568E0213954A000D56BD4 /* TransactionDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */; };
 		FA4638FA21C7A1CC001846D9 /* SendCoinRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4638F921C7A1CC001846D9 /* SendCoinRawTransactionTests.swift */; };
 		FA4638FC21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4638FB21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift */; };
@@ -97,6 +98,7 @@
 		FA17817821F2180700FECDED /* EventManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManagerTests.swift; sourceTree = "<group>"; };
 		FA1835A3220D119900310CAF /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCandidateRawTransactionTests.swift; sourceTree = "<group>"; };
+		FA2148E1228D9A7300E54E51 /* CKMnemonicsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKMnemonicsTests.swift; sourceTree = "<group>"; };
 		FA2568DF213954A000D56BD4 /* TransactionDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataTests.swift; sourceTree = "<group>"; };
 		FA4638F921C7A1CC001846D9 /* SendCoinRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinRawTransactionTests.swift; sourceTree = "<group>"; };
 		FA4638FB21C7B64E001846D9 /* IssueCheckRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCheckRawTransactionTests.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				FA101E3921C29DAC00DB1D3A /* AddressTransformerTests.swift */,
 				FA101E3B21C2A46500DB1D3A /* Base58Tests.swift */,
 				FA46391921CB8DB2001846D9 /* ManagerDefaultTests.swift */,
+				FA2148E1228D9A7300E54E51 /* CKMnemonicsTests.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -422,7 +426,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MinterCore_Example/Pods-MinterCore_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-MinterCore_Example/Pods-MinterCore_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
@@ -445,7 +449,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MinterCore_Example/Pods-MinterCore_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinterCore_Example/Pods-MinterCore_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		502A13AFDDB0587A6B66A375 /* [CP] Embed Pods Frameworks */ = {
@@ -454,7 +458,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MinterCore_Tests/Pods-MinterCore_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-MinterCore_Tests/Pods-MinterCore_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
@@ -462,8 +466,10 @@
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 				"${BUILT_PRODUCTS_DIR}/secp256k1.swift/secp256k1.framework",
+				"${BUILT_PRODUCTS_DIR}/GoldenKeystore/GoldenKeystore.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+				"${BUILT_PRODUCTS_DIR}/TrezorCrypto/TrezorCrypto.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -474,12 +480,14 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoldenKeystore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrezorCrypto.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MinterCore_Tests/Pods-MinterCore_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MinterCore_Tests/Pods-MinterCore_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		708B1DA783A4290438304B1B /* [CP] Check Pods Manifest.lock */ = {
@@ -550,6 +558,7 @@
 				FA101E3821C1118600DB1D3A /* RawTransactionTests.swift in Sources */,
 				FA46391821CB8BAB001846D9 /* StatusManagerTests.swift in Sources */,
 				FA17817921F2180700FECDED /* EventManagerTests.swift in Sources */,
+				FA2148E3228DB10200E54E51 /* CKMnemonicsTests.swift in Sources */,
 				FA46391221CA843E001846D9 /* AccountManagerTests.swift in Sources */,
 				FA46391C21CB8EA6001846D9 /* TransactionManagerTests.swift in Sources */,
 				FA46391421CA8CF4001846D9 /* CandidateManagerTests.swift in Sources */,

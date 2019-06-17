@@ -8,7 +8,6 @@
 import Foundation
 import ObjectMapper
 
-
 public class TransactionData {
 	public var from: String?
 	public var to: String?

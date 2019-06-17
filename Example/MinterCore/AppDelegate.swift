@@ -17,7 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 			
-			MinterCoreSDK.initialize(urlString: "https://minter-node-1.testnet.minter.network:8841")
+			MinterCoreSDK.initialize(urlString: "http://138.197.222.87:8841")
+			
+			let man = TransactionManager.default
+			man.send(tx: "Mxfdfds") { (res1, res2, error) in
+				
+			}
 			
 			return true
     }

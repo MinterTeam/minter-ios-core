@@ -9,5 +9,5 @@ class BaseQuickSpec : QuickSpec {
 	override func spec() {
 		MinterCoreSDK.initialize(urlString: "http://front-de.minter.network:48841")
 	}
-	
+
 }

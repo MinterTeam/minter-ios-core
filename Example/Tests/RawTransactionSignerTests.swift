@@ -26,6 +26,7 @@ class RawTransactionSignerSpec: BaseQuickSpec {
 			
 			it("RawTransactionSigner can retreive Public Key") {
 				
+				//Mx33bd6a537e8ad987b234ea3098c992f158df7b0f
 				let mnemonic = "adjust correct photo fancy knee lion blur away coconut inform sun cancel"
 				let correctPublicKey = "039f1a49aa7bb95c587486d671838466137243f27b808a9eac4726ef3a33d6771b"
 				

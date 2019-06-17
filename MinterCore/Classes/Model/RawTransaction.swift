@@ -108,9 +108,9 @@ public enum RawTransactionType {
 }
 
 /// A base class for all RawTransactions
-open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
+open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 
-	public struct SignatureData : Encodable, Decodable, RLPEncodable {
+	public struct SignatureData: Encodable, Decodable, RLPEncodable {
 
 		public var v: BigUInt
 		public var s: BigUInt
@@ -152,6 +152,9 @@ open class RawTransaction : Encodable, Decodable, SignatureRLPEncodable {
 			try container.encode(s, forKey: .s)
 		}
 	}
+	
+	public static let maxPayloadSize = 1024
+	public static let payloadByteComissionPrice = Decimal(0.002)
 
 	/// Used for prevent transaction reply
 	public var nonce: BigUInt

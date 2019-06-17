@@ -9,10 +9,8 @@ import Foundation
 import ObjectMapper
 import BigInt
 
-
 public let TransactionCoinFactor = BigUInt(stringLiteral: "1000000000000000000")
 public let TransactionCoinFactorDecimal = pow(10, 18)
-
 
 /// Transaction type
 public enum TransactionType: Int {
@@ -32,14 +30,13 @@ public enum TransactionType: Int {
 	case editCandidate = 14
 }
 
-
 /// Transaction Model
 open class Transaction {
-	
+
 	public init() {}
 
 	// MARK: -
-	
+
 	public var hash: String?
 	public var rawTx: String?
 	public var height: Int?
@@ -53,17 +50,16 @@ open class Transaction {
 	public var payload: String?
 }
 
-
 class TransactionMappable : Transaction, Mappable {
-	
+
 	// MARK: - Mappable
-	
+
 	required init?(map: Map) {
 		super.init()
-		
+
 		mapping(map: map)
 	}
-	
+
 	func mapping(map: Map) {
 		self.hash <- map["hash"]
 		self.rawTx <- map["raw_tx"]

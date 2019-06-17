@@ -1,3 +1,4 @@
+source 'https://github.com/Cocoapods/Specs'
 use_frameworks!
 
 target 'MinterCore_Example' do
@@ -8,8 +9,9 @@ target 'MinterCore_Example' do
 		inherit! :search_paths
 
 		pod 'Quick', '~> 1.2.0'
-		pod 'Nimble', '~> 7.0.2'
+		pod 'Nimble'
 		pod 'MinterCore', :path => '../'
+	pod 'GoldenKeystore', :git => 'https://github.com/sidorov-panda/GoldenKeystore'
 	end
 end
 
@@ -17,7 +19,7 @@ post_install do |installer|
 	installer.pods_project.targets.each do |target|
 		if ['Nimble'].include? target.name
 			target.build_configurations.each do |config|
-				config.build_settings['SWIFT_VERSION'] = '3.2'
+#				config.build_settings['SWIFT_VERSION'] = '3.2'
 			end
 		end
 	end
