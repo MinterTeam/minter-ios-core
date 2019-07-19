@@ -11,31 +11,11 @@ import CryptoSwift
 public extension String {
 	
 	public static func seedString(_ mnemonic: String, passphrase: String = "") -> String? {
-//		return Mnemonic.createSeed(mnemonic: mnemonic).toHexString()
 		return try? CKMnemonic.deterministicSeedString(from: mnemonic, passphrase: passphrase, language: .english)
 	}
 	
 	public static func generateMnemonicString() -> String? {
-//		return Mnemonic.create(strength: .normal, language: .english)
 		let language: CKMnemonicLanguageType = .english
 		return try? CKMnemonic.generateMnemonic(strength: 128, language: language)
 	}
-	
-//	public static func privateKeyString(seed: String) -> String? {
-//		let hmac = HMAC(key: "Bitcoin seed".bytes, variant: HMAC.Variant.sha512)
-//		let val = try? hmac.authenticate(seed.bytes)
-//
-//		guard val != nil else {
-//			return nil
-//		}
-//
-//		let privateKeyData = Data(bytes: val![0..<32])
-//
-//		guard RawTransactionSigner.verify(privateKey: privateKeyData) else {
-//			return nil
-//		}
-//
-//		return privateKeyData.toHexString()
-//	}
-
 }

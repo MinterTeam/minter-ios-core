@@ -50,6 +50,35 @@ public class BuyCoinRawTransaction : RawTransaction {
 		self.init(nonce: nonce, chainId: chainId, gasPrice: gasPrice, gasCoin: gasCoin, data: encodedData)
 	}
 
+	/// Convenience initializer
+	///
+	/// - Parameters:
+	///   - nonce: Nonce
+	///   - gasCoin: Coin to spend fee from
+	///   - coinFrom: Coin which you'd like to spend
+	///   - coinTo: Coin which you'd like to buy
+	///   - value: How much you'd like to buy
+	///   - maximumValueToSell: Maximum value of coins to sell.
+	public convenience init(nonce: BigUInt,
+													chainId: Int = MinterCoreSDK.shared.network.rawValue,
+													gasPrice: Int = RawTransactionDefaultGasPrice,
+													gasCoin: String,
+													coinFrom: String,
+													coinTo: String,
+													value: BigUInt,
+													maximumValueToSell: BigUInt) {
+		
+		let encodedData = BuyCoinRawTransactionData(coinFrom: coinFrom,
+																								coinTo: coinTo,
+																								value: value,
+																								maximumValueToSell: maximumValueToSell).encode() ?? Data()
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: gasPrice,
+							gasCoin: gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10),
+							data: encodedData)
+	}
+
 }
 
 /// BuyCoinRawTransactionData

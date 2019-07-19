@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public extension AccountManager {
 	
 	class var `default`: AccountManager {

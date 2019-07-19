@@ -17,7 +17,7 @@ public class PrivateKey {
 
 	/// Raw Private key bytes
 	public let raw: Data
-	let chainCode: Data
+	public let chainCode: Data
 
 	public let publicKey: Data
 

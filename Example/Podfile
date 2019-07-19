@@ -11,7 +11,7 @@ target 'MinterCore_Example' do
 		pod 'Quick', '~> 1.2.0'
 		pod 'Nimble'
 		pod 'MinterCore', :path => '../'
-	pod 'GoldenKeystore', :git => 'https://github.com/sidorov-panda/GoldenKeystore'
+		pod 'GoldenKeystore', :git => 'https://github.com/sidorov-panda/GoldenKeystore'
 	end
 end
 
