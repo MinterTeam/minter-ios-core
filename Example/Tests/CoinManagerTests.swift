@@ -35,6 +35,7 @@ class CoinManagerTestsSpec : BaseQuickSpec {
 						
 						expect(error).to(beNil())
 						expect(coin).toNot(beNil())
+						expect(coin?.reserveBalance).toNot(beNil())
 						
 						done()
 					})

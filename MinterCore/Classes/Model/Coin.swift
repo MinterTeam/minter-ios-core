@@ -31,7 +31,7 @@ public class Coin {
 }
 
 /// Internal use Coin mappable class
-public class CoinMappable : Coin, Mappable {
+public class CoinMappable: Coin, Mappable {
 
 	/**
 	Coin Model Initializer
@@ -61,13 +61,12 @@ public class CoinMappable : Coin, Mappable {
 public extension Coin {
 
 	/// Base coin model, differs depend on the network (testnet, mainnet)
-	public static func baseCoin() -> Coin {
+	static func baseCoin() -> Coin {
 		let coin = Coin()
 		if MinterCoreSDK.shared.network == .testnet {
 			coin.name = "MINT Test"
 			coin.symbol = "MNT"
-		}
-		else {
+		} else {
 			coin.name = "BIP"
 			coin.symbol = "BIP"
 		}

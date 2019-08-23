@@ -33,7 +33,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 				self.manager = TransactionManager.default
 				
 				waitUntil(timeout: 10) { done in
-					self.manager?.transaction(hash: "Mt928f473c42c1c278b176ff6171d026d025374c201397b05f2a76899132705118", completion: { (transaction, error) in
+					self.manager?.transaction(hash: "Mt9c9e310e5a6ed848eba71f7b3c7c51b291c4d5f63858749051290125a14e6b64", completion: { (transaction, error) in
 						
 						expect(error).to(beNil())
 						expect(transaction).toNot(beNil())
@@ -198,23 +198,22 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 					})
 				}
 			}
-			
-			it("Can create multisig transaction") {
-				
-				let correctTx = "f84701018a4d4e54000000000000000cb0ef01c20101ea9433bd6a537e8ad987b234ea3098c992f158df7b0f9433bd6a537e8ad987b234ea3098c992f158df7b0f80800184c3018080"
-				
-				
-				let data = CreateMultisigAddressRawTransactionData(threshold: BigUInt(1), weights: [BigUInt(1), BigUInt(1)], addresses: ["Mx33bd6a537e8ad987b234ea3098c992f158df7b0f", "Mx33bd6a537e8ad987b234ea3098c992f158df7b0f"])
-				let encoded = data.encode()
-				
-				expect(encoded).toNot(beNil())
-				
-				let tx = CreateMultisigAddressRawTransaction(nonce: BigUInt(1), type: RawTransactionType.createMultisigAddress.BigUIntValue(), gasCoin: "MNT", data: encoded!)
-				
-				expect(tx).toNot(beNil())
-				expect(tx.encode()?.toHexString()).to(equal(correctTx))
-			}
-			
+
+//			it("Can create multisig transaction") {
+//
+//				let correctTx = "f84701018a4d4e54000000000000000cb0ef01c20101ea9433bd6a537e8ad987b234ea3098c992f158df7b0f9433bd6a537e8ad987b234ea3098c992f158df7b0f80800184c3018080"
+//
+//				let data = CreateMultisigAddressRawTransactionData(threshold: BigUInt(1), weights: [BigUInt(1), BigUInt(1)], addresses: ["Mx33bd6a537e8ad987b234ea3098c992f158df7b0f", "Mx33bd6a537e8ad987b234ea3098c992f158df7b0f"])
+//				let encoded = data.encode()
+//
+//				expect(encoded).toNot(beNil())
+//
+//				let tx = CreateMultisigAddressRawTransaction(nonce: BigUInt(1), type: RawTransactionType.createMultisigAddress.BigUIntValue(), gasCoin: "MNT", data: encoded!)
+//
+//				expect(tx).toNot(beNil())
+//				expect(tx.encode()?.toHexString()).to(equal(correctTx))
+//			}
+
 			it("Can create custom coin") {
 				
 				let mnemonic = "dial script notice debris supreme game crisp taste place web gesture execute"

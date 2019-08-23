@@ -7,30 +7,26 @@
 
 import Foundation
 
-
 public class HTTPClientError : Error {
-	
+
 	public var code: Int?
-	
+
 	public var message: String?
-	
+
 	public init(code: Int?, message: String?) {
 		self.code = code
 		self.message = message
 	}
-	
+
 	public init() {}
-	
-	//MARK: -
-	
+
+	// MARK: -
+
 	public var userData: [String : Any]?
-	
+
 }
 
 public typealias HTTPClientResponseDictionary = [String : Any]
-
-//public typealias HTTPClientResponse = Any
-
 
 public protocol HTTPClient {
 	
