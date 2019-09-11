@@ -8,7 +8,7 @@
 import Foundation
 
 public extension AccountManager {
-	
+
 	class var `default`: AccountManager {
 		get {
 			let httpClient = APIClient.shared
@@ -19,7 +19,7 @@ public extension AccountManager {
 }
 
 public extension TransactionManager {
-	
+
 	class var `default`: MinterCore.TransactionManager {
 		get {
 			let httpClient = APIClient.shared
@@ -30,7 +30,7 @@ public extension TransactionManager {
 }
 
 public extension CoinManager {
-	
+
 	class var `default`: CoinManager {
 		get {
 			let httpClient = APIClient.shared
@@ -41,8 +41,8 @@ public extension CoinManager {
 }
 
 public extension StatusManager {
-	
-	class var `default` : StatusManager {
+
+	class var `default`: StatusManager {
 		get {
 			let httpClient = APIClient.shared
 			let manager = self.init(httpClient: httpClient)
@@ -52,8 +52,8 @@ public extension StatusManager {
 }
 
 public extension CandidateManager {
-	
-	class var `default` : CandidateManager {
+
+	class var `default`: CandidateManager {
 		get {
 			let httpClient = APIClient.shared
 			let manager = self.init(httpClient: httpClient)
@@ -63,8 +63,8 @@ public extension CandidateManager {
 }
 
 public extension ValidatorManager {
-	
-	class var `default` : ValidatorManager {
+
+	class var `default`: ValidatorManager {
 		get {
 			let httpClient = APIClient.shared
 			let manager = self.init(httpClient: httpClient)
@@ -75,7 +75,7 @@ public extension ValidatorManager {
 
 public extension BlockManager {
 	
-	class var `default` : BlockManager {
+	class var `default`: BlockManager {
 		get {
 			let httpClient = APIClient.shared
 			let manager = self.init(httpClient: httpClient)
@@ -85,8 +85,8 @@ public extension BlockManager {
 }
 
 public extension EventManager {
-	
-	class var `default` : EventManager {
+
+	class var `default`: EventManager {
 		get {
 			let httpClient = APIClient.shared
 			let manager = self.init(httpClient: httpClient)

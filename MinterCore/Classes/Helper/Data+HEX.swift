@@ -9,7 +9,7 @@ import Foundation
 import BigInt
 
 public extension Data {
-	
+
 public 	func setLengthLeft(_ toBytes: UInt64, isNegative: Bool = false) -> Data? {
 		let existingLength = UInt64(self.count)
 		if (existingLength == toBytes) {
@@ -26,7 +26,7 @@ public 	func setLengthLeft(_ toBytes: UInt64, isNegative: Bool = false) -> Data?
 		data.append(self)
 		return data
 	}
-	
+
 public 	func setLengthRight(_ toBytes: UInt64, isNegative: Bool = false) -> Data? {
 		let existingLength = UInt64(self.count)
 		if (existingLength == toBytes) {
@@ -46,7 +46,7 @@ public 	func setLengthRight(_ toBytes: UInt64, isNegative: Bool = false) -> Data
 }
 
 public extension Data {
-	
+
 	init?(hexString: String) {
 		let len = hexString.count / 2
 		var data = Data(capacity: len)
@@ -62,12 +62,11 @@ public extension Data {
 		}
 		self = data
 	}
-	
+
 	func hexadecimalString() -> String {
 		return String(map { String(format: "%02hhx ", $0) }.joined().dropLast())
 	}
 }
-
 
 public protocol DataConvertable {
 	static func +(lhs: Data, rhs: Self) -> Data
@@ -80,7 +79,7 @@ extension DataConvertable {
 		let data = Data(buffer: UnsafeBufferPointer(start: &value, count: 1))
 		return lhs + data
 	}
-	
+
 	public static func +=(lhs: inout Data, rhs: Self) {
 		lhs = lhs + rhs
 	}
@@ -88,5 +87,3 @@ extension DataConvertable {
 
 extension UInt8: DataConvertable {}
 extension UInt32: DataConvertable {}
-
-

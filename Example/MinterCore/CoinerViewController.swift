@@ -54,7 +54,7 @@ class CoinerViewController: BaseViewController {
 			
 			let tx = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", data: data.encode()!)
 			
-			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
+			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey!.raw.toHexString())
 			
 			TransactionManager.default.send(tx: "Mt" + signed!) { (res, res1, err) in
 				DispatchQueue.main.async {

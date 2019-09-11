@@ -36,7 +36,7 @@ class DelegateViewController: BaseViewController {
 			
 			let tx = DelegateRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", publicKey: publicKey, coin: coin, value: BigUInt(decimal: amount)!)
 			
-			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey.raw.toHexString())
+			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey!.raw.toHexString())
 			
 			TransactionManager.default.send(tx: "Mt" + signed!) { (res, res1, err) in
 				DispatchQueue.main.async {

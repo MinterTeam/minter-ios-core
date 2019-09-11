@@ -7,10 +7,8 @@
 
 import Foundation
 
-
 /// StatusManager class
 public class StatusManager : BaseManager {
-	
 	
 	/// Methods return data which shows current state of the node. You also can use it to check if node is running in normal mode.
 	/// - Parameter completion: methods which will be called after request finished. Completion optionally contains response data and error if occured.

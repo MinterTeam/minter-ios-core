@@ -33,7 +33,9 @@ class RawTransactionSignerSpec: BaseQuickSpec {
 				let seed = String.seedString(mnemonic)!
 				let pk = PrivateKey(seed: Data(hex: seed))
 				
-				let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
+				guard let key = try? pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0) else {
+					fatalError()
+				}
 				
 				let pub = RawTransactionSigner.publicKey(privateKey: key.raw, compressed: true)
 				expect(pub?.toHexString()).to(equal(correctPublicKey))
@@ -46,7 +48,9 @@ class RawTransactionSignerSpec: BaseQuickSpec {
 				let seed = String.seedString(mnemonic)!
 				let pk = PrivateKey(seed: Data(hex: seed))
 				
-				let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
+				guard let key = try? pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0) else {
+					fatalError()
+				}
 				
 				let publicKey = RawTransactionSigner.publicKey(privateKey: key.raw, compressed: false)!.dropFirst()
 				
@@ -62,7 +66,9 @@ class RawTransactionSignerSpec: BaseQuickSpec {
 				let seed = String.seedString(mnemonic)!
 				let pk = PrivateKey(seed: Data(hex: seed))
 				
-				let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
+				guard let key = try? pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0) else {
+					fatalError()
+				}
 				
 				let address = RawTransactionSigner.address(privateKey: key.raw.toHexString())
 				

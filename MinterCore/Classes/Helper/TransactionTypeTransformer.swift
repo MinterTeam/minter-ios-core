@@ -10,7 +10,7 @@ import ObjectMapper
 
 /// TransactionTypeTransformer class
 public class TransactionTypeTransformer : TransformType {
-	
+
 	public init() {}
 
 	public typealias Object = TransactionType

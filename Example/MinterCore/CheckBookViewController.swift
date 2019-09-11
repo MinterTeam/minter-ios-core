@@ -60,7 +60,7 @@ class CheckBookViewController: BaseViewController {
 	
 	@IBAction func redeemButtonDidTap(_ sender: Any) {
 		
-		let pk = Session.shared.privateKey.raw.toHexString()
+		let pk = Session.shared.privateKey!.raw.toHexString()
 		
 		let rawCheck = Data(hex: checkTextField.text?.stripMinterCheckHexPrefix() ?? "")
 		
@@ -75,46 +75,42 @@ class CheckBookViewController: BaseViewController {
 		let gasCoin = "MNT"
 		
 		getNonce { (nonce) in
-			
 			guard let nonce = nonce else {
 				SVProgressHUD.showError(withStatus: "Can't get nonce")
 				return
 			}
-		
+
 			let tx = RedeemCheckRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, rawCheck: rawCheck, proof: proof!)!
 			tx.data = data.encode()!
-			
+
 			let result = RawTransactionSigner.sign(rawTx: tx, privateKey: pk)
-			
+
 			TransactionManager.default.send(tx: "Mt" + result!) { (res, ress, err) in
-				
 				guard nil == err else {
 					SVProgressHUD.showError(withStatus: err.debugDescription ?? "")
 					return
 				}
-				
 				SVProgressHUD.showError(withStatus: "Check has been redeemed")
-				
 			}
 		}
-		
+
 	}
-	
-	//MARK: - View Controller
-	
+
+	// MARK: - View Controller
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 	}
 
-	//MARK: -
-	
+	// MARK: -
+
 	func makeIssueTransaction(nonce: BigUInt, dueBlock: String = "999999", amount: String, coin: String, passPhrase: String) -> String? {
-		
+
 		let due = BigUInt(dueBlock) ?? BigUInt(0)
 		let val = BigUInt(amount) ?? BigUInt(0)
-		
+
 		var tx = IssueCheckRawTransaction(nonce: nonce, dueBlock: due, coin: coin, value: val, passPhrase: passPhrase)
-		let check = tx.serialize(privateKey: Session.shared.privateKey.raw.toHexString(), passphrase: passPhrase)
+		let check = tx.serialize(privateKey: Session.shared.privateKey!.raw.toHexString(), passphrase: passPhrase)
 		return check
 	}
 

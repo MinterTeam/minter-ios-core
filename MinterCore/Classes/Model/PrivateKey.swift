@@ -89,7 +89,7 @@ public class PrivateKey {
 	- hardened: determines if key should be hardened
 	- Returns: PrivateKey instances
 	*/
-	public func derive(at index: UInt32, hardened: Bool = false) -> PrivateKey {
+	public func derive(at index: UInt32, hardened: Bool = false) throws -> PrivateKey {
 
 		guard (0x80000000 & index) == 0 else {
 			fatalError("Invalid index \(index)")
@@ -119,11 +119,8 @@ public class PrivateKey {
 		let helper = SECP256k1Helper()
 		helper.setPrivateKey(privateKey: self.raw)
 
-		do {
-			try helper.privateKeyTweakAdd(tweak: Data(bytes: Array(pk)))
-		} catch {
-			return self.derive(at: index + 1, hardened: hardened)
-		}
+		try helper.privateKeyTweakAdd(tweak: Data(bytes: Array(pk)))
+
 		let hash = Array(RIPEMD160.hash(message: pubKey.sha256()).bytes.prefix(4))
 		let fingerprint = UInt32(bytes: hash, fromIndex: 0)
 

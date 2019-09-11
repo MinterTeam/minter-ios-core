@@ -65,9 +65,9 @@ class ViewController: UIViewController {
 		
 		let seed = String.seedString(mnemonic)!
 		let pk = PrivateKey(seed: Data(hex: seed))
-		
-		let key = pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0)
-		
+
+		guard let key = try? pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0) else { return }
+
 		let publicKey = RawTransactionSigner.publicKey(privateKey: key.raw, compressed: false)!.dropFirst()
 		let address = RawTransactionSigner.address(publicKey: publicKey)
 		

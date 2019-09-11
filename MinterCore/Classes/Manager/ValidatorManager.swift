@@ -9,8 +9,7 @@ import Foundation
 
 /// ValidatorManager class
 public class ValidatorManager : BaseManager {
-	
-	
+
 	/// Method retreives list of active validators
 	///
 	/// - Parameter completion: method which will be called after request finished.

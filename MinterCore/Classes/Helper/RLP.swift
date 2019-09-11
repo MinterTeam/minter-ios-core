@@ -36,7 +36,6 @@ struct RLP {
 		guard let data = string.data(using: .utf8) else {
 			return nil
 		}
-		
 		return encodeData(data)
 	}
 	
