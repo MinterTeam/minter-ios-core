@@ -9,14 +9,20 @@ import Foundation
 import BigInt
 
 /// UnbondRawTransaction
-public class UnbondRawTransaction : RawTransaction {
+public class UnbondRawTransaction: RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasCoin: Data,
 													data: Data) {
 
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(1), gasCoin: gasCoin, type: RawTransactionType.unbond.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(1),
+							gasCoin: gasCoin,
+							type: RawTransactionType.unbond.BigUIntValue(),
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
 
@@ -35,14 +41,19 @@ public class UnbondRawTransaction : RawTransaction {
 													coin: String,
 													value: BigUInt) {
 
-		let encodedData = UnbondRawTransactionData(publicKey: publicKey, coin: coin, value: value).encode() ?? Data()
-		self.init(nonce: nonce, chainId: chainId, gasCoin: gasCoin, data: encodedData)
+		let encodedData = UnbondRawTransactionData(publicKey: publicKey,
+																							 coin: coin,
+																							 value: value).encode() ?? Data()
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasCoin: gasCoin,
+							data: encodedData)
 	}
 
 }
 
 /// UnbondRawTransactionData
-public struct UnbondRawTransactionData : Encodable, Decodable {
+public struct UnbondRawTransactionData: Encodable, Decodable {
 
 	/// Validator's public key
 	public var publicKey: String

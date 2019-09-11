@@ -17,7 +17,13 @@ public class SetCandidateOnlineRawTransaction : RawTransaction {
 													data: Data) {
 
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(RawTransactionDefaultGasPrice), gasCoin: coinData, type: RawTransactionType.setCandidateOnline.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(RawTransactionDefaultGasPrice),
+							gasCoin: coinData,
+							type: RawTransactionType.setCandidateOnline.BigUIntValue(),
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
 
@@ -32,7 +38,10 @@ public class SetCandidateOnlineRawTransaction : RawTransaction {
 													gasCoin: String,
 													publicKey: String) {
 		let encodedData = SetCandidateOnlineRawTransactionData(publicKey: publicKey).encode() ?? Data()
-		self.init(nonce: nonce, chainId: chainId, gasCoin: gasCoin, data: encodedData)
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasCoin: gasCoin,
+							data: encodedData)
 	}
 
 }

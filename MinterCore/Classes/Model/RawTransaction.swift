@@ -19,7 +19,6 @@ public protocol SignatureRLPEncodable : RLPEncodable {
 
 //TODO: Change depend on network!
 public let RawTransactionDefaultTransactionCoin = Coin.baseCoin().symbol ?? "MNT"
-
 public let RawTransactionDefaultGasPrice = 1
 
 /// Transaction type
@@ -83,7 +82,6 @@ public enum RawTransactionType {
 
 		case .editCandidate:
 			return BigUInt(14)
-
 		}
 	}
 
@@ -111,7 +109,6 @@ public enum RawTransactionType {
 open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 
 	public struct SignatureData: Encodable, Decodable, RLPEncodable {
-
 		public var v: BigUInt
 		public var s: BigUInt
 		public var r: BigUInt
@@ -124,7 +121,6 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 
 		public init(from decoder: Decoder) throws {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
-
 			self.v = try values.decode(BigUInt.self, forKey: .v)
 			self.s = try values.decode(BigUInt.self, forKey: .s)
 			self.r = try values.decode(BigUInt.self, forKey: .r)
@@ -152,7 +148,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 			try container.encode(s, forKey: .s)
 		}
 	}
-	
+
 	public static let maxPayloadSize = 1024
 	public static let payloadByteComissionPrice = Decimal(0.002)
 
@@ -200,7 +196,12 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 	- data: RLP-encoded data
 	- Returns: Signed RawTx hex string, which can be send to Minter Node
 	*/
-	public init(nonce: BigUInt, chainId: Int = 2, gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice), gasCoin: Data, type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1), signatureData: SignatureData = SignatureData()) {
+	public init(nonce: BigUInt,
+							chainId: Int = 2,
+							gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice),
+							gasCoin: Data,
+							type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1),
+							signatureData: SignatureData = SignatureData()) {
 		self.nonce = nonce
 		self.chainId = chainId
 		self.gasPrice = gasPrice
@@ -220,17 +221,26 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 	///   - chainId, 1 - mainnet, 2 - testnet
 	///   - gasCoin: Coin to spend fee from
 	///   - data: Encoded data
-	public convenience init(nonce: BigUInt, chainId: Int = 2, type: BigUInt, gasCoin: String, data: Data) {
+	public convenience init(nonce: BigUInt,
+													chainId: Int = 2,
+													type: BigUInt,
+													gasCoin: String,
+													data: Data) {
 
 		let gasCoinData = gasCoin.data(using: .utf8)!.setLengthRight(10) ?? Data()
 
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(1), gasCoin: gasCoinData, type: type, payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(1),
+							gasCoin: gasCoinData,
+							type: type,
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
 
 	required public init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-
 		self.nonce = try values.decode(BigUInt.self, forKey: .nonce)
 		self.chainId = try values.decode(Int.self, forKey: .chainId)
 		self.gasPrice = try values.decode(BigUInt.self, forKey: .gasPrice)
@@ -277,10 +287,27 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 	public func encode(forSignature: Bool = false) -> Data? {
 
 		if forSignature {
-			let fields = [self.nonce, self.chainId, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData, self.signatureType] as [Any]
+			let fields = [self.nonce,
+										self.chainId,
+										self.gasPrice,
+										self.gasCoin,
+										self.type,
+										self.data,
+										self.payload,
+										self.serviceData,
+										self.signatureType] as [Any]
 			return RLP.encode(fields)
 		} else {
-			let fields = [self.nonce, self.chainId, self.gasPrice, self.gasCoin, self.type, self.data, self.payload, self.serviceData, self.signatureType, self.signatureData.encode() ?? Data()] as [Any]
+			let fields = [self.nonce,
+										self.chainId,
+										self.gasPrice,
+										self.gasCoin,
+										self.type,
+										self.data,
+										self.payload,
+										self.serviceData,
+										self.signatureType,
+										self.signatureData.encode() ?? Data()] as [Any]
 			return RLP.encode(fields)
 		}
 	}

@@ -13,12 +13,12 @@ public class TransactionData {
 	public var to: String?
 }
 
-public class SendCoinTransactionData : TransactionData {
+public class SendCoinTransactionData: TransactionData {
 	public var coin: String?
 	public var amount: Decimal?
 }
 
-public class SendCoinTransactionDataMappable : SendCoinTransactionData, Mappable {
+public class SendCoinTransactionDataMappable: SendCoinTransactionData, Mappable {
 	
 	required public init?(map: Map) {
 		super.init()
@@ -44,7 +44,7 @@ public class ConvertTransactionData : TransactionData {
 	public var value: Decimal?
 }
 
-public class ConvertTransactionDataMappable : ConvertTransactionData, Mappable {
+public class ConvertTransactionDataMappable: ConvertTransactionData, Mappable {
 	
 	required public init?(map: Map) {
 		super.init()
@@ -66,12 +66,12 @@ public class ConvertTransactionDataMappable : ConvertTransactionData, Mappable {
 	}
 }
 
-public class SellAllCoinsTransactionData : TransactionData {
+public class SellAllCoinsTransactionData: TransactionData {
 	public var fromCoin: String?
 	public var toCoin: String?
 }
 
-public class SellAllCoinsTransactionDataMappable : SellAllCoinsTransactionData, Mappable {
+public class SellAllCoinsTransactionDataMappable: SellAllCoinsTransactionData, Mappable {
 	
 	required public init?(map: Map) {
 		super.init()

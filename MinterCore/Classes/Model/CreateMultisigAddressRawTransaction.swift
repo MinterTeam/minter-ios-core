@@ -17,10 +17,15 @@ public class CreateMultisigAddressRawTransaction : RawTransaction {
 													data: Data) {
 
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(RawTransactionDefaultGasPrice), gasCoin: coinData, type: RawTransactionType.createMultisigAddress.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(RawTransactionDefaultGasPrice),
+							gasCoin: coinData,
+							type: RawTransactionType.createMultisigAddress.BigUIntValue(),
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
-
 }
 
 /// CreateMultisigAddressRawTransactionData class

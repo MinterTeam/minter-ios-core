@@ -18,7 +18,6 @@ public class PrivateKey {
 	/// Raw Private key bytes
 	public let raw: Data
 	public let chainCode: Data
-
 	public let publicKey: Data
 
 	/**
@@ -31,11 +30,13 @@ public class PrivateKey {
 	*/
 	public convenience init(seed: Data) {
 
-		let hmac = HMAC(key: "Bitcoin seed".data(using: .ascii)!.bytes, variant: HMAC.Variant.sha512)
+		let hmac = HMAC(key: "Bitcoin seed".data(using: .ascii)!.bytes,
+										variant: HMAC.Variant.sha512)
 		let val = try! hmac.authenticate(seed.bytes)
 		let privateKey = val[0..<32]
 		let chainCode = val[32..<64]
-		self.init(privateKey: Data(bytes: privateKey), chainCode: Data(bytes: chainCode))
+		self.init(privateKey: Data(bytes: privateKey),
+							chainCode: Data(bytes: chainCode))
 	}
 
 	/**
@@ -48,14 +49,18 @@ public class PrivateKey {
 	- childIndex
 	- Returns: PrivateKey instances
 	*/
-	init(privateKey: Data, chainCode: Data, depth: UInt8 = 0, fingerprint: UInt32 = 0, childIndex: UInt32 = 0) {
+	init(privateKey: Data,
+			 chainCode: Data,
+			 depth: UInt8 = 0,
+			 fingerprint: UInt32 = 0,
+			 childIndex: UInt32 = 0) {
 		self.raw = privateKey
 		self.chainCode = chainCode
 		self.depth = depth
 		self.fingerprint = fingerprint
 		self.childIndex = childIndex
-		self.publicKey = RawTransactionSigner.publicKey(privateKey: privateKey, compressed: true)!
-
+		self.publicKey = RawTransactionSigner.publicKey(privateKey: privateKey,
+																										compressed: true)!
 	}
 
 	/**
@@ -63,7 +68,6 @@ public class PrivateKey {
 	- Returns: Extended Key from the Private Key
 	*/
 	public func extended() -> String {
-
 		var extendedPrivateKeyData = Data()
 		extendedPrivateKeyData += UInt32(0x0488ADE4).bigEndian
 		extendedPrivateKeyData += depth.littleEndian
@@ -74,9 +78,7 @@ public class PrivateKey {
 		extendedPrivateKeyData += raw
 
 		let checksum = extendedPrivateKeyData.sha256().sha256().prefix(4)
-
 		extendedPrivateKeyData.append(contentsOf: checksum.bytes)
-
 		return Base58.base58FromBytes(extendedPrivateKeyData.bytes)
 	}
 
@@ -125,7 +127,11 @@ public class PrivateKey {
 		let hash = Array(RIPEMD160.hash(message: pubKey.sha256()).bytes.prefix(4))
 		let fingerprint = UInt32(bytes: hash, fromIndex: 0)
 
-		return PrivateKey(privateKey: self.raw, chainCode: Data(bytes: chain), depth: self.depth, fingerprint: fingerprint, childIndex: UInt32(childIndex))
+		return PrivateKey(privateKey: self.raw,
+											chainCode: Data(bytes: chain),
+											depth: self.depth,
+											fingerprint: fingerprint,
+											childIndex: UInt32(childIndex))
 	}
 
 }

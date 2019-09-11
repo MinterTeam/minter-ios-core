@@ -24,7 +24,12 @@ public class RedeemCheckRawTransaction : RawTransaction {
 			return nil
 		}
 		
-		super.init(nonce: nonce, chainId: chainId, gasCoin: gsCoin, type: RawTransactionType.redeemCheck.BigUIntValue(), payload: Data(), serviceData: Data())
+		super.init(nonce: nonce,
+							 chainId: chainId,
+							 gasCoin: gsCoin,
+							 type: RawTransactionType.redeemCheck.BigUIntValue(),
+							 payload: Data(),
+							 serviceData: Data())
 		self.data = data
 	}
 	

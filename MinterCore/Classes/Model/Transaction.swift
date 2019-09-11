@@ -50,7 +50,7 @@ open class Transaction {
 	public var payload: String?
 }
 
-class TransactionMappable : Transaction, Mappable {
+class TransactionMappable: Transaction, Mappable {
 
 	// MARK: - Mappable
 

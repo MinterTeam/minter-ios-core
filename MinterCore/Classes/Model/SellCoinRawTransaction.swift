@@ -8,11 +8,10 @@
 import Foundation
 import BigInt
 
-
 /// `SellCoinRawTransaction` is a transaction for selling one coin (owned by sender) in favour of another coin
 /// in a system.
 /// - SeeAlso: https://docs.minter.network/#section/Transactions/Sell-coin-transaction
-public class SellCoinRawTransaction : RawTransaction {
+public class SellCoinRawTransaction: RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
@@ -21,7 +20,13 @@ public class SellCoinRawTransaction : RawTransaction {
 													data: Data) {
 
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(gasPrice), gasCoin: coinData, type: RawTransactionType.sellCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(gasPrice),
+							gasCoin: coinData,
+							type: RawTransactionType.sellCoin.BigUIntValue(),
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
 
@@ -39,7 +44,11 @@ public class SellCoinRawTransaction : RawTransaction {
 																								 value: value,
 																								 minimumValueToBuy: minimumValueToBuy)
 			.encode() ?? Data()
-		self.init(nonce: nonce, chainId: chainId, gasPrice: gasPrice, gasCoin: gasCoin, data: encodedData)
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: gasPrice,
+							gasCoin: gasCoin,
+							data: encodedData)
 	}
 
 }
@@ -58,7 +67,10 @@ public struct SellCoinRawTransactionData: Encodable, Decodable {
 
 	// MARK: -
 
-	public init(coinFrom: String, coinTo: String, value: BigUInt, minimumValueToBuy: BigUInt) {
+	public init(coinFrom: String,
+							coinTo: String,
+							value: BigUInt,
+							minimumValueToBuy: BigUInt) {
 		self.coinFrom = coinFrom
 		self.coinTo = coinTo
 		self.value = value
@@ -111,7 +123,13 @@ public class SellAllCoinsRawTransaction : RawTransaction {
 													gasCoin: String,
 													data: Data) {
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(gasPrice), gasCoin: coinData, type: RawTransactionType.sellAllCoins.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(gasPrice),
+							gasCoin: coinData,
+							type: RawTransactionType.sellAllCoins.BigUIntValue(),
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
 
@@ -123,8 +141,14 @@ public class SellAllCoinsRawTransaction : RawTransaction {
 													coinTo: String,
 													minimumValueToBuy: BigUInt) {
 		
-		let encodedData = SellAllCoinsRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValueToBuy).encode() ?? Data()
-		self.init(nonce: nonce, chainId: chainId, gasPrice: gasPrice, gasCoin: gasCoin, data: encodedData)
+		let encodedData = SellAllCoinsRawTransactionData(coinFrom: coinFrom,
+																										 coinTo: coinTo,
+																										 minimumValueToBuy: minimumValueToBuy).encode() ?? Data()
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: gasPrice,
+							gasCoin: gasCoin,
+							data: encodedData)
 	}
 
 }
@@ -141,7 +165,9 @@ public struct SellAllCoinsRawTransactionData: Encodable, Decodable {
 
 	// MARK: -
 
-	public init(coinFrom: String, coinTo: String, minimumValueToBuy: BigUInt) {
+	public init(coinFrom: String,
+							coinTo: String,
+							minimumValueToBuy: BigUInt) {
 		self.coinFrom = coinFrom
 		self.coinTo = coinTo
 		self.minimumValueToBuy = minimumValueToBuy
