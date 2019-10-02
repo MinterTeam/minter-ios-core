@@ -9,14 +9,20 @@ import Foundation
 import BigInt
 
 /// DeclareCandidacyRawTransaction
-public class DeclareCandidacyRawTransaction : RawTransaction {
+public class DeclareCandidacyRawTransaction: RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasCoin: Data,
 													data: Data) {
 
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(1), gasCoin: gasCoin, type: RawTransactionType.declareCandidacy.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(1),
+							gasCoin: gasCoin,
+							type: RawTransactionType.declareCandidacy.BigUIntValue(),
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
 
@@ -31,8 +37,15 @@ public class DeclareCandidacyRawTransaction : RawTransaction {
 
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 
-		let encodedData = DeclareCandidacyRawTransactionData(address: address, publicKey: publicKey, commission: commission, coin: coin, stake: stake).encode() ?? Data()
-		self.init(nonce: nonce, chainId: chainId, gasCoin: coinData, data: encodedData)
+		let encodedData = DeclareCandidacyRawTransactionData(address: address,
+																												 publicKey: publicKey,
+																												 commission: commission,
+																												 coin: coin,
+																												 stake: stake).encode() ?? Data()
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasCoin: coinData,
+							data: encodedData)
 	}
 
 }
@@ -100,12 +113,10 @@ public struct DeclareCandidacyRawTransactionData : Encodable, Decodable {
 	// MARK: - RLPEncoding
 
 	public func encode() -> Data? {
-
 		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		let pub = Data(hex: publicKey.stripMinterHexPrefix())
 		let adrs = Data(hex: address.stripMinterHexPrefix())
 		let fields = [adrs, pub, commission, coinData, stake] as [Any]
 		return RLP.encode(fields)
 	}
-
 }

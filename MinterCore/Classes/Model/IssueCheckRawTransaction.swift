@@ -29,7 +29,11 @@ public struct IssueCheckRawTransaction: Encodable, Decodable {
 	///   - coin: Check coin
 	///   - value: Check value
 	///   - passPhrase: Phrase to activate check
-	public init(nonce: BigUInt = BigUInt(1), dueBlock: BigUInt = BigUInt(999999), coin: String = "MNT", value: BigUInt, passPhrase: String) {
+	public init(nonce: BigUInt = BigUInt(1),
+							dueBlock: BigUInt = BigUInt(999999),
+							coin: String = "MNT",
+							value: BigUInt,
+							passPhrase: String) {
 		self.nonce = nonce
 		self.dueBlock = dueBlock
 		self.coin = coin
@@ -85,7 +89,6 @@ public struct IssueCheckRawTransaction: Encodable, Decodable {
 		guard let signedCheck = self.encode(forSigning: false)?.toHexString() else {
 			return nil
 		}
-
 		return "Mc" + signedCheck
 	}
 
@@ -109,7 +112,6 @@ public struct IssueCheckRawTransaction: Encodable, Decodable {
 	}
 
 	private func encode(forSigning: Bool) -> Data? {
-
 		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 
 		var fields: [Any]?
@@ -128,5 +130,4 @@ public struct IssueCheckRawTransaction: Encodable, Decodable {
 		}
 		return RLP.encode(fields)
 	}
-
 }

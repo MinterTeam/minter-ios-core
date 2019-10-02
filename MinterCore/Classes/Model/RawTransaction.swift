@@ -17,77 +17,64 @@ public protocol SignatureRLPEncodable : RLPEncodable {
 	func encode(forSignature: Bool) -> Data?
 }
 
-//TODO: Change depend on network!
 public let RawTransactionDefaultTransactionCoin = Coin.baseCoin().symbol ?? "MNT"
 public let RawTransactionDefaultGasPrice = 1
 
 /// Transaction type
 /// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/transactions.html#types
-public enum RawTransactionType {
-	case sendCoin
-	case sellCoin
-	case sellAllCoins
-	case buyCoin
-	case createCoin
-	case declareCandidacy
-	case delegate
-	case unbond
-	case redeemCheck
-	case setCandidateOnline
-	case setCandidateOffline
-	case createMultisigAddress
-	case multisend(addreessesCount: Int)
-	case editCandidate
+public enum RawTransactionType: Int {
+	case sendCoin = 1
+	case sellCoin = 2
+	case sellAllCoins = 3
+	case buyCoin = 4
+	case createCoin = 5
+	case declareCandidacy = 6
+	case delegate = 7
+	case unbond = 8
+	case redeemCheck = 9
+	case setCandidateOnline = 10
+	case setCandidateOffline = 11
+	case createMultisigAddress = 12
+	case multisend = 13//(addreessesCount: Int)
+	case editCandidate = 14
 
 	public func BigUIntValue() -> BigUInt {
-		switch self {
-		case .sendCoin:
-			return BigUInt(1)
-
-		case .sellCoin:
-			return BigUInt(2)
-
-		case .sellAllCoins:
-			return BigUInt(3)
-
-		case .buyCoin:
-			return BigUInt(4)
-
-		case .createCoin:
-			return BigUInt(5)
-
-		case .declareCandidacy:
-			return BigUInt(6)
-
-		case .delegate:
-			return BigUInt(7)
-
-		case .unbond:
-			return BigUInt(8)
-
-		case .redeemCheck:
-			return BigUInt(9)
-
-		case .setCandidateOnline:
-			return BigUInt(10)
-
-		case .setCandidateOffline:
-			return BigUInt(11)
-
-		case .createMultisigAddress:
-			return BigUInt(12)
-
-		case .multisend(let _):
-			return BigUInt(13)
-
-		case .editCandidate:
-			return BigUInt(14)
-		}
+		return BigUInt(self.rawValue)
+//		switch self {
+//		case .sendCoin:
+//			return BigUInt(1)
+//		case .sellCoin:
+//			return BigUInt(2)
+//		case .sellAllCoins:
+//			return BigUInt(3)
+//		case .buyCoin:
+//			return BigUInt(4)
+//		case .createCoin:
+//			return BigUInt(5)
+//		case .declareCandidacy:
+//			return BigUInt(6)
+//		case .delegate:
+//			return BigUInt(7)
+//		case .unbond:
+//			return BigUInt(8)
+//		case .redeemCheck:
+//			return BigUInt(9)
+//		case .setCandidateOnline:
+//			return BigUInt(10)
+//		case .setCandidateOffline:
+//			return BigUInt(11)
+//		case .createMultisigAddress:
+//			return BigUInt(12)
+//		case .multisend(let _):
+//			return BigUInt(13)
+//		case .editCandidate:
+//			return BigUInt(14)
+//		}
 	}
 
 	/// Comission for a transaction in pips
 	/// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/commissions.html
-	public func commission() -> Decimal {
+	public func commission(multisendNumber: Int = 0) -> Decimal {
 		switch self {
 		case .sendCoin: return 0.01 * TransactionCoinFactorDecimal
 		case .sellCoin, .buyCoin, .sellAllCoins: return 0.1 * TransactionCoinFactorDecimal
@@ -99,7 +86,7 @@ public enum RawTransactionType {
 		case .setCandidateOnline: return 0.1 * TransactionCoinFactorDecimal
 		case .setCandidateOffline: return 0.1 * TransactionCoinFactorDecimal
 		case .createMultisigAddress: return 0.1 * TransactionCoinFactorDecimal
-		case .multisend(let number): return (0.1 + Decimal(max(0, number - 1)) * 0.05) * TransactionCoinFactorDecimal
+		case .multisend: return (0.1 + Decimal(max(0, multisendNumber - 1)) * 0.05) * TransactionCoinFactorDecimal
 		case .editCandidate: return 0.1 * TransactionCoinFactorDecimal
 		}
 	}
@@ -113,7 +100,9 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 		public var s: BigUInt
 		public var r: BigUInt
 
-		public init(v: BigUInt = BigUInt(1), r: BigUInt = BigUInt(0), s: BigUInt = BigUInt(0)) {
+		public init(v: BigUInt = BigUInt(1),
+								r: BigUInt = BigUInt(0),
+								s: BigUInt = BigUInt(0)) {
 			self.v = v
 			self.r = r
 			self.s = s
@@ -172,8 +161,10 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 	/// Using this field requires an extra commission (about 1 pip per byte)
 	public var serviceData: Data
 
+	/// SignatureType
 	public var signatureType: BigUInt
 
+	/// SignatureData
 	public var signatureData: SignatureData
 
 	// MARK: -
@@ -200,7 +191,11 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 							chainId: Int = 2,
 							gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice),
 							gasCoin: Data,
-							type: BigUInt, data: Data = Data(), payload: Data, serviceData: Data, signatureType: BigUInt = BigUInt(1),
+							type: BigUInt,
+							data: Data = Data(),
+							payload: Data,
+							serviceData: Data,
+							signatureType: BigUInt = BigUInt(1),
 							signatureData: SignatureData = SignatureData()) {
 		self.nonce = nonce
 		self.chainId = chainId
@@ -225,7 +220,9 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 													chainId: Int = 2,
 													type: BigUInt,
 													gasCoin: String,
-													data: Data) {
+													data: Data,
+													payload: Data = Data(),
+													serviceData: Data = Data()) {
 
 		let gasCoinData = gasCoin.data(using: .utf8)!.setLengthRight(10) ?? Data()
 
@@ -234,8 +231,8 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 							gasPrice: BigUInt(1),
 							gasCoin: gasCoinData,
 							type: type,
-							payload: Data(),
-							serviceData: Data())
+							payload: payload,
+							serviceData: serviceData)
 		self.data = data
 	}
 

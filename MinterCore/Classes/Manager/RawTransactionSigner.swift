@@ -235,5 +235,4 @@ public class RawTransactionSigner {
 
 		return sig.r! + sig.s! + sig.v!
 	}
-
 }

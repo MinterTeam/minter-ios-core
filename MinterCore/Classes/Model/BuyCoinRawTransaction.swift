@@ -10,7 +10,7 @@ import BigInt
 
 /// `BuyCoinRawTransaction` is a transaction for buing a coin paying another coin (owned by sender).
 /// - SeeAlso: https://docs.minter.network/#section/Transactions/Buy-coin-transaction
-public class BuyCoinRawTransaction : RawTransaction {
+public class BuyCoinRawTransaction: RawTransaction {
 
 	/// Convenience initializer
 	///
@@ -24,7 +24,13 @@ public class BuyCoinRawTransaction : RawTransaction {
 													gasCoin: Data,
 													data: Data) {
 
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(gasPrice), gasCoin: gasCoin, type: RawTransactionType.buyCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(gasPrice),
+							gasCoin: gasCoin,
+							type: RawTransactionType.buyCoin.BigUIntValue(),
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
 
@@ -46,8 +52,15 @@ public class BuyCoinRawTransaction : RawTransaction {
 													value: BigUInt,
 													maximumValueToSell: BigUInt) {
 
-		let encodedData = BuyCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value, maximumValueToSell: maximumValueToSell).encode() ?? Data()
-		self.init(nonce: nonce, chainId: chainId, gasPrice: gasPrice, gasCoin: gasCoin, data: encodedData)
+		let encodedData = BuyCoinRawTransactionData(coinFrom: coinFrom,
+																								coinTo: coinTo,
+																								value: value,
+																								maximumValueToSell: maximumValueToSell).encode() ?? Data()
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: gasPrice,
+							gasCoin: gasCoin,
+							data: encodedData)
 	}
 
 	/// Convenience initializer
@@ -82,7 +95,7 @@ public class BuyCoinRawTransaction : RawTransaction {
 }
 
 /// BuyCoinRawTransactionData
-public struct BuyCoinRawTransactionData : Encodable, Decodable {
+public struct BuyCoinRawTransactionData: Encodable, Decodable {
 
 	/// Coin you sell (e.g. "MNT")
 	public var coinFrom: String
@@ -98,7 +111,10 @@ public struct BuyCoinRawTransactionData : Encodable, Decodable {
 
 	// MARK: -
 
-	public init(coinFrom: String, coinTo: String, value: BigUInt, maximumValueToSell: BigUInt) {
+	public init(coinFrom: String,
+							coinTo: String,
+							value: BigUInt,
+							maximumValueToSell: BigUInt) {
 		self.coinFrom = coinFrom
 		self.coinTo = coinTo
 		self.value = value
@@ -114,7 +130,7 @@ public struct BuyCoinRawTransactionData : Encodable, Decodable {
 	}
 
 	// MARK: - Encoding
-	
+
 	enum CodingKeys: String, CodingKey {
 		case coinFrom
 		case coinTo

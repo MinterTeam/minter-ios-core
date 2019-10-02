@@ -48,15 +48,12 @@ public struct CreateMultisigAddressRawTransactionData {
 	// MARK: - RLPEncoding
 
 	public func encode() -> Data? {
-
 		let newAddresses = self.addresses.map { (str) -> Data? in
 			return Data(hex: str.stripMinterHexPrefix())
 			}.filter { (data) -> Bool in
 				return data != nil
 		} as! [Data]
-
 		let fields = [self.threshold, self.weights, newAddresses] as [Any]
 		return RLP.encode(fields)
 	}
-
 }

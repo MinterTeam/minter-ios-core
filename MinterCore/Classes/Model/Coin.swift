@@ -55,7 +55,6 @@ public class CoinMappable: Coin, Mappable {
 		self.reserveBalance <- (map["reserve_balance"], DecimalTransformer())
 		self.creator <- map["creator"]
 	}
-
 }
 
 public extension Coin {

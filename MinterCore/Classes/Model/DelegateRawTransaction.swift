@@ -9,7 +9,7 @@ import Foundation
 import BigInt
 
 /// DelegateRawTransaction class
-public class DelegateRawTransaction : RawTransaction {
+public class DelegateRawTransaction: RawTransaction {
 
 	/// Convenience initializer
 	///
@@ -21,10 +21,15 @@ public class DelegateRawTransaction : RawTransaction {
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasCoin: String,
 													data: Data) {
-
 		let gasCoinData = gasCoin.data(using: .utf8)!.setLengthRight(10) ?? Data()
 
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(1), gasCoin: gasCoinData, type: RawTransactionType.delegate.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(1),
+							gasCoin: gasCoinData,
+							type: RawTransactionType.delegate.BigUIntValue(),
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
 
@@ -42,11 +47,14 @@ public class DelegateRawTransaction : RawTransaction {
 													publicKey: String,
 													coin: String,
 													value: BigUInt) {
-
-		let encodedData = DelegateRawTransactionData(publicKey: publicKey, coin: coin, value: value).encode() ?? Data()
-		self.init(nonce: nonce, chainId: chainId, gasCoin: gasCoin, data: encodedData)
+		let encodedData = DelegateRawTransactionData(publicKey: publicKey,
+																								 coin: coin,
+																								 value: value).encode() ?? Data()
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasCoin: gasCoin,
+							data: encodedData)
 	}
-
 }
 
 /// DelegateRawTransactionData
@@ -98,5 +106,4 @@ public struct DelegateRawTransactionData : Encodable, Decodable {
 		let fields = [Data(hex: publicKey.stripMinterHexPrefix()), coinData, value] as [Any]
 		return RLP.encode(fields)
 	}
-
 }

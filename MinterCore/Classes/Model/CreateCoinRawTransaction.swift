@@ -9,7 +9,7 @@ import Foundation
 import BigInt
 
 /// CreateCoinRawTransaction
-public class CreateCoinRawTransaction : RawTransaction {
+public class CreateCoinRawTransaction: RawTransaction {
 
 	/// Convenience initializer
 	///
@@ -22,7 +22,13 @@ public class CreateCoinRawTransaction : RawTransaction {
 													gasCoin: String,
 													data: Data) {
 		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		self.init(nonce: nonce, chainId: chainId, gasPrice: BigUInt(RawTransactionDefaultGasPrice), gasCoin: coinData, type: RawTransactionType.createCoin.BigUIntValue(), payload: Data(), serviceData: Data())
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasPrice: BigUInt(RawTransactionDefaultGasPrice),
+							gasCoin: coinData,
+							type: RawTransactionType.createCoin.BigUIntValue(),
+							payload: Data(),
+							serviceData: Data())
 		self.data = data
 	}
 
@@ -44,14 +50,21 @@ public class CreateCoinRawTransaction : RawTransaction {
 													initialAmount: BigUInt,
 													initialReserve: BigUInt,
 													reserveRatio: BigUInt) {
-		let encodedData = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio).encode() ?? Data()
-		self.init(nonce: nonce, chainId: chainId, gasCoin: gasCoin, data: encodedData)
+		let encodedData = CreateCoinRawTransactionData(name: name,
+																									 symbol: symbol,
+																									 initialAmount: initialAmount,
+																									 initialReserve: initialReserve,
+																									 reserveRatio: reserveRatio).encode() ?? Data()
+		self.init(nonce: nonce,
+							chainId: chainId,
+							gasCoin: gasCoin,
+							data: encodedData)
 	}
 
 }
 
 /// CreateCoinRawTransactionData
-public struct CreateCoinRawTransactionData : Encodable, Decodable {
+public struct CreateCoinRawTransactionData: Encodable, Decodable {
 
 	/// Coin name (e.g. Belt Coin)
 	public var name: String
@@ -121,11 +134,8 @@ public struct CreateCoinRawTransactionData : Encodable, Decodable {
 	// MARK: - RLP Encoding
 
 	public func encode() -> Data? {
-
 		let coinData = symbol.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-
 		let fields = [name, coinData, initialAmount, initialReserve, reserveRatio] as [Any]
 		return RLP.encode(fields)
 	}
-
 }

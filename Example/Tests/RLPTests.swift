@@ -13,41 +13,74 @@ import Nimble
 import ObjectMapper
 import BigInt
 
-
 class RLPSpec: QuickSpec {
-	
+
 	override func spec() {
-		
 		describe("RLP Tests can encode values") {
-			
 			it("Can encode numbers") {
-				expect(RLP.encode(0)?.toHexString()).to(equal("80"))
+				expect(RLP.encode(0)).to(equal(Data(hex: "80")))
 			}
-			
+
+			it("Can decode numbers") {
+				let correct: [UInt8] = [128]
+				let data = RLP.decode("80")!.data!
+				expect(data.bytes).to(equal(correct))
+			}
+
 			it("Can encode numbers") {
-				expect(RLP.encode(1)?.toHexString()).to(equal("01"))
+				expect(RLP.encode(1)).to(equal(Data(hex: "01")))
 			}
-			
+
+			it("Can decode numbers") {
+				let correct: [UInt8] = [1]
+				let data = RLP.decode("01")!.data!
+				expect(data.bytes).to(equal(correct))
+			}
+
 			it("Can encode numbers") {
-				expect(RLP.encode(16)?.toHexString()).to(equal("10"))
+				expect(RLP.encode(16)).to(equal(Data(hex: "10")))
 			}
-			
+
+			it("Can decode numbers") {
+				let correct: [UInt8] = [16]
+				let data = RLP.decode("10")!.data!
+				expect(data.bytes).to(equal(correct))
+			}
+
 			it("Can encode numbers") {
-				expect(RLP.encode(79)?.toHexString()).to(equal("4f"))
+				expect(RLP.encode(79)).to(equal(Data(hex: "4f")))
 			}
-			
+
+			it("Can decode numbers") {
+				let correct: [UInt8] = [79]
+				let data = RLP.decode("4f")!.data!
+				expect(data.bytes).to(equal(correct))
+			}
+
 			it("Can encode numbers") {
-				expect(RLP.encode(1000)?.toHexString()).to(equal("8203e8"))
+				expect(RLP.encode(1000)).to(equal(Data(hex: "8203e8")))
 			}
-			
-			it("Can encode numbers") {
-				expect(RLP.encode([])?.toHexString()).to(equal("c0"))
+
+			it("Can decode numbers") {
+				let correct: [UInt8] = [130, 3, 232]
+				let data = RLP.decode("8203e8")!.data!
+				expect(data.bytes).to(equal(correct))
 			}
-			
+
+			it("Can encode array") {
+				expect(RLP.encode([])).to(equal(Data(hex: "c0")))
+			}
+
+			it("Can decode array") {
+				let correct: [UInt8] = [192]
+				let data = RLP.decode("c0")!.data!
+				expect(data.bytes).to(equal(correct))
+			}
+
 			it("Can encode array strings") {
-				expect(RLP.encode([ "asdf", "qwer", "zxcv", "asdf","qwer", "zxcv", "asdf", "qwer", "zxcv", "asdf", "qwer"])?.toHexString()).to(equal("f784617364668471776572847a78637684617364668471776572847a78637684617364668471776572847a78637684617364668471776572"))
+				expect(RLP.encode(["asdf", "qwer", "zxcv", "asdf","qwer", "zxcv", "asdf", "qwer", "zxcv", "asdf", "qwer"])?.toHexString()).to(equal("f784617364668471776572847a78637684617364668471776572847a78637684617364668471776572847a78637684617364668471776572"))
 			}
-			
+
 			it("Can encode complex array") {
 				expect(RLP.encode([
 					["asdf","qwer","zxcv"],
