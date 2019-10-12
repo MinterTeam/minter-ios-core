@@ -309,21 +309,40 @@ public struct RLP {
 				return (0, 0, .empty)
 			}
 			let prefixByte = input[0]
+			let exac = prefixByte.subtractingReportingOverflow(0xb7)
+			let exac1 = prefixByte.subtractingReportingOverflow(0xc0)
+			let exac2 = prefixByte.subtractingReportingOverflow(0xf7)
 			if prefixByte <= 0x7f {
 				return (BigUInt(0), BigUInt(1), .data)
 			} else if prefixByte <= 0xb7 && length > BigUInt(prefixByte - 0x80) {
 				let dataLength = BigUInt(prefixByte - 0x80)
 				return (BigUInt(1), dataLength, .data)
-			} else if try prefixByte <= 0xbf && length > BigUInt(prefixByte - 0xb7) && length >  BigUInt(prefixByte - 0xb7) + toBigUInt(slice(data: input, offset: BigUInt(1), length: BigUInt(prefixByte - 0xb7))) {
+			} else if
+				try prefixByte <= 0xbf
+					&& exac.1 == false
+					&& length > BigUInt(exac.0)
+					&& length > BigUInt(exac.0) + toBigUInt(slice(data: input,
+																											offset: BigUInt(1),
+																											length: BigUInt(exac.0))) {
 				let lengthOfLength = BigUInt(prefixByte - 0xb7)
 				let dataLength = try toBigUInt(slice(data: input, offset: BigUInt(1), length: BigUInt(prefixByte - 0xb7)))
 				return (1 + lengthOfLength, dataLength, .data)
-			} else if prefixByte <= 0xf7 && length > BigUInt(prefixByte - 0xc0) {
+			} else if
+				prefixByte <= 0xf7
+					&& exac1.1 == false
+					&& length > BigUInt(exac1.0)
+			{
 				let listLen = BigUInt(prefixByte - 0xc0)
 				return (1, listLen, .list)
-			} else if try prefixByte <= 0xff && length > BigUInt(prefixByte - 0xf7) && length > BigUInt(prefixByte - 0xf7) + toBigUInt(slice(data: input, offset: BigUInt(1), length: BigUInt(prefixByte - 0xf7))) {
-				let lengthOfListLength = BigUInt(prefixByte - 0xf7)
-				let listLength = try toBigUInt(slice(data: input, offset: BigUInt(1), length: BigUInt(prefixByte - 0xf7)))
+			} else if
+				try prefixByte <= 0xff
+					&& exac2.1 == false
+					&& length > BigUInt(exac2.0)
+					&& length > BigUInt(exac2.0) + toBigUInt(slice(data: input, offset: BigUInt(1),
+																												 length: BigUInt(exac2.0))) {
+				let lengthOfListLength = BigUInt(exac2.0)
+				let listLength = try toBigUInt(slice(data: input, offset: BigUInt(1),
+																						 length: BigUInt(exac2.0)))
 				return (1 + lengthOfListLength, listLength, .list)
 			} else {
 				return (nil, nil, nil)
