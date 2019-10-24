@@ -15,17 +15,20 @@ public class DelegateRawTransaction: RawTransaction {
 	///
 	/// - Parameters:
 	///   - nonce: Nonce
+	///   - chainId - chain identifier
+	///   - gasPrice - gas price
 	///   - gasCoin: Coin to spend fee from
 	///   - data: Encoded DelegateRawTransactionData instance
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
+													gasPrice: Int = RawTransactionDefaultGasPrice,
 													gasCoin: String,
 													data: Data) {
-		let gasCoinData = gasCoin.data(using: .utf8)!.setLengthRight(10) ?? Data()
+		let gasCoinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data()
 
 		self.init(nonce: nonce,
 							chainId: chainId,
-							gasPrice: BigUInt(1),
+							gasPrice: BigUInt(gasPrice),
 							gasCoin: gasCoinData,
 							type: RawTransactionType.delegate.BigUIntValue(),
 							payload: Data(),
@@ -43,6 +46,7 @@ public class DelegateRawTransaction: RawTransaction {
 	///   - value: How much you'd like to delegate
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
+													gasPrice: Int = RawTransactionDefaultGasPrice,
 													gasCoin: String,
 													publicKey: String,
 													coin: String,
@@ -52,20 +56,18 @@ public class DelegateRawTransaction: RawTransaction {
 																								 value: value).encode() ?? Data()
 		self.init(nonce: nonce,
 							chainId: chainId,
+							gasPrice: gasPrice,
 							gasCoin: gasCoin,
 							data: encodedData)
 	}
 }
 
 /// DelegateRawTransactionData
-public struct DelegateRawTransactionData : Encodable, Decodable {
-
+public struct DelegateRawTransactionData: Encodable, Decodable {
 	/// Validator's public key
 	public var publicKey: String
-
 	/// Coin you delegate (e.g. "MNT")
 	public var coin: String
-
 	/// Amount
 	public var value: BigUInt
 

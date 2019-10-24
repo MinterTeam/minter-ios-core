@@ -96,16 +96,12 @@ public class BuyCoinRawTransaction: RawTransaction {
 
 /// BuyCoinRawTransactionData
 public struct BuyCoinRawTransactionData: Encodable, Decodable {
-
 	/// Coin you sell (e.g. "MNT")
 	public var coinFrom: String
-
 	/// Coin you buy (e.g. "BELTCOIN")
 	public var coinTo: String
-
 	/// Amount
 	public var value: BigUInt
-
 	/// Maximum value to buy
 	public var maximumValueToSell: BigUInt
 
