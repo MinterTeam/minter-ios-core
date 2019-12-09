@@ -50,7 +50,6 @@ This is a pure Swift SDK for working with <b>Minter</b> blockchain
       - [Candidates](#Candidates)
       - [estimateTxCommission](#estimatetxcommission)
       - [Transactions](#transactions)
-  - [Error handling](#error-handling)
   
 * [Minter SDK](#using-mintersdk)
   - [Sign transaction](#sign-transaction)
@@ -68,7 +67,6 @@ This is a pure Swift SDK for working with <b>Minter</b> blockchain
     - [EditCandidate](#example-15)
   - [Minter Check](#create-minter-check)
   - [Minter Wallet](#minter-wallet)
-* [Tests](#tests)
 
 ## Using MinterAPI
 
