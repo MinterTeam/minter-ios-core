@@ -50,7 +50,7 @@ class CoinerViewController: BaseViewController {
 				return
 			}
 			
-			let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio)
+			let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio, maxSupply: BigUInt(1000000))
 			
 			let tx = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", data: data.encode()!)
 			

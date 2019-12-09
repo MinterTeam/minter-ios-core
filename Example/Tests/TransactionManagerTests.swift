@@ -12,7 +12,6 @@ import Nimble
 import BigInt
 @testable import MinterCore
 
-
 class TransactionManagerTestsSpec : BaseQuickSpec {
 	
 	let http = APIClient()
@@ -198,21 +197,6 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 					})
 				}
 			}
-
-//			it("Can create multisig transaction") {
-//
-//				let correctTx = "f84701018a4d4e54000000000000000cb0ef01c20101ea9433bd6a537e8ad987b234ea3098c992f158df7b0f9433bd6a537e8ad987b234ea3098c992f158df7b0f80800184c3018080"
-//
-//				let data = CreateMultisigAddressRawTransactionData(threshold: BigUInt(1), weights: [BigUInt(1), BigUInt(1)], addresses: ["Mx33bd6a537e8ad987b234ea3098c992f158df7b0f", "Mx33bd6a537e8ad987b234ea3098c992f158df7b0f"])
-//				let encoded = data.encode()
-//
-//				expect(encoded).toNot(beNil())
-//
-//				let tx = CreateMultisigAddressRawTransaction(nonce: BigUInt(1), type: RawTransactionType.createMultisigAddress.BigUIntValue(), gasCoin: "MNT", data: encoded!)
-//
-//				expect(tx).toNot(beNil())
-//				expect(tx.encode()?.toHexString()).to(equal(correctTx))
-//			}
 
 			it("Can create custom coin") {
 				let mnemonic = "dial script notice debris supreme game crisp taste place web gesture execute"

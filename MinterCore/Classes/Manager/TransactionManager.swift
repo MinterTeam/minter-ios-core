@@ -9,7 +9,6 @@ import Foundation
 import ObjectMapper
 import BigInt
 
-
 public enum TransactionManagerError : Error {
 	case transactionsIncorrectPayload
 	case transactionSendError(code: Int?, message: String?)
@@ -239,7 +238,7 @@ public class TransactionManager : BaseManager {
 	/// - Parameters:
 	///   - rawTx: Signed raw Tx
 	///   - completion: Method which will be called after request completed
-	public func estimateCommission(for rawTx: String, height: String = "0", completion: ( (Decimal?, Error?) -> ())? ) {
+	public func estimateCommission(for rawTx: String, height: String = "0", completion: ( (Decimal?, Error?) -> ())?) {
 		
 		let url = MinterAPIURL.estimateTxCommission.url()
 		
