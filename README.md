@@ -73,17 +73,11 @@ This is a pure Swift SDK for working with <b>Minter</b> blockchain
   - [Minter Wallet](#minter-wallet)
 * [Tests](#tests)
 
-## Installing
-
-```bash
-composer require minter/minter-php-sdk
-```
-
 ## Using MinterAPI
 
 You can get all valid responses and full documentation at [Minter Node Api](https://minter-go-node.readthedocs.io/en/latest/api.html)
 
-Create MinterAPI instance
+Initializing SDK
 
 ```swift
 ///Minter SDK initialization
@@ -217,7 +211,7 @@ public func candidates(height: String = "0", includeStakes: Bool = false, comple
 
 Return estimate of transaction.
 
-```
+```swift
 public func estimateCommission(for rawTx: String, height: String = "0", completion: ( (Decimal?, Error?) -> ())?)
 ```
 
