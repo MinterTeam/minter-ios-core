@@ -36,7 +36,7 @@ This is a pure Swift SDK for working with <b>Minter</b> blockchain
 * [Minter Api](#using-minterapi)
     - Methods:
       - [address](#address)
-      - [nonce](#getnonce)
+      - [nonce](#nonce)
       - [send](#send)
       - [status](#status)
       - [getValidators](#validators)
@@ -110,7 +110,7 @@ AccountManager.default.address("Mxfe60014a6e9ac91618f5d1cab3fd58cded61ee99", wit
 })
 ```
 
-### Nonce
+### nonce
 
 Use [address](#address) method of AccountManager to get nonce
 
