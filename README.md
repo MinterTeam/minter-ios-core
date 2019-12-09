@@ -100,7 +100,7 @@ Returns coins list, balance and transaction count (for nonce) of an address.
 
 ```swift
 public func address(_ address: String, height: String = "0", with completion: (([String : Any]?, Error?) -> ())?)
-``
+```
 
 ###### Example
 
