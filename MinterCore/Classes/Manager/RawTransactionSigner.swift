@@ -184,7 +184,7 @@ public class RawTransactionSigner {
 	/**
 	Method signs Check Data with privateKey
 	- Parameters:
-	- data: CHeck Data to be signed
+	- data: Check Data to be signed
 	- privateKey: PrivateKey Data object to be used to sign Tx
 	- Returns: R S V of signed check
 	*/

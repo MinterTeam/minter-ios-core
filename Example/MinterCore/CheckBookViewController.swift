@@ -39,13 +39,12 @@ class CheckBookViewController: BaseViewController {
 		let passPhrase = passPhraseTextField.text ?? "pass"
 		
 		getNonce { (nonce) in
-			
 			guard let nonce = nonce else {
 				SVProgressHUD.showError(withStatus: "Can't get nonce")
 				return
 			}
-			
-			let check = self.makeIssueTransaction(nonce: nonce, dueBlock: dueBlock, amount: amount, coin: coin, passPhrase: passPhrase)
+
+			let check = self.makeIssueTransaction(nonce: "nonce", dueBlock: dueBlock, amount: amount, coin: coin, passPhrase: passPhrase)
 			DispatchQueue.main.async {
 				if let check = check {
 					self.checkTextField.text = check
@@ -104,12 +103,11 @@ class CheckBookViewController: BaseViewController {
 
 	// MARK: -
 
-	func makeIssueTransaction(nonce: BigUInt, dueBlock: String = "999999", amount: String, coin: String, passPhrase: String) -> String? {
-
+	func makeIssueTransaction(nonce: String, dueBlock: String = "999999", amount: String, coin: String, passPhrase: String) -> String? {
 		let due = BigUInt(dueBlock) ?? BigUInt(0)
 		let val = BigUInt(amount) ?? BigUInt(0)
 
-		var tx = IssueCheckRawTransaction(nonce: nonce, dueBlock: due, coin: coin, value: val, passPhrase: passPhrase)
+		var tx = IssueCheckRawTransaction(nonce: nonce, dueBlock: due, coin: coin, value: val, gasCoin: coin, passPhrase: passPhrase)
 		let check = tx.serialize(privateKey: Session.shared.privateKey!.raw.toHexString(), passphrase: passPhrase)
 		return check
 	}

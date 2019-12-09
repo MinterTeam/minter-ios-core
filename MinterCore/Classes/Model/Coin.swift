@@ -53,6 +53,8 @@ public class CoinMappable: Coin, Mappable {
 		self.volume <- map["volume"]
 		self.crr <- map["crr"]
 		self.reserveBalance <- (map["reserve_balance"], DecimalTransformer())
+		//HACK: will be fixed in explorer API v2
+		self.reserveBalance <- (map["reserveBalance"], DecimalTransformer())
 		self.creator <- map["creator"]
 	}
 }

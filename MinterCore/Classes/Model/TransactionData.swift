@@ -38,7 +38,7 @@ public class SendCoinTransactionDataMappable: SendCoinTransactionData, Mappable 
 	}
 }
 
-public class ConvertTransactionData : TransactionData {
+public class ConvertTransactionData: TransactionData {
 	public var fromCoin: String?
 	public var toCoin: String?
 	public var value: Decimal?

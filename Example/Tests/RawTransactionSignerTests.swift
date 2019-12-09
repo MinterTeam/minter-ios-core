@@ -91,13 +91,14 @@ class RawTransactionSignerSpec: BaseQuickSpec {
 		
 		describe("RawTransactionSigner can sign check") {
 			it ("Should equal to check") {
+
 				let pk = "64e27afaab363f21eec05291084367f6f1297a7b280d69d672febecda94a09ea"
 				let pass = "pass"
 
-				let validSign = "Mcf89f01830f423f8a4d4e5400000000000000888ac7230489e80000b841ada7ad273bef8a1d22f3e314fdfad1e19b90b1fe8dc7eeb30bd1d391e89af8642af029c138c2e379b95d6bc71b26c531ea155d9435e156a3d113a14c912dfebf001ba0eb3d47f227c3da3b29e09234ad24c49296f177234f3c9700d780712a656c338ba05726e0ed31ab98c07869a99f22e84165fe4a777b0bac7bcf287532210cae1bba"
+				let validSign = "Mcf8ab3102830f423f8a4d4e5400000000000000880de0b6b3a76400008a4d4e5400000000000000b8412759bbf06ee0f3ef76908b412337a393fdd76e51ae9c7ca4ff7bb79e6a7733924abb71fffeae2bccbcc4a6498f5321887055c2f32d9c7792352d506258183a95001ba0f0dc82a1352c735d15d6bb81d9595fda4ee97e7a9114ebb6df9497f6dfa7be4fa049409688f92dbd7fe7d4874f75b53dacfdfb531f2721a1276dd3c2d0cf2938f0"
 
-				let nonce = BigUInt(1)
-				var check = IssueCheckRawTransaction(nonce: nonce, dueBlock: BigUInt(999999), coin: "MNT", value: BigUInt("10000000000000000000")!, passPhrase: pass)
+				let nonce = "1"
+				var check = IssueCheckRawTransaction(nonce: nonce, dueBlock: BigUInt(999999), coin: "MNT", value: BigUInt(1)*TransactionCoinFactor, gasCoin: "MNT", passPhrase: pass)
 				let signed = check.serialize(privateKey: pk, passphrase: pass)
 
 				expect(signed).to(equal(validSign))
