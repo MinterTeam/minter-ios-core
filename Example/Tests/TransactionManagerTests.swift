@@ -205,7 +205,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 				
 				guard let key = try? pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0) else { return }
 				
-				let newCoin = CreateCoinRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoin: "MNT", name: "TESTCOIN", symbol: "TESTCOIN", initialAmount: BigUInt(1), initialReserve: BigUInt(100), reserveRatio: BigUInt(15))
+        let newCoin = CreateCoinRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoin: "MNT", name: "TESTCOIN", symbol: "TESTCOIN", initialAmount: BigUInt(1), initialReserve: BigUInt(100), reserveRatio: BigUInt(15), maxSupply: BigUInt(10000))
 
 				let signed = RawTransactionSigner.sign(rawTx: newCoin, privateKey: key.raw.toHexString())
 				

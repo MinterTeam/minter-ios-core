@@ -33,16 +33,17 @@ class CreateCoinRawTransactionTestsSpec: BaseQuickSpec {
 				let initialAmount = BigUInt(2)
 				let initialReserve = BigUInt(3)
 				let reserveRatio = BigUInt(4)
+        let maxSupply = BigUInt(10000)
 				
 				let symbol = "MNT2"
 				let name = "Minter two"
 				let gasCoin = "MNT"
 				
-				let model = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio)
+				let model = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio, maxSupply: maxSupply)
 				
 				let coinData = symbol.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 				
-				let fields = [name, coinData, initialAmount, initialReserve, reserveRatio] as [Any]
+				let fields = [name, coinData, initialAmount, initialReserve, reserveRatio, maxSupply] as [Any]
 				
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))
@@ -57,7 +58,7 @@ class CreateCoinRawTransactionTestsSpec: BaseQuickSpec {
 				let reserve = BigUInt(2)
 				let ratio = BigUInt(3)
 				
-				let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: amount, initialReserve: reserve, reserveRatio: ratio)
+				let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: amount, initialReserve: reserve, reserveRatio: ratio, maxSupply: BigUInt(10000))
 				
 				expect(data).toNot(beNil())
 				expect(data.name).to(equal(name))
@@ -74,7 +75,7 @@ class CreateCoinRawTransactionTestsSpec: BaseQuickSpec {
 				let reserve = BigUInt(2)
 				let ratio = BigUInt(3)
 
-				let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: amount, initialReserve: reserve, reserveRatio: ratio)
+				let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: amount, initialReserve: reserve, reserveRatio: ratio, maxSupply: BigUInt(10000))
 
 				let encoded = try? JSONEncoder().encode(data)
 				expect(encoded).toNot(beNil())
