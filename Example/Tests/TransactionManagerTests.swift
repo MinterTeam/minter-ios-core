@@ -12,7 +12,7 @@ import Nimble
 import BigInt
 @testable import MinterCore
 
-class TransactionManagerTestsSpec : BaseQuickSpec {
+class TransactionManagerTestsSpec: BaseQuickSpec {
 	
 	let http = APIClient()
 	var manager: TransactionManager? = TransactionManager.default
@@ -32,7 +32,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 				self.manager = TransactionManager.default
 				
 				waitUntil(timeout: 10) { done in
-					self.manager?.transaction(hash: "Mt9c9e310e5a6ed848eba71f7b3c7c51b291c4d5f63858749051290125a14e6b64", completion: { (transaction, error) in
+					self.manager?.transaction(hash: "Mtf997ff1a8db91cec4241135ccd1c998a9a63b81af0eea4999a86027a7fec5089", completion: { (transaction, error) in
 						
 						expect(error).to(beNil())
 						expect(transaction).toNot(beNil())
@@ -92,7 +92,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 			it("TransactionManager can get estimate") {
 				self.manager = TransactionManager.default
 				waitUntil(timeout: 10) { done in
-					self.manager?.estimateCoinBuy(from: "MNT", to: "VALIDATOR", amount: Decimal(string: "10000000000")!, completion: { (willPay, commission, error) in
+					self.manager?.estimateCoinBuy(from: "MNT", to: "LASHIN", amount: Decimal(string: "10000000000")!, completion: { (willPay, commission, error) in
 						
 						expect(error).to(beNil())
 						expect(willPay).toNot(beNil())
@@ -105,7 +105,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 			it("TransactionManager can get estimate") {
 				self.manager = TransactionManager.default
 				waitUntil(timeout: 10) { done in
-					self.manager?.estimateCoinBuy(from: "MNT", to: "VALIDATOR", amount: Decimal(string: "-1")!, completion: { (willPay, commission, error) in
+					self.manager?.estimateCoinBuy(from: "MNT", to: "LASHIN", amount: Decimal(string: "-1")!, completion: { (willPay, commission, error) in
 						
 						expect(error).toNot(beNil())
 						expect(willPay).to(beNil())
@@ -131,7 +131,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 			it("TransactionManager can get estimate") {
 				self.manager = TransactionManager.default
 				waitUntil(timeout: 10) { done in
-					self.manager?.estimateCoinSell(from: "MNT", to: "VALIDATOR", amount: Decimal(string: "10000000000")!, completion: { (willPay, commission, error) in
+					self.manager?.estimateCoinSell(from: "MNT", to: "LASHIN", amount: Decimal(string: "10000000000")!, completion: { (willPay, commission, error) in
 						
 						expect(error).to(beNil())
 						expect(willPay).toNot(beNil())
@@ -144,7 +144,7 @@ class TransactionManagerTestsSpec : BaseQuickSpec {
 			it("TransactionManager can get estimate") {
 				self.manager = TransactionManager.default
 				waitUntil(timeout: 10) { done in
-					self.manager?.estimateCoinSell(from: "MNT", to: "VALIDATOR", amount: Decimal(string: "-1")!, completion: { (willPay, commission, error) in
+					self.manager?.estimateCoinSell(from: "MNT", to: "LASHIN", amount: Decimal(string: "-1")!, completion: { (willPay, commission, error) in
 						
 						expect(error).toNot(beNil())
 						expect(willPay).to(beNil())
