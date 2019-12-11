@@ -7,7 +7,7 @@ import Nimble
 
 class BaseQuickSpec : QuickSpec {
 	override func spec() {
-		MinterCoreSDK.initialize(urlString: "http://front-de.minter.network:48841")
+		MinterCoreSDK.initialize(urlString: "https://minter-node-2.testnet.minter.network:8841")
 	}
 
 }

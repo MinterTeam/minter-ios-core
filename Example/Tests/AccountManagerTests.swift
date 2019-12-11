@@ -38,7 +38,7 @@ class AccountManagerTestsSpec : BaseQuickSpec {
 				expect(self.account).toNot(beNil())
 				
 				waitUntil(timeout: 10.0) { done in
-					self.account?.address("Mx184ac726059e43643e67290666f7b3195093f870", with: { (resp, err) in
+					self.account?.address("Mx4af34c3ca4c663dfed9020edc3e732c1b202b16c", with: { (resp, err) in
 						expect(err).to(beNil())
 						expect(resp).toNot(beNil())
 						done()

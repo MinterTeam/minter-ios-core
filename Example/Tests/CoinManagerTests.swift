@@ -31,7 +31,7 @@ class CoinManagerTestsSpec : BaseQuickSpec {
 				expect(self.manager).toNot(beNil())
 				
 				waitUntil(timeout: 10.0) { done in
-					self.manager?.info(symbol: "VALIDATOR", completion: { (coin, error) in
+					self.manager?.info(symbol: "BTC", completion: { (coin, error) in
 						
 						expect(error).to(beNil())
 						expect(coin).toNot(beNil())
