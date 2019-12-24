@@ -30,7 +30,7 @@ class CandidateManagerTestsSpec : BaseQuickSpec {
 				self.manager = CandidateManager(httpClient: self.http)
 
 				waitUntil(timeout: 10.0) { done in
-					self.manager?.candidate(publicKey: "Mp09d648161d51bcffe76bdfdf270c909cd93de90f98cda6dd3218d21184399e0e", completion: { (response, error) in
+					self.manager?.candidate(publicKey: "Mpaaaaa16ebd6af229b4cfc02c3ab40bd25c1051c3aa2120f07d08c1bd01777777", completion: { (response, error) in
 
 						expect(error).to(beNil())
 						expect(response).toNot(beNil())
