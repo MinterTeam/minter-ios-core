@@ -52,6 +52,7 @@
 		FA9BE30F21402EDD002160F3 /* PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */; };
 		FACB437D2179FF04004D0C53 /* MasternodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */; };
 		FACB437F217F2486004D0C53 /* DelegateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB437E217F2486004D0C53 /* DelegateViewController.swift */; };
+		FAE621FE2410E2820040BE4C /* MultisigRawTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE621FD2410E2820040BE4C /* MultisigRawTransactionTests.swift */; };
 		FAFCC7942139437E00955258 /* TransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47CCAA21383BEA009C3F4B /* TransactionTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +124,7 @@
 		FA9BE30E21402EDD002160F3 /* PrivateKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyTests.swift; sourceTree = "<group>"; };
 		FACB437C2179FF04004D0C53 /* MasternodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasternodeViewController.swift; sourceTree = "<group>"; };
 		FACB437E217F2486004D0C53 /* DelegateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateViewController.swift; sourceTree = "<group>"; };
+		FAE621FD2410E2820040BE4C /* MultisigRawTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultisigRawTransactionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +266,7 @@
 				FA46392521CBDB48001846D9 /* DeclareCandidacyRawTransactionTests.swift */,
 				FA46392721CBF804001846D9 /* SetCandidateRawTransactionTests.swift */,
 				FA197B1D21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift */,
+				FAE621FD2410E2820040BE4C /* MultisigRawTransactionTests.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				FA9BE30F21402EDD002160F3 /* PrivateKeyTests.swift in Sources */,
 				FA46392621CBDB48001846D9 /* DeclareCandidacyRawTransactionTests.swift in Sources */,
 				FA8027F6218C636000474A69 /* RLPTests.swift in Sources */,
+				FAE621FE2410E2820040BE4C /* MultisigRawTransactionTests.swift in Sources */,
 				FA46391621CAA048001846D9 /* CoinManagerTests.swift in Sources */,
 				FA197B1A21EA197F00264CE6 /* Tests.swift in Sources */,
 				FA197B1E21EB26B600264CE6 /* EditCandidateRawTransactionTests.swift in Sources */,

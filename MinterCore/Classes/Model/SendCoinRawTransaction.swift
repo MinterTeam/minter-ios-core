@@ -16,14 +16,16 @@ public class SendCoinRawTransaction: RawTransaction {
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasPrice: Int = RawTransactionDefaultGasPrice,
 													gasCoin: Data,
-													data: Data) {
+													data: Data,
+                          signatureType: BigUInt = BigUInt(1)) {
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(gasPrice),
 							gasCoin: gasCoin,
 							type: RawTransactionType.sendCoin.BigUIntValue(),
 							payload: Data(),
-							serviceData: Data())
+							serviceData: Data(),
+              signatureType: signatureType)
 		self.data = data
 	}
 

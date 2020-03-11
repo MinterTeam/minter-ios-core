@@ -9,7 +9,7 @@ import Foundation
 import BigInt
 
 /// CreateMultisigAddressRawTransaction Class
-public class CreateMultisigAddressRawTransaction : RawTransaction {
+public class CreateMultisigAddressRawTransaction: RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
@@ -26,6 +26,26 @@ public class CreateMultisigAddressRawTransaction : RawTransaction {
 							serviceData: Data())
 		self.data = data
 	}
+
+  public convenience init(nonce: BigUInt,
+                          chainId: Int = MinterCoreSDK.shared.network.rawValue,
+                          gasCoin: String,
+                          threshold: BigUInt,
+                          weights: [BigUInt],
+                          addresses: [String]) {
+
+    let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+    self.init(nonce: nonce,
+              chainId: chainId,
+              gasPrice: BigUInt(RawTransactionDefaultGasPrice),
+              gasCoin: coinData,
+              type: RawTransactionType.createMultisigAddress.BigUIntValue(),
+              payload: Data(),
+              serviceData: Data())
+    let data = CreateMultisigAddressRawTransactionData(threshold: threshold, weights: weights, addresses: addresses).encode()
+    self.data = data ?? Data()
+  }
+
 }
 
 /// CreateMultisigAddressRawTransactionData class

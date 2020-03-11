@@ -13,7 +13,6 @@ import Nimble
 import ObjectMapper
 import BigInt
 
-
 class EditCandidateRawTransactionTestsSpec: BaseQuickSpec {
 	
 	override func spec() {

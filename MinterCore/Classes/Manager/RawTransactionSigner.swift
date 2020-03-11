@@ -54,6 +54,28 @@ public class RawTransactionSigner {
 		return tx.encode(forSignature: false)?.toHexString()
 	}
 
+  public static func sign(rawTx: RawTransaction, address: String, privateKeys: [String]) -> String? {
+    guard let txDataToSign = rawTx.encode(forSignature: true) else { return nil }
+    let hash = RawTransactionSigner.hashForSigning(data: txDataToSign)!
+
+    let signs = privateKeys.map { (privateKey) -> (v: Data?, r: Data?, s: Data?)? in
+      guard let key = Data(hexString: privateKey) else { return nil }
+      return self.sign(hash, privateKey: key)
+    }.filter { (val) -> Bool in
+      return val != nil
+    } as? [(v: Data, r: Data, s: Data)] ?? []
+
+    guard !signs.isEmpty else {
+      return nil
+    }
+
+    rawTx.signatureType = BigUInt(2)
+    rawTx.signatureData = .init(multisigAddress: address,
+                                signatures: signs)
+
+    return rawTx.encode(forSignature: false)?.toHexString()
+  }
+
 	/**
 	Method calculates hash from RawTx data
 	- Parameters:
@@ -207,9 +229,9 @@ public class RawTransactionSigner {
 			secp256k1_ecdsa_recoverable_signature_serialize_compact(context, output, &recid, &signature)
 		}
 
-		var r = output[..<32]
-		var s = output[32..<64]
-		var v = Data(bytes: [UInt8(recid)])
+    let r = output[..<32]
+    let s = output[32..<64]
+    let v = Data(bytes: [UInt8(recid)])
 
 		return (
 			r: r,

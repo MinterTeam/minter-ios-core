@@ -9,11 +9,11 @@ import Foundation
 import Alamofire
 import BigInt
 
-public protocol RLPEncodable : Encodable {
+public protocol RLPEncodable: Encodable {
 	func encode() -> Data?
 }
 
-public protocol SignatureRLPEncodable : RLPEncodable {
+public protocol SignatureRLPEncodable: RLPEncodable {
 	func encode(forSignature: Bool) -> Data?
 }
 
@@ -90,9 +90,12 @@ public enum RawTransactionType: Int {
 open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 
 	public struct SignatureData: Encodable, Decodable, RLPEncodable {
-		public var v: BigUInt
-		public var s: BigUInt
-		public var r: BigUInt
+		public var v: BigUInt?
+		public var s: BigUInt?
+		public var r: BigUInt?
+
+    public var multisigAddress: String?
+    public var signatures = [(v: Data, r: Data, s: Data)]()
 
 		public init(v: BigUInt = BigUInt(1),
 								r: BigUInt = BigUInt(0),
@@ -101,6 +104,11 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 			self.r = r
 			self.s = s
 		}
+
+    public init(multisigAddress: String, signatures: [(v: Data, r: Data, s: Data)]) {
+      self.multisigAddress = multisigAddress
+      self.signatures = signatures
+    }
 
 		public init(from decoder: Decoder) throws {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -112,6 +120,21 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 		// MARK: - RLPEncodable
 
 		public func encode() -> Data? {
+      if !signatures.isEmpty {
+        guard
+          let multisigAddress = multisigAddress,
+          let address = Data(hexString: multisigAddress.stripMinterHexPrefix()) else {
+            return nil
+        }
+        return RLP.encode([address, signatures.map { (data) -> [Data] in
+          return [data.v, data.r, data.s]
+        }])
+      }
+
+      guard let v = self.v, let r = self.r, let s = self.s else {
+        return nil
+      }
+
 			let fields = [self.v, self.r, self.s] as [Any]
 			return RLP.encode(fields)
 		}
@@ -154,7 +177,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 	/// Reserved field
 	/// Using this field requires an extra commission (about 1 pip per byte)
 	public var serviceData: Data
-	/// SignatureType
+  /// signatureType:  1 - simple, 2 - multisignature
 	public var signatureType: BigUInt
 	/// SignatureData
 	public var signatureData: SignatureData
@@ -172,7 +195,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 	- data: Transaction Data object
 	- payload: Payload Data object
 	- serviceData: ServiceData Data object
-	- v, r, s: Digital signature
+  - signatureType: Signature type, 1 - simple, 2 - multisignature
 	- Precondition:
 	- nonce value can be retreived from the Minter Network, for exmple by calling this method https://minter-go-node.readthedocs.io/en/docs/api.html#transaction-count
 	- gasCoin: 10 bytes of coin symbol, if the byte count less than 10 add 0 bytes from the right (e.g. UInt8([77, 78, 84, 0, 0, 0, 0, 0, 0, 0])
