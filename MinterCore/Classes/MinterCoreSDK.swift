@@ -17,7 +17,7 @@ public class MinterCoreSDK {
 	private init() {}
 
 	public static let shared = MinterCoreSDK()
-	
+
 	public var network: Network {
 		return self._network
 	}

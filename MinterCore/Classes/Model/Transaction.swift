@@ -18,7 +18,7 @@ public enum TransactionType: Int {
 	case sell = 2
 	case sellAll = 3
 	case buy = 4
-	case create = 5
+	case createCoin = 5
 	case declare = 6
 	case delegate = 7
 	case unbond = 8

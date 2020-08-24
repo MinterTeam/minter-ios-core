@@ -9,7 +9,7 @@ import Foundation
 import ObjectMapper
 
 /// DecimalTransformer class
-public class DecimalTransformer : TransformType {
+public class DecimalTransformer: TransformType {
 
 	static let stringFormatters: NumberFormatter = {
 		let formatter = NumberFormatter()

@@ -11,44 +11,55 @@ import BigInt
 /// UnbondRawTransaction
 public class UnbondRawTransaction: RawTransaction {
 
-	public convenience init(nonce: BigUInt,
-													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: Data,
-													data: Data) {
+  /// Convenience initializer
+  ///
+  /// - Parameters:
+  ///   - nonce: Nonce
+  ///   - chainId - chain identifier
+  ///   - gasPrice - gas price
+  ///   - gasCoin: Coin to spend fee from
+  ///   - data: Encoded UnbondRawTransactionData instance
+  public convenience init(nonce: BigUInt,
+                          chainId: Int = MinterCoreSDK.shared.network.rawValue,
+                          gasPrice: Int = RawTransactionDefaultGasPrice,
+                          gasCoin: String,
+                          data: Data) {
+    let gasCoinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data()
 
-		self.init(nonce: nonce,
-							chainId: chainId,
-							gasPrice: BigUInt(1),
-							gasCoin: gasCoin,
-							type: RawTransactionType.unbond.BigUIntValue(),
-							payload: Data(),
-							serviceData: Data())
-		self.data = data
-	}
+    self.init(nonce: nonce,
+              chainId: chainId,
+              gasPrice: BigUInt(gasPrice),
+              gasCoin: gasCoinData,
+              type: RawTransactionType.unbond.BigUIntValue(),
+              payload: Data(),
+              serviceData: Data())
+    self.data = data
+  }
 
-	/// Convenience initializer
-	///
-	/// - Parameters:
-	///   - nonce: Nonce
-	///   - gasCoin: Coin to spend fee from
-	///   - publicKey: Validator's public key
-	///   - coin: Coin which you'd like to unbond
-	///   - value: How much you'd like to unbond
-	public convenience init(nonce: BigUInt,
-													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: Data,
-													publicKey: String,
-													coin: String,
-													value: BigUInt) {
-
-		let encodedData = UnbondRawTransactionData(publicKey: publicKey,
-																							 coin: coin,
-																							 value: value).encode() ?? Data()
-		self.init(nonce: nonce,
-							chainId: chainId,
-							gasCoin: gasCoin,
-							data: encodedData)
-	}
+  /// Convenience initializer
+  ///
+  /// - Parameters:
+  ///   - nonce: Nonce
+  ///   - gasCoin: Coin to spend fee from
+  ///   - publicKey: Validator's public key
+  ///   - coin: Coin which you'd like to delegate
+  ///   - value: How much you'd like to delegate
+  public convenience init(nonce: BigUInt,
+                          chainId: Int = MinterCoreSDK.shared.network.rawValue,
+                          gasPrice: Int = RawTransactionDefaultGasPrice,
+                          gasCoin: String,
+                          publicKey: String,
+                          coin: String,
+                          value: BigUInt) {
+    let encodedData = UnbondRawTransactionData(publicKey: publicKey,
+                                               coin: coin,
+                                               value: value).encode() ?? Data()
+    self.init(nonce: nonce,
+              chainId: chainId,
+              gasPrice: gasPrice,
+              gasCoin: gasCoin,
+              data: encodedData)
+  }
 
 }
 

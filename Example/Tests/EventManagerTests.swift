@@ -11,7 +11,6 @@ import Quick
 import Nimble
 @testable import MinterCore
 
-
 class EventManagerTestsSpec : BaseQuickSpec {
 	
 	let http = APIClient()

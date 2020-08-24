@@ -8,7 +8,7 @@
 import Foundation
 
 /// ValidatorManager class
-public class ValidatorManager : BaseManager {
+public class ValidatorManager: BaseManager {
 
 	/// Method retreives list of active validators
 	///
