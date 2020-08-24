@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-      MinterCoreSDK.initialize(urlString: "https://texasnet.node-api.minter.network:8841")
+      MinterCoreSDK.initialize(urlString: "68.183.211.176:8841")
 			return true
     }
 

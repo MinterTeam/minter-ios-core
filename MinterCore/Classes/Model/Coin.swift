@@ -26,8 +26,10 @@ public class Coin {
 	/// Reserve Balance (e.g. 10000000000000000000)
 	public var reserveBalance: Decimal?
 
+  public var maxSupply: Decimal?
+
 	/// Creator`s address (e.g. Mx8aecc99090e22db1ae017a739b0dc0beb63dbee8)
-	public var creator: String?
+	public var ownerAddress: String?
 }
 
 /// Internal use Coin mappable class
@@ -53,9 +55,8 @@ public class CoinMappable: Coin, Mappable {
 		self.volume <- map["volume"]
 		self.crr <- map["crr"]
 		self.reserveBalance <- (map["reserve_balance"], DecimalTransformer())
-		//HACK: will be fixed in explorer API v2
-		self.reserveBalance <- (map["reserveBalance"], DecimalTransformer())
-		self.creator <- map["creator"]
+    self.maxSupply <- (map["max_supply"], DecimalTransformer())
+		self.ownerAddress <- map["owner_address"]
 	}
 }
 
