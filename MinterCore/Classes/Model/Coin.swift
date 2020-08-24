@@ -10,6 +10,8 @@ import ObjectMapper
 
 /// Coin Model
 public class Coin {
+  // Coin identifier
+  public var id: String?
 
 	/// Coin name (e.g. Belt Coin)
 	public var name: String?
@@ -21,7 +23,7 @@ public class Coin {
 	public var volume: String?
 
 	/// Coin Reserve Ratio (e.g. 10)
-	public var crr: Double?
+	public var crr: String?
 
 	/// Reserve Balance (e.g. 10000000000000000000)
 	public var reserveBalance: Decimal?
@@ -50,6 +52,7 @@ public class CoinMappable: Coin, Mappable {
 	// MARK: - ObjectMapper
 
 	public func mapping(map: Map) {
+    self.id <- map["id"]
 		self.name <- map["name"]
 		self.symbol <- map["symbol"]
 		self.volume <- map["volume"]
@@ -66,7 +69,7 @@ public extension Coin {
 	static func baseCoin() -> Coin {
 		let coin = Coin()
 		if MinterCoreSDK.shared.network == .testnet {
-			coin.name = "MINT Test"
+			coin.name = "MNT"
 			coin.symbol = "MNT"
 		} else {
 			coin.name = "BIP"

@@ -7,20 +7,20 @@
 
 import Foundation
 
-public enum BlockManagerError : Error {
+public enum BlockManagerError: Error {
 	case incorrectPayload
 }
 
 /// Block Manager
-public class BlockManager : BaseManager {
+public class BlockManager: BaseManager {
 
 	public func blocks(height: String = "0", with completion: (([String : Any]?, Error?) -> ())?) {
 
-		let blocksURL = MinterAPIURL.blocks.url()
+		let blocksURL = MinterAPIURL.blocks(height: height).url()
 
-		self.httpClient.getRequest(blocksURL, parameters: ["height" : height]) { (response, error) in
+		self.httpClient.getRequest(blocksURL, parameters: [:]) { (response, error) in
 
-			var res: [String : Any]?
+			var res: [String: Any]?
 			var err: Error?
 
 			defer {

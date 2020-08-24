@@ -23,11 +23,11 @@ public class AccountManager: BaseManager {
 	*/
 	public func address(_ address: String, height: String = "0", with completion: (([String : Any]?, Error?) -> ())?) {
 
-		let balanceURL = MinterAPIURL.address.url()
+    let balanceURL = MinterAPIURL.address(address: address).url()
 
-		self.httpClient.getRequest(balanceURL, parameters: ["address" : address, "height" : height]) { (response, error) in
+		self.httpClient.getRequest(balanceURL, parameters: ["height": height]) { (response, error) in
 
-			var res: [String : Any]?
+			var res: [String: Any]?
 			var err: Error?
 
 			defer {
@@ -40,7 +40,7 @@ public class AccountManager: BaseManager {
 			}
 
 			/// trying to parse response
-			guard let balance = response.data as? [String : Any] else {
+			guard let balance = response.data as? [String: Any] else {
 				err = AccountManagerError.balanceIncorrectPayload
 				return
 			}

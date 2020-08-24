@@ -11,10 +11,9 @@ import Quick
 import Nimble
 @testable import MinterCore
 
-
 class CoinManagerTestsSpec : BaseQuickSpec {
 	
-	let http = APIClient()
+	let http = NodeAPIClient()
 	var manager: CoinManager?
 	
 	override func spec() {
@@ -31,12 +30,12 @@ class CoinManagerTestsSpec : BaseQuickSpec {
 				expect(self.manager).toNot(beNil())
 				
 				waitUntil(timeout: 10.0) { done in
-					self.manager?.info(symbol: "BANANATEST", completion: { (coin, error) in
-						
+					self.manager?.info(symbol: "KLIM", completion: { (coin, error) in
+
 						expect(error).to(beNil())
 						expect(coin).toNot(beNil())
 						expect(coin?.reserveBalance).toNot(beNil())
-						
+
 						done()
 					})
 				}
@@ -47,7 +46,7 @@ class CoinManagerTestsSpec : BaseQuickSpec {
 				expect(self.manager).toNot(beNil())
 				
 				waitUntil(timeout: 10.0) { done in
-					self.manager?.info(symbol: "§&^", completion: { (coin, error) in
+					self.manager?.info(symbol: "BBB11", completion: { (coin, error) in
 						
 						expect(error).toNot(beNil())
 						expect(coin).to(beNil())

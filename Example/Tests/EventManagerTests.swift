@@ -13,7 +13,7 @@ import Nimble
 
 class EventManagerTestsSpec : BaseQuickSpec {
 	
-	let http = APIClient()
+	let http = NodeAPIClient()
 	var manager: EventManager = EventManager.default
 	
 	override func spec() {

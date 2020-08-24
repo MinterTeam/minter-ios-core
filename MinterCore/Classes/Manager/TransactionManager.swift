@@ -26,23 +26,23 @@ public class TransactionManager : BaseManager {
 	- completion: Method which will be called after request finished, contains `Transaction` and `Error` if occured
 	*/
 	public func transaction(hash: String, completion: ((Transaction?, Error?) -> ())?) {
-		
+
 		let url = MinterAPIURL.transaction.url()
-		
-		self.httpClient.getRequest(url, parameters: ["hash" : hash]) { (response, error) in
-			
+
+		self.httpClient.getRequest(url, parameters: ["hash": hash]) { (response, error) in
+
 			var transaction: Transaction?
 			var err: Error?
-			
+
 			defer {
 				completion?(transaction, err)
 			}
-			
+
 			guard error == nil else {
 				err = error
 				return
 			}
-			
+
 			if let res = response.data as? [String : Any] {
 				transaction = Mapper<TransactionMappable>().map(JSON: res)
 			}
@@ -50,23 +50,23 @@ public class TransactionManager : BaseManager {
 	}
 
 	public func transaction(query: String, completion: (([Transaction]?, Error?) -> ())?) {
-		
+
 		let url = MinterAPIURL.transactions.url()
-		
-		self.httpClient.getRequest(url, parameters: ["query" : query]) { (response, error) in
-			
+
+		self.httpClient.getRequest(url, parameters: ["query": query]) { (response, error) in
+
 			var transactions: [Transaction]?
 			var err: Error?
-			
+
 			defer {
 				completion?(transactions, err)
 			}
-			
+
 			guard error == nil else {
 				err = error
 				return
 			}
-			
+
 			if let res = response.data as? [[String : Any]] {
 				transactions = Mapper<TransactionMappable>().mapArray(JSONArray: res)
 			}
@@ -74,24 +74,24 @@ public class TransactionManager : BaseManager {
 	}
 
 	public func unconfirmedTransaction(limit: String = "0", completion: (([String : Any]?, Error?) -> ())?) {
-		
+
 		let url = MinterAPIURL.unconfirmedTransactions.url()
-		
-		self.httpClient.getRequest(url, parameters: ["limit" : limit]) { (response, error) in
-			
-			var transactions: [String : Any]?
+
+		self.httpClient.getRequest(url, parameters: ["limit": limit]) { (response, error) in
+
+			var transactions: [String: Any]?
 			var err: Error?
-			
+
 			defer {
 				completion?(transactions, err)
 			}
-			
+
 			guard error == nil else {
 				err = error
 				return
 			}
-			
-			if let res = response.data as? [String : Any] {
+
+			if let res = response.data as? [String: Any] {
 				transactions = res
 			}
 		}
@@ -104,24 +104,24 @@ public class TransactionManager : BaseManager {
 	- completion: Method which will be called after request finished, contains Tx hash, status text and error if occured
 	*/
 	public func send(tx: String, completion: ((String?, String?, Error?) -> ())?) {
-		
+
 		let url = MinterAPIURL.sendTransaction.url()
-		
-		self.httpClient.getRequest(url, parameters: ["tx" : tx]) { (response, error) in
-			
+
+		self.httpClient.getRequest(url, parameters: ["tx": tx]) { (response, error) in
+
 			var hash: String?
 			var err: Error?
 			var resultText: String?
-			
+
 			defer {
 				completion?(hash, resultText, err)
 			}
-			
+
 			guard error == nil else {
 				err = error
 				return
 			}
-			
+
 			let data = response.data as? [String : Any]
 			hash = data?["hash"] as? String
 			//TODO: migrate to TransactionManagerError
@@ -132,50 +132,53 @@ public class TransactionManager : BaseManager {
 	/**
 	Method retreives buy coin estimate data from a Minter node
 	- Parameters:
-	- from: Coin symbol which you'd like to sell (e.g. MNT)
-	- to: Coin symbol you'd like to buy (e.g. BELTCOIN)
+	- fromId: Coin id which you'd like to sell (e.g. 1)
+	- toId: Coin id you'd like to buy (e.g. 2)
 	- amount: How many coins you'd like to buy (e.g. 1000000000000000000)
 	- completion: Method which will be called after request finished. Completion method contans: How many coins you will pay, estimate commission, error if occured.
-	- Precondition: `from` and `to` must be uppercased (e.g. MNT, BLTCOIN, etc.)
 	*/
-	public func estimateCoinBuy(from: String, to: String, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
-		
+	public func estimateCoinBuy(fromId: Int, toId: Int, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
+
 		let url = MinterAPIURL.estimateCoinBuy.url()
-		
+
 		guard let value = BigUInt(decimal: amount) else {
 			completion?(nil, nil, CoinManagerError.wrongAmount)
 			return
 		}
-		
-		self.httpClient.getRequest(url, parameters: ["coin_to_sell" : from, "coin_to_buy" : to, "value_to_buy" : value]) { (response, error) in
-			
+
+		self.httpClient.getRequest(url, parameters: ["coin_id_to_sell": fromId,
+                                                 "coin_id_to_buy": toId,
+                                                 "value_to_buy": value]
+    ) { (response, error) in
+
 			var value: Decimal?
 			var comission: Decimal?
 			var err: Error?
-			
+
 			defer {
 				completion?(value, comission, err)
 			}
-			
+
 			guard error == nil else {
 				err = error
 				return
 			}
-			
-			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_pay"] as? String, let commission = estimatePayload["commission"] as? String {
-				
+
+			if let estimatePayload = response.data as? [String: Any],
+        let willGet = estimatePayload["will_pay"] as? String,
+        let commission = estimatePayload["commission"] as? String {
+
 				let willPay = Decimal(string: willGet)
 				let com = Decimal(string: commission)
-				
+
 				guard nil != willPay && nil != com else {
 					err = CoinManagerError.noEstimate
 					return
 				}
-				
+
 				value = willPay
 				comission = com
-			}
-			else {
+			} else {
 				err = BaseManagerError.badResponse
 			}
 		}
@@ -184,37 +187,40 @@ public class TransactionManager : BaseManager {
 	/**
 	Method retreives sell coin estimate data from a Minter node
 	- Parameters:
-	- from: Coin symbol which you'd like to sell (e.g. MNT)
-	- to: Coin symbol you'd like to buy (e.g. BELTCOIN)
+	- fromId: Coin id which you'd like to sell (e.g. MNT)
+	- toId: Coin symbol you'd like to buy (e.g. BELTCOIN)
 	- amount: How many coins you'd like to sell (e.g. 1000000000000000000)
 	- completion: Method which will be called after request finished. Completion method contans: How many coins you will get, estimate commission, error if occured.
-	- Precondition: `from` and `to` should be uppercased (e.g. MNT, BLTCOIN, etc.)
 	*/
-	public func estimateCoinSell(from: String, to: String, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
-		
+	public func estimateCoinSell(fromId: Int, toId: Int, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
+
 		let url = MinterAPIURL.estimateCoinSell.url()
-		
+
 		guard let value = BigUInt(decimal: amount) else {
 			completion?(nil, nil, CoinManagerError.wrongAmount)
 			return
 		}
-		
-		self.httpClient.getRequest(url, parameters: ["coin_to_sell" : from, "coin_to_buy" : to, "value_to_sell" : value]) { (response, error) in
-			
+
+		self.httpClient.getRequest(url, parameters: ["coin_id_to_sell": fromId,
+                                                 "coin_id_to_buy": toId,
+                                                 "value_to_sell": value]) { (response, error) in
+
 			var value: Decimal?
 			var comission: Decimal?
 			var err: Error?
-			
+
 			defer {
 				completion?(value, comission, err)
 			}
-			
+
 			guard error == nil else {
 				err = error
 				return
 			}
-			
-			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_get"] as? String, let commission = estimatePayload["commission"] as? String {
+
+			if let estimatePayload = response.data as? [String: Any],
+        let willGet = estimatePayload["will_get"] as? String,
+        let commission = estimatePayload["commission"] as? String {
 				
 				let willGet = Decimal(string: willGet)
 				let com = Decimal(string: commission)
@@ -223,11 +229,10 @@ public class TransactionManager : BaseManager {
 					err = CoinManagerError.noEstimate
 					return
 				}
-				
+
 				value = willGet
 				comission = com
-			}
-			else {
+			} else {
 				err = BaseManagerError.badResponse
 			}
 		}
@@ -238,80 +243,83 @@ public class TransactionManager : BaseManager {
 	/// - Parameters:
 	///   - rawTx: Signed raw Tx
 	///   - completion: Method which will be called after request completed
-	public func estimateCommission(for rawTx: String, height: String = "0", completion: ( (Decimal?, Error?) -> ())?) {
-		
+	public func estimateCommission(for rawTx: String, height: String = "0", completion: ((Decimal?, Error?) -> ())?) {
+
 		let url = MinterAPIURL.estimateTxCommission.url()
-		
+
 		let tx = rawTx.stripMinterHexPrefix()
-		
-		self.httpClient.getRequest(url, parameters: ["tx" : "Mt" + tx, "height" : height]) { (response, error) in
-			
+
+		self.httpClient.getRequest(url, parameters: ["tx": "Mt" + tx, "height": height]) { (response, error) in
+
 			var comission: Decimal?
 			var err: Error?
-			
+
 			defer {
 				completion?(comission, err)
 			}
-			
-			if let payload = response.data as? [String : Any], let commission = payload["commission"] as? String {
+
+			if let payload = response.data as? [String: Any],
+        let commission = payload["commission"] as? String {
 				comission = Decimal(string: commission)
-			}
-			else {
+			} else {
 				err = BaseManagerError.badResponse
 			}
-			
 		}
 	}
 
 	/**
 	Method retreives sell coin estimate data from a Minter node
 	- Parameters:
-	- from: Coin symbol which you'd like to sell (e.g. MNT)
-	- to: Coin symbol you'd like to buy (e.g. BELTCOIN)
+	- fromId: Coin id which you'd like to sell (e.g. 1)
+	- toId: Coin symbol you'd like to buy (e.g. 2)
 	- gasPrice: Gas Price
 	- amount: How many coins you'd like to sell in pip (e.g. 1000000000000000000)
 	- completion: Method which will be called after request finished. Completion method contans: How many coins you will get, estimate commission, error if occured.
-	- Precondition: `from` and `to` should be uppercased (e.g. MNT, BLTCOIN, etc.)
 	*/
-	public func estimateCoinSellAll(from: String, to: String, gasPrice: Int = 1, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
-		
+	public func estimateCoinSellAll(fromId: Int, toId: Int, gasPrice: Int = 1, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?) {
+
 		let url = MinterAPIURL.estimateCoinSell.url()
-		
+
 		guard let value = BigUInt(decimal: amount) else {
 			completion?(nil, nil, CoinManagerError.wrongAmount)
 			return
 		}
-		
-		self.httpClient.getRequest(url, parameters: ["coin_to_sell" : from, "coin_to_buy" : to, "value_to_sell" : value, "gas_price" : gasPrice]) { (response, error) in
-			
+
+		self.httpClient.getRequest(url, parameters: ["coin_id_to_sell": fromId,
+                                                 "coin_id_to_buy": toId,
+                                                 "value_to_sell": value,
+                                                 "gas_price": gasPrice]
+    ) { (response, error) in
+
 			var value: Decimal?
 			var comission: Decimal?
 			var err: Error?
-			
+
 			defer {
 				completion?(value, comission, err)
 			}
-			
-			guard error == nil else {
-				err = error
-				return
-			}
-			
-			if let estimatePayload = response.data as? [String : Any], let willGet = estimatePayload["will_get"] as? String, let commission = estimatePayload["commission"] as? String {
-				
-				let willGet = Decimal(string: willGet)
-				let com = Decimal(string: commission)
-				
-				guard nil != willGet, nil != com else {
-					err = CoinManagerError.noEstimate
-					return
-				}
-				
-				value = willGet
-				comission = com
-			}
-			else {
-				err = BaseManagerError.badResponse
+
+      guard error == nil else {
+        err = error
+        return
+      }
+
+			if let estimatePayload = response.data as? [String: Any],
+        let willGet = estimatePayload["will_get"] as? String,
+        let commission = estimatePayload["commission"] as? String {
+
+          let willGet = Decimal(string: willGet)
+          let com = Decimal(string: commission)
+
+          guard nil != willGet, nil != com else {
+            err = CoinManagerError.noEstimate
+            return
+          }
+
+          value = willGet
+          comission = com
+			} else {
+        err = BaseManagerError.badResponse
 			}
 		}
 	}

@@ -16,9 +16,9 @@ public class EventManager : BaseManager {
 	
 	public func events(height: String = "0", with completion: (([String : Any]?, Error?) -> ())?) {
 
-		let blocksURL = MinterAPIURL.events.url()
+		let blocksURL = MinterAPIURL.events(height: height).url()
 
-		self.httpClient.getRequest(blocksURL, parameters: ["height" : height]) { (response, error) in
+    self.httpClient.getRequest(blocksURL, parameters: [:]) { (response, error) in
 
 			var res: [String : Any]?
 			var err: Error?

@@ -14,7 +14,7 @@ import Nimble
 
 class StatusManagerTestsSpec : BaseQuickSpec {
 	
-	let http = APIClient()
+	let http = NodeAPIClient()
 	var manager: StatusManager?
 	
 	override func spec() {

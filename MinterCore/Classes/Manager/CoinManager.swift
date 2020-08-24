@@ -28,9 +28,9 @@ public class CoinManager: BaseManager {
 	*/
 	public func info(symbol: String, height: String = "0", completion: ((Coin?, Error?) -> ())?) {
 
-		let url = MinterAPIURL.coinInfo.url()
+    let url = MinterAPIURL.coinInfo(symbol: symbol).url()
 
-		self.httpClient.getRequest(url, parameters: ["symbol" : symbol, "height" : height]) { (response, error) in
+		self.httpClient.getRequest(url, parameters: ["height" : height]) { (response, error) in
 
 			var coin: Coin?
 			var err: Error?

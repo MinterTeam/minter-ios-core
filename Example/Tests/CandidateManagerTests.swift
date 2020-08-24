@@ -11,9 +11,9 @@ import Quick
 import Nimble
 @testable import MinterCore
 
-class CandidateManagerTestsSpec : BaseQuickSpec {
+class CandidateManagerTestsSpec: BaseQuickSpec {
 
-	let http = APIClient()
+	let http = NodeAPIClient()
 	var manager: CandidateManager?
 
 	override func spec() {
@@ -30,7 +30,7 @@ class CandidateManagerTestsSpec : BaseQuickSpec {
 				self.manager = CandidateManager(httpClient: self.http)
 
 				waitUntil(timeout: 10.0) { done in
-					self.manager?.candidate(publicKey: "Mpaaaaa16ebd6af229b4cfc02c3ab40bd25c1051c3aa2120f07d08c1bd01777777", completion: { (response, error) in
+					self.manager?.candidate(publicKey: "Mp0208f8a2bd535f65ecbe4b057b3b3c5fbfef6003b0713dc37b697b1d19153fe8", completion: { (response, error) in
 
 						expect(error).to(beNil())
 						expect(response).toNot(beNil())

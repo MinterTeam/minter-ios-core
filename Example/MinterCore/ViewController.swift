@@ -37,13 +37,13 @@ class ViewController: UIViewController {
 		}
 
 		let transactionManager = TransactionManager.default
-		transactionManager.estimateCoinBuy(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
+		transactionManager.estimateCoinBuy(fromId: 0, toId: 1, amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
 			print("Value: \(value)")
 			print("Commission: \(commission)")
 			print("Error: \(error)")
 		}
 		
-		transactionManager.estimateCoinSell(from: "MNT", to: "BELTCOIN", amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
+		transactionManager.estimateCoinSell(fromId: 0, toId: 1, amount: Decimal(string: "10000000000000")!) { (value, commission, error) in
 			print("Value: \(String(describing: value))")
 			print("Commission: \(String(describing: commission))")
 			print("Error: \(String(describing: error))")

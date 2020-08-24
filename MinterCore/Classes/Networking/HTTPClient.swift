@@ -22,24 +22,26 @@ public class HTTPClientError : Error {
 
 	// MARK: -
 
-	public var userData: [String : Any]?
+	public var userData: [String: Any]?
 
 }
 
 public typealias HTTPClientResponseDictionary = [String : Any]
 
 public protocol HTTPClient {
-	
-	typealias HTTPClientResponse = (code: Int, data: Any?, meta: [String : Any]?, links: [String : Any]?)
-	
+
+	typealias HTTPClientResponse = (code: Int, data: Any?,
+    meta: [String: Any]?,
+    links: [String: Any]?)
+
 	typealias CompletionBlock = ((_ response: HTTPClientResponse, _ error: Error?) -> Void)
-	
+
 	func postRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?)
-	
+
 	func getRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?)
-	
+
 	func putRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?)
-	
+
 	func deleteRequest(_ URL: URL, parameters: [String: Any]?, completion: HTTPClient.CompletionBlock?)
-	
+
 }

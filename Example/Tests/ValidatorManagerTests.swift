@@ -11,36 +11,32 @@ import Quick
 import Nimble
 @testable import MinterCore
 
-
 class ValidatorManagerTestsSpec : BaseQuickSpec {
-	
-	let http = APIClient()
+
+	let http = NodeAPIClient()
 	var manager: ValidatorManager?
-	
+
 	override func spec() {
 		super.spec()
-		
+
 		describe("ValidatorManager") {
 			it("ValidatorManager can be initialized") {
 				let manager = ValidatorManager(httpClient: self.http)
 				expect(manager).toNot(beNil())
 			}
-			
+
 			it("ValidatorManager can be initialized") {
 				self.manager = ValidatorManager(httpClient: self.http)
-				
+
 				waitUntil(timeout: 30.0) { done in
-					
+
 					self.manager?.validators(height: 1, with: { (validators, error) in
 						expect(validators).toNot(beNil())
 						expect(error).to(beNil())
 						done()
 					})
-					
 				}
 			}
-			
 		}
-		
 	}
 }
