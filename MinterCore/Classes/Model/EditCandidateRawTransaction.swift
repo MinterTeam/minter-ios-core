@@ -13,16 +13,13 @@ public class EditCandidateRawTransaction: RawTransaction {
 
 	public convenience init?(nonce: BigUInt,
 													 chainId: Int,
-													 gasCoin: String,
+													 gasCoinId: Int,
 													 data: Data) {
 
-		guard let gsCoin = gasCoin.data(using: .utf8)?.setLengthRight(10) else {
-			return nil
-		}
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(1),
-							gasCoin: gsCoin,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.editCandidate.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data())
@@ -39,7 +36,7 @@ public class EditCandidateRawTransaction: RawTransaction {
 	///   - ownerAddress:
 	public convenience init?(nonce: BigUInt,
 													 chainId: Int,
-													 gasCoin: String,
+													 gasCoinId: Int,
 													 publicKey: String,
 													 rewardAddress: String,
 													 ownerAddress: String) {
@@ -48,7 +45,7 @@ public class EditCandidateRawTransaction: RawTransaction {
 																											ownerAddress: ownerAddress)?.encode() ?? Data()
 		self.init(nonce: nonce,
 							chainId: chainId,
-							gasCoin: gasCoin,
+							gasCoinId: gasCoinId,
 							data: encodedData)
 	}
 }

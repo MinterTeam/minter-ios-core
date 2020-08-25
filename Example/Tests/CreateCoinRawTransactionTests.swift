@@ -20,7 +20,7 @@ class CreateCoinRawTransactionTestsSpec: BaseQuickSpec {
 			it("Can be initialized") {
 				let data = "data".data(using: .utf8)!
 				let nonce = BigUInt(1)
-				let model = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", data: data)
+				let model = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoinId: Coin.baseCoin().id!, data: data)
 				
 				expect(model).toNot(beNil())
 				expect(model.data).to(equal(data))
@@ -32,14 +32,14 @@ class CreateCoinRawTransactionTestsSpec: BaseQuickSpec {
 				let nonce = BigUInt(1)
 				let initialAmount = BigUInt(2)
 				let initialReserve = BigUInt(3)
-				let reserveRatio = BigUInt(4)
+				let reserveRatio = UInt(4)
         let maxSupply = BigUInt(10000)
 				
 				let symbol = "MNT2"
 				let name = "Minter two"
-				let gasCoin = "MNT"
+				let gasCoin = Coin.baseCoin().id!
 				
-				let model = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio, maxSupply: maxSupply)
+				let model = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoin, name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio, maxSupply: maxSupply)
 				
 				let coinData = symbol.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 				
@@ -56,7 +56,7 @@ class CreateCoinRawTransactionTestsSpec: BaseQuickSpec {
 				let symbol = "SYMBOL"
 				let amount = BigUInt(1)
 				let reserve = BigUInt(2)
-				let ratio = BigUInt(3)
+				let ratio = UInt(3)
 				
 				let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: amount, initialReserve: reserve, reserveRatio: ratio, maxSupply: BigUInt(10000))
 				
@@ -73,7 +73,7 @@ class CreateCoinRawTransactionTestsSpec: BaseQuickSpec {
 				let symbol = "SYMBOL"
 				let amount = BigUInt(1)
 				let reserve = BigUInt(2)
-				let ratio = BigUInt(3)
+				let ratio = UInt(3)
 
 				let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: amount, initialReserve: reserve, reserveRatio: ratio, maxSupply: BigUInt(10000))
 

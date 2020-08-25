@@ -13,14 +13,13 @@ public class SetCandidateOnlineRawTransaction : RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: String,
+													gasCoinId: Int,
 													data: Data) {
 
-		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(RawTransactionDefaultGasPrice),
-							gasCoin: coinData,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.setCandidateOnline.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data())
@@ -35,12 +34,12 @@ public class SetCandidateOnlineRawTransaction : RawTransaction {
 	///   - publicKey: Validator's public key
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: String,
+													gasCoinId: Int,
 													publicKey: String) {
 		let encodedData = SetCandidateOnlineRawTransactionData(publicKey: publicKey).encode() ?? Data()
 		self.init(nonce: nonce,
 							chainId: chainId,
-							gasCoin: gasCoin,
+							gasCoinId: gasCoinId,
 							data: encodedData)
 	}
 
@@ -60,7 +59,6 @@ public struct SetCandidateOnlineRawTransactionData : Encodable, Decodable {
 
 	public init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-
 		self.publicKey = try values.decode(String.self, forKey: .publicKey)
 	}
 

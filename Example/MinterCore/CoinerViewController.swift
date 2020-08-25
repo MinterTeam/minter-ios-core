@@ -35,10 +35,9 @@ class CoinerViewController: BaseViewController {
 		let symbol = coinSymbolTextField.text ?? ""
 		
 		guard
-		let normalizedReserveRatio = Decimal(string: constantReserveRatioTextField.text ?? "0"),
+    let reserveRatio = UInt(constantReserveRatioTextField.text ?? "0"),
 		let initialAmount = BigUInt(decimal: normalizedAmount),
-		let initialReserve = BigUInt(decimal: normalizedReserve),
-		let reserveRatio = BigUInt(decimal: normalizedReserveRatio) else {
+		let initialReserve = BigUInt(decimal: normalizedReserve) else {
 			//Show error
 			return
 		}
@@ -52,7 +51,7 @@ class CoinerViewController: BaseViewController {
 			
 			let data = CreateCoinRawTransactionData(name: name, symbol: symbol, initialAmount: initialAmount, initialReserve: initialReserve, reserveRatio: reserveRatio, maxSupply: BigUInt(1000000))
 			
-			let tx = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", data: data.encode()!)
+			let tx = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoinId: Coin.baseCoin().id!, data: data.encode()!)
 			
 			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey!.raw.toHexString())
 			

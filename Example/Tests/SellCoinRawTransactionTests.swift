@@ -17,48 +17,44 @@ class SellCoinRawTransactionTestsSpec: BaseQuickSpec {
 	override func spec() {
 		describe("Can be initialized") {
 			it("Base initializer") {
-				let gasCoin = "gasCoin"
+				let gasCoin = Coin.baseCoin().id!
 				let data = "data".data(using: .utf8)!
 				let nonce = BigUInt(1)
-				let tx = SellCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, data: data)
-				
-				let correctGasCoin = gasCoin.data(using: .utf8)!.setLengthRight(10)
+				let tx = SellCoinRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoin, data: data)
 				
 				expect(tx).toNot(beNil())
 				expect(tx.nonce).to(equal(nonce))
-				expect(tx.gasCoin).to(equal(correctGasCoin))
+				expect(tx.gasCoinId).to(equal(gasCoin))
 				expect(tx.data).to(equal(data))
 			}
 		}
 		
 		describe("Can be initialized") {
 			it("Base initializer") {
-				let gasCoin = "gasCoin"
+				let gasCoin = Coin.baseCoin().id!
 				let nonce = BigUInt(1)
-				let coinFrom = "MNT"
-				let coinTo = "BPM"
+				let coinFrom = Coin.baseCoin().id!
+				let coinTo = 1
 				let value = BigUInt(1)
 				let minimumValue = BigUInt(0)
-				let tx = SellCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValue)
+				let tx = SellCoinRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoin, coinFromId: coinFrom, coinToId: coinTo, value: value, minimumValueToBuy: minimumValue)
 				
-				let data = SellCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValue).encode()!
-				
-				let correctGasCoin = gasCoin.data(using: .utf8)!.setLengthRight(10)
+				let data = SellCoinRawTransactionData(coinFromId: coinFrom, coinToId: coinTo, value: value, minimumValueToBuy: minimumValue).encode()!
 				
 				expect(tx).toNot(beNil())
 				expect(tx.nonce).to(equal(nonce))
-				expect(tx.gasCoin).to(equal(correctGasCoin))
+				expect(tx.gasCoinId).to(equal(gasCoin))
 				expect(tx.data).to(equal(data))
 			}
 		}
 		
 		describe("Can be encoded/decoded") {
 			it("Base initializer") {
-				let coinFrom = "MNT"
-				let coinTo = "BPM"
+				let coinFrom = Coin.baseCoin().id!
+				let coinTo = 1
 				let value = BigUInt(1)
 				let minimumValue = BigUInt(0)
-				let data = SellCoinRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValue)
+				let data = SellCoinRawTransactionData(coinFromId: coinFrom, coinToId: coinTo, value: value, minimumValueToBuy: minimumValue)
 				
 				let encoded = try? JSONEncoder().encode(data)
 				expect(encoded).toNot(beNil())
@@ -66,8 +62,8 @@ class SellCoinRawTransactionTestsSpec: BaseQuickSpec {
 				let decoded = try? JSONDecoder().decode(SellCoinRawTransactionData.self, from: encoded!)
 				expect(decoded).toNot(beNil())
 				
-				expect(decoded?.coinFrom).to(equal(coinFrom))
-				expect(decoded?.coinTo).to(equal(coinTo))
+				expect(decoded?.coinFromId).to(equal(coinFrom))
+				expect(decoded?.coinToId).to(equal(coinTo))
 				expect(decoded?.value).to(equal(value))
 				expect(decoded?.minimumValueToBuy).to(equal(minimumValue))
 			}
@@ -81,47 +77,43 @@ class SellAllCoinRawTransactionTestsSpec: QuickSpec {
 	override func spec() {
 		describe("Can be initialized") {
 			it("Base initializer") {
-				let gasCoin = "gasCoin"
+				let gasCoin = Coin.baseCoin().id!
 				let data = "data".data(using: .utf8)!
 				let nonce = BigUInt(1)
-				let tx = SellAllCoinsRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, data: data)
-				
-				let correctGasCoin = gasCoin.data(using: .utf8)!.setLengthRight(10)
+				let tx = SellAllCoinsRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoin, data: data)
 				
 				expect(tx).toNot(beNil())
 				expect(tx.nonce).to(equal(nonce))
-				expect(tx.gasCoin).to(equal(correctGasCoin))
+				expect(tx.gasCoinId).to(equal(gasCoin))
 				expect(tx.data).to(equal(data))
 			}
 		}
 		
 		describe("Can be initialized") {
 			it("Base initializer") {
-				let gasCoin = "gasCoin"
+				let gasCoin = Coin.baseCoin().id!
 				let nonce = BigUInt(1)
-				let coinFrom = "MNT"
-				let coinTo = "BPM"
+				let coinFrom = Coin.baseCoin().id!
+				let coinTo = 1
 				let minimumValue = BigUInt(0)
 				
-				let tx = SellAllCoinsRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValue)
+				let tx = SellAllCoinsRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoin, coinFromId: coinFrom, coinToId: coinTo, minimumValueToBuy: minimumValue)
 				
-				let data = SellAllCoinsRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValue).encode()!
-				
-				let correctGasCoin = gasCoin.data(using: .utf8)!.setLengthRight(10)
+				let data = SellAllCoinsRawTransactionData(coinFromId: coinFrom, coinToId: coinTo, minimumValueToBuy: minimumValue).encode()!
 				
 				expect(tx).toNot(beNil())
 				expect(tx.nonce).to(equal(nonce))
-				expect(tx.gasCoin).to(equal(correctGasCoin))
+				expect(tx.gasCoinId).to(equal(gasCoin))
 				expect(tx.data).to(equal(data))
 			}
 		}
 		
 		describe("Can be encoded/decoded") {
 			it("Base initializer") {
-				let coinFrom = "MNT"
-				let coinTo = "BPM"
+				let coinFrom = Coin.baseCoin().id!
+				let coinTo = 1
 				let minimumValue = BigUInt(0)
-				let data = SellAllCoinsRawTransactionData(coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValue)
+				let data = SellAllCoinsRawTransactionData(coinFromId: coinFrom, coinToId: coinTo, minimumValueToBuy: minimumValue)
 				
 				let encoded = try? JSONEncoder().encode(data)
 				expect(encoded).toNot(beNil())
@@ -129,8 +121,8 @@ class SellAllCoinRawTransactionTestsSpec: QuickSpec {
 				let decoded = try? JSONDecoder().decode(SellAllCoinsRawTransactionData.self, from: encoded!)
 				expect(decoded).toNot(beNil())
 				
-				expect(decoded?.coinFrom).to(equal(coinFrom))
-				expect(decoded?.coinTo).to(equal(coinTo))
+				expect(decoded?.coinFromId).to(equal(coinFrom))
+				expect(decoded?.coinToId).to(equal(coinTo))
 				expect(decoded?.minimumValueToBuy).to(equal(minimumValue))
 			}
 		}

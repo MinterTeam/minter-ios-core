@@ -13,14 +13,13 @@ public class CreateMultisigAddressRawTransaction: RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: String,
+													gasCoinId: Int,
 													data: Data) {
 
-		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(RawTransactionDefaultGasPrice),
-							gasCoin: coinData,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.createMultisigAddress.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data())
@@ -29,16 +28,15 @@ public class CreateMultisigAddressRawTransaction: RawTransaction {
 
   public convenience init(nonce: BigUInt,
                           chainId: Int = MinterCoreSDK.shared.network.rawValue,
-                          gasCoin: String,
+                          gasCoinId: Int,
                           threshold: BigUInt,
                           weights: [BigUInt],
                           addresses: [String]) {
 
-    let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
     self.init(nonce: nonce,
               chainId: chainId,
               gasPrice: BigUInt(RawTransactionDefaultGasPrice),
-              gasCoin: coinData,
+              gasCoinId: gasCoinId,
               type: RawTransactionType.createMultisigAddress.BigUIntValue(),
               payload: Data(),
               serviceData: Data())

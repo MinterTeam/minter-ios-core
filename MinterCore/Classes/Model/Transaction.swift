@@ -31,6 +31,7 @@ public enum TransactionType: Int {
 }
 
 /// Transaction Model
+/// Used to interact with Node's REST API
 open class Transaction {
 
 	public init() {}

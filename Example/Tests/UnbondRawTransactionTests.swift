@@ -21,43 +21,39 @@ class UnbondRawTransactionTestsSpec: BaseQuickSpec {
 			
 			it("Can be initialized") {
 				let nonce = BigUInt(1)
-				let coin = "MNT"
+				let coin = Coin.baseCoin().id!
 				let data = "data".data(using: .utf8)!
 				
-				let gasCoin = coin.data(using: .utf8)!.setLengthRight(10)!
-				
-				let model = UnbondRawTransaction(nonce: nonce, chainId: 2, gasCoin: coin, data: data)
+				let model = UnbondRawTransaction(nonce: nonce, chainId: 2, gasCoinId: coin, data: data)
 				
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))
 				expect(model.data).to(equal(data))
-				expect(model.gasCoin).to(equal(gasCoin))
+				expect(model.gasCoinId).to(equal(coin))
 			}
 			
 			it("Can be initialized") {
 				let nonce = BigUInt(1)
-				let coin = "MNT"
+				let coin = Coin.baseCoin().id!
 				let publicKey = "91cab56e6c6347560224b4adaea1200335f34687766199335143a52ec28533a5"
 				let value = BigUInt(2)
 
-				let gasCoin = coin.data(using: .utf8)!.setLengthRight(10)!
-
-				let data = RLP.encode([Data(hex: publicKey), gasCoin, value])
+				let data = RLP.encode([Data(hex: publicKey), coin, value])
 				
-				let model = UnbondRawTransaction(nonce: nonce, chainId: 2, gasCoin: coin, publicKey: publicKey, coin: coin, value: value)
+				let model = UnbondRawTransaction(nonce: nonce, chainId: 2, gasCoinId: coin, publicKey: publicKey, coinId: coin, value: value)
 				
 				expect(model).toNot(beNil())
 				expect(model.nonce).to(equal(nonce))
 				expect(model.data).to(equal(data))
-				expect(model.gasCoin).to(equal(gasCoin))
+				expect(model.gasCoinId).to(equal(coin))
 			}
 			
 			it("Can be initialized") {
-				let coin = "MNT"
+				let coin = Coin.baseCoin().id!
 				let publicKey = "91cab56e6c6347560224b4adaea1200335f34687766199335143a52ec28533a5"
 				let value = BigUInt(2)
 				
-				let model = UnbondRawTransactionData(publicKey: publicKey, coin: coin, value: value)
+				let model = UnbondRawTransactionData(publicKey: publicKey, coinId: coin, value: value)
 				
 				let encoded = try? JSONEncoder().encode(model)
 				expect(encoded).toNot(beNil())
@@ -66,7 +62,7 @@ class UnbondRawTransactionTestsSpec: BaseQuickSpec {
 				expect(decoded).toNot(beNil())
 				
 				expect(decoded?.publicKey).to(equal(publicKey))
-				expect(decoded?.coin).to(equal(coin))
+				expect(decoded?.coinId).to(equal(coin))
 				expect(decoded?.value).to(equal(value))
 			}
 			

@@ -21,7 +21,7 @@ public class DeepLinkManager {
                               transaction.payload,
                               transaction.nonce,
                               transaction.gasPrice,
-                              transaction.gasCoin])
+                              transaction.gasCoinId])
 
     guard let encodedTx = encoded?.base64EncodedString() else { return nil }
 

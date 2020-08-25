@@ -11,8 +11,8 @@ import BigInt
 public struct RLP {
 
 	enum Error: Swift.Error {
-			case encodingError
-			case decodingError
+    case encodingError
+    case decodingError
 	}
 
 	/// Encodes an element as RLP data.
@@ -26,6 +26,8 @@ public struct RLP {
 			return encodeList(list)
 		case let number as Int:
 			return encodeInt(number)
+    case let number as UInt:
+      return encodeUInt(number)
 		case let bigint as BigInt:
 			return encodeBigInt(bigint)
 		case let biguint as BigUInt:

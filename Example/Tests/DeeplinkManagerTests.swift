@@ -20,10 +20,10 @@ class DeeplinkManagerTestsSpec: BaseQuickSpec {
     describe("Deeplink Manager") {
       it("Can make deeplink out of tx") {
         let transaction = SendCoinRawTransaction(nonce: BigUInt(0),
-                                                 gasCoin: "BIP",
+                                                 gasCoinId: Coin.baseCoin().id!,
                                                  to: "Mx228e5a68b847d169da439ec15f727f08233a7ca6",
                                                  value: BigUInt(1),
-                                                 coin: "BIP")
+                                                 coinId: Coin.baseCoin().id!)
         let manager = DeepLinkManager(transaction: transaction)
         manager.encode()
         let correctDeeplink = "https://bip.to/tx/8gGi4YpCSVAAAAAAAAAAlCKOWmi4R9Fp2kOewV9yfwgjOnymAYCAAYpCSVAAAAAAAAAA"

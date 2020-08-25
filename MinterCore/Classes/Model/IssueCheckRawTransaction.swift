@@ -14,9 +14,9 @@ public struct IssueCheckRawTransaction: Encodable, Decodable {
 	public var nonce: String
   public var chainId: Int
 	public var dueBlock: BigUInt = BigUInt(999999)
-	public var coin: String
+	public var coinId: Int
 	public var value: BigUInt
-  public var gasCoin: String
+  public var gasCoinId: Int
 	public var passPhrase: String
 	public var lock: Data?
 	public var r: BigUInt?
@@ -35,16 +35,16 @@ public struct IssueCheckRawTransaction: Encodable, Decodable {
 	public init(nonce: String,
               chainId: Int = MinterCoreSDK.shared.network.rawValue,
 							dueBlock: BigUInt = BigUInt(9999999),
-							coin: String = Coin.baseCoin().symbol!,
+							coinId: Int = Coin.baseCoin().id!,
 							value: BigUInt,
-              gasCoin: String = Coin.baseCoin().symbol!,
+              gasCoinId: Int = Coin.baseCoin().id!,
 							passPhrase: String) {
 		self.nonce = nonce
     self.chainId = chainId
 		self.dueBlock = dueBlock
-		self.coin = coin
+		self.coinId = coinId
 		self.value = value
-    self.gasCoin = gasCoin
+    self.gasCoinId = gasCoinId
 		self.passPhrase = passPhrase
 	}
 
@@ -53,9 +53,9 @@ public struct IssueCheckRawTransaction: Encodable, Decodable {
 		self.nonce = try values.decode(String.self, forKey: .nonce)
     self.chainId = try values.decode(Int.self, forKey: .chainId)
 		self.dueBlock = try values.decode(BigUInt.self, forKey: .dueBlock)
-		self.coin = try values.decode(String.self, forKey: .coin)
+		self.coinId = try values.decode(Int.self, forKey: .coinId)
 		self.value = try values.decode(BigUInt.self, forKey: .value)
-    self.gasCoin = try values.decode(String.self, forKey: .gasCoin)
+    self.gasCoinId = try values.decode(Int.self, forKey: .gasCoinId)
 		self.passPhrase = try values.decode(String.self, forKey: .passPhrase)
 	}
 
@@ -107,9 +107,9 @@ public struct IssueCheckRawTransaction: Encodable, Decodable {
 		case nonce
     case chainId
 		case dueBlock
-		case coin
+		case coinId
 		case value
-    case gasCoin
+    case gasCoinId
 		case passPhrase
 	}
 
@@ -118,28 +118,25 @@ public struct IssueCheckRawTransaction: Encodable, Decodable {
 		try container.encode(nonce, forKey: .nonce)
     try container.encode(chainId, forKey: .chainId)
 		try container.encode(dueBlock, forKey: .dueBlock)
-		try container.encode(coin, forKey: .coin)
+		try container.encode(coinId, forKey: .coinId)
 		try container.encode(value, forKey: .value)
-    try container.encode(gasCoin, forKey: .gasCoin)
+    try container.encode(gasCoinId, forKey: .gasCoinId)
 		try container.encode(passPhrase, forKey: .passPhrase)
 	}
 
 	private func encode(forSigning: Bool) -> Data? {
-		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-    let gasCoinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-
 		var fields: [Any]?
 		if forSigning {
-			fields = [nonce, chainId, dueBlock, coinData, value, gasCoinData] as [Any]
+			fields = [nonce, chainId, dueBlock, coinId, value, gasCoinId] as [Any]
 		} else {
 			guard nil != lock else {
 				return nil
 			}
 
 			if nil != v && nil != r && nil != s {
-				fields = [nonce, chainId, dueBlock, coinData, value, gasCoinData, lock!, v!, r!, s!] as [Any]
+				fields = [nonce, chainId, dueBlock, coinId, value, gasCoinId, lock!, v!, r!, s!] as [Any]
 			} else {
-				fields = [nonce, chainId, dueBlock, coinData, value, gasCoinData, lock!] as [Any]
+				fields = [nonce, chainId, dueBlock, coinId, value, gasCoinId, lock!] as [Any]
 			}
 		}
 		return RLP.encode(fields)

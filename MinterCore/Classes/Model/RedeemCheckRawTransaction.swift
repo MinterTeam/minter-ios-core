@@ -15,18 +15,13 @@ public class RedeemCheckRawTransaction: RawTransaction {
 
 	public init?(nonce: BigUInt = BigUInt(1),
 							 chainId: Int = MinterCoreSDK.shared.network.rawValue,
-							 gasCoin: String,
+							 gasCoinId: Int,
 							 rawCheck: Data,
 							 proof: Data) {
 
-		guard let gsCoin = gasCoin.data(using: .utf8)?.setLengthRight(10),
-			let data = RedeemCheckRawTransactionData(rawCheck: rawCheck, proof: proof).encode() else {
-			return nil
-		}
-
 		super.init(nonce: nonce,
 							 chainId: chainId,
-							 gasCoin: gsCoin,
+							 gasCoinId: gasCoinId,
 							 type: RawTransactionType.redeemCheck.BigUIntValue(),
 							 payload: Data(),
 							 serviceData: Data())

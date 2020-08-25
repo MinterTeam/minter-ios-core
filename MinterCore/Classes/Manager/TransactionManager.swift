@@ -107,7 +107,7 @@ public class TransactionManager : BaseManager {
 
 		let url = MinterAPIURL.sendTransaction.url()
 
-		self.httpClient.getRequest(url, parameters: ["tx": tx]) { (response, error) in
+		self.httpClient.postRequest(url, parameters: ["tx": tx]) { (response, error) in
 
 			var hash: String?
 			var err: Error?
@@ -221,10 +221,10 @@ public class TransactionManager : BaseManager {
 			if let estimatePayload = response.data as? [String: Any],
         let willGet = estimatePayload["will_get"] as? String,
         let commission = estimatePayload["commission"] as? String {
-				
+
 				let willGet = Decimal(string: willGet)
 				let com = Decimal(string: commission)
-				
+
 				guard nil != willGet, nil != com else {
 					err = CoinManagerError.noEstimate
 					return

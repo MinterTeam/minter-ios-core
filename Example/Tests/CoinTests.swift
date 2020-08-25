@@ -32,8 +32,8 @@ class CoinSpec: BaseQuickSpec {
 			}
 
 			it("can be mapped with Dict") {
-				let json: [String : Any] = [
-          "id": "1",
+				let json: [String: Any] = [
+          "id": 1,
 					"reserve_balance" : "395005853441855252801391",
 					"symbol" : "SHSCOIN",
 					"volume" : "1987475416525182163966830",
@@ -41,11 +41,10 @@ class CoinSpec: BaseQuickSpec {
 					"crr" : "50",
 					"owner_address" : "Mx6eadf5badeda8f76fc35e0c4d7f7fbc00fe34315"
 				]
-				
-				
+
 				let model = Mapper<CoinMappable>().map(JSON: json)
 				expect(model).toNot(beNil())
-        expect(model?.id).to(equal("1"))
+        expect(model?.id).to(equal(1))
 				expect(model?.reserveBalance).to(equal(Decimal(string: "395005853441855252801391")!))
 				expect(model?.symbol).to(equal("SHSCOIN"))
 				expect(model?.name).to(equal("Stakeholder Coin"))
@@ -56,7 +55,7 @@ class CoinSpec: BaseQuickSpec {
 			it("can be mapped with JSON") {
         let JSONString = """
 {\
-          \"id\": \"1\",\
+          \"id\": 1,\
           \"name\": \"\",\
           \"symbol\": \"KLIM\",\
           \"volume\": \"1000000000000000000\",\
@@ -69,7 +68,7 @@ class CoinSpec: BaseQuickSpec {
 
 				let model = Mapper<CoinMappable>().map(JSONString: JSONString)
 				expect(model).toNot(beNil())
-        expect(model?.id).to(equal("1"))
+        expect(model?.id).to(equal(1))
 				expect(model?.reserveBalance).to(equal(Decimal(string: "10000000000000000000000")!))
 				expect(model?.symbol).to(equal("KLIM"))
 				expect(model?.name).to(equal(""))

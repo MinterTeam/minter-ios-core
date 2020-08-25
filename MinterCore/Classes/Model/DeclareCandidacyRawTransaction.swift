@@ -13,13 +13,13 @@ public class DeclareCandidacyRawTransaction: RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: Data,
+													gasCoinId: Int,
 													data: Data) {
 
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(1),
-							gasCoin: gasCoin,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.declareCandidacy.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data())
@@ -28,30 +28,28 @@ public class DeclareCandidacyRawTransaction: RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: String,
+													gasCoinId: Int,
 													address: String,
 													publicKey: String,
 													commission: BigUInt,
-													coin: String,
+													coinId: Int,
 													stake: BigUInt) {
-
-		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 
 		let encodedData = DeclareCandidacyRawTransactionData(address: address,
 																												 publicKey: publicKey,
 																												 commission: commission,
-																												 coin: coin,
+																												 coinId: coinId,
 																												 stake: stake).encode() ?? Data()
 		self.init(nonce: nonce,
 							chainId: chainId,
-							gasCoin: coinData,
+							gasCoinId: gasCoinId,
 							data: encodedData)
 	}
 
 }
 
 /// DeclareCandidacyRawTransactionData
-public struct DeclareCandidacyRawTransactionData : Encodable, Decodable {
+public struct DeclareCandidacyRawTransactionData: Encodable, Decodable {
 
 	/// Address to get reward to
 	public var address: String
@@ -62,8 +60,8 @@ public struct DeclareCandidacyRawTransactionData : Encodable, Decodable {
 	/// Comission (up to 100%)
 	public var commission: BigUInt
 
-	/// Coin you declare (e.g. "MNT")
-	public var coin: String
+	/// Coin you declare (e.g. 0)
+	public var coinId: Int
 
 	/// Stake
 	public var stake: BigUInt
@@ -73,12 +71,12 @@ public struct DeclareCandidacyRawTransactionData : Encodable, Decodable {
 	public init(address: String,
 							publicKey: String,
 							commission: BigUInt,
-							coin: String,
+							coinId: Int,
 							stake: BigUInt) {
 		self.address = address
 		self.publicKey = publicKey
 		self.commission = commission
-		self.coin = coin
+		self.coinId = coinId
 		self.stake = stake
 	}
 
@@ -87,7 +85,7 @@ public struct DeclareCandidacyRawTransactionData : Encodable, Decodable {
 		self.address = try values.decode(String.self, forKey: .address)
 		self.publicKey = try values.decode(String.self, forKey: .publicKey)
 		self.commission = try values.decode(BigUInt.self, forKey: .commission)
-		self.coin = try values.decode(String.self, forKey: .coin)
+		self.coinId = try values.decode(Int.self, forKey: .coinId)
 		self.stake = try values.decode(BigUInt.self, forKey: .stake)
 	}
 
@@ -97,7 +95,7 @@ public struct DeclareCandidacyRawTransactionData : Encodable, Decodable {
 		case address
 		case publicKey
 		case commission
-		case coin
+		case coinId
 		case stake
 	}
 
@@ -106,17 +104,16 @@ public struct DeclareCandidacyRawTransactionData : Encodable, Decodable {
 		try container.encode(address, forKey: .address)
 		try container.encode(publicKey, forKey: .publicKey)
 		try container.encode(commission, forKey: .commission)
-		try container.encode(coin, forKey: .coin)
+		try container.encode(coinId, forKey: .coinId)
 		try container.encode(stake, forKey: .stake)
 	}
 
 	// MARK: - RLPEncoding
 
 	public func encode() -> Data? {
-		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		let pub = Data(hex: publicKey.stripMinterHexPrefix())
 		let adrs = Data(hex: address.stripMinterHexPrefix())
-		let fields = [adrs, pub, commission, coinData, stake] as [Any]
+		let fields = [adrs, pub, commission, coinId, stake] as [Any]
 		return RLP.encode(fields)
 	}
 }

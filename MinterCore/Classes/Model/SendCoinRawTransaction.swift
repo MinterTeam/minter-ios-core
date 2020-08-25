@@ -15,13 +15,13 @@ public class SendCoinRawTransaction: RawTransaction {
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasPrice: Int = RawTransactionDefaultGasPrice,
-													gasCoin: Data,
+                          gasCoinId: Int = Coin.baseCoin().id!,
 													data: Data,
                           signatureType: BigUInt = BigUInt(1)) {
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(gasPrice),
-							gasCoin: gasCoin,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.sendCoin.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data(),
@@ -32,14 +32,13 @@ public class SendCoinRawTransaction: RawTransaction {
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasPrice: Int = RawTransactionDefaultGasPrice,
-													gasCoin: String,
+													gasCoinId: Int,
 													data: Data) {
 
-		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(gasPrice),
-							gasCoin: coinData,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.sendCoin.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data())
@@ -49,16 +48,15 @@ public class SendCoinRawTransaction: RawTransaction {
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasPrice: Int = RawTransactionDefaultGasPrice,
-													gasCoin: String,
+													gasCoinId: Int = Coin.baseCoin().id!,
 													to: String,
 													value: BigUInt,
-													coin: String) {
-		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		let encodedData = SendCoinRawTransactionData(to: to, value: value, coin: coin).encode() ?? Data()
+													coinId: Int) {
+		let encodedData = SendCoinRawTransactionData(to: to, value: value, coinId: coinId).encode() ?? Data()
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: gasPrice,
-							gasCoin: coinData,
+							gasCoinId: gasCoinId,
 							data: encodedData)
 	}
 
@@ -71,22 +69,22 @@ public struct SendCoinRawTransactionData: Encodable, Decodable {
 	public var to: String
 	/// How many coins you'd like to send, the value should be in pip
 	public var value: BigUInt
-	/// Coin symbol (e.g. "MNT")
-	public var coin: String = RawTransactionDefaultTransactionCoin
+	/// Coin symbol (e.g. 1)
+	public var coinId: Int = Coin.baseCoin().id!
 
 	// MARK: -
 
-	public init(to: String, value: BigUInt, coin: String) {
+	public init(to: String, value: BigUInt, coinId: Int) {
 		self.to = to
 		self.value = value
-		self.coin = coin
+		self.coinId = coinId
 	}
 
 	public init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		self.to = try values.decode(String.self, forKey: .to)
 		self.value = try values.decode(BigUInt.self, forKey: .value)
-		self.coin = try values.decode(String.self, forKey: .coin)
+		self.coinId = try values.decode(Int.self, forKey: .coinId)
 	}
 
 	// MARK: - Encoding
@@ -94,14 +92,14 @@ public struct SendCoinRawTransactionData: Encodable, Decodable {
 	enum CodingKeys: String, CodingKey {
 		case to
 		case value
-		case coin
+		case coinId
 	}
 
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(to, forKey: .to)
 		try container.encode(value, forKey: .value)
-		try container.encode(coin, forKey: .coin)
+		try container.encode(coinId, forKey: .coinId)
 	}
 
 	public func encode() -> Data? {
@@ -110,8 +108,7 @@ public struct SendCoinRawTransactionData: Encodable, Decodable {
 			return Data()
 		}
 
-		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		let fields = [coinData, toData, value] as [Any]
+		let fields = [coinId, toData, value] as [Any]
 		return RLP.encode(fields)
 	}
 }

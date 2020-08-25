@@ -22,7 +22,7 @@ class MultisigRawTransactionTestsSpec: BaseQuickSpec {
         let correctSigned = "f8a30102018a4d4e54000000000000000cb848f84607c3010305f83f94ee81347211c72524338f9680072af9074433314394ee81347211c72524338f9680072af9074433314594ee81347211c72524338f9680072af90744333144808001b845f8431ca094eb41d39e6782f5539615cc66da7073d4283893f0b3ee2b2f36aee1eaeb7c57a037f90ffdb45eb9b6f4cf301b48e73a6a81df8182e605b656a52057537d264ab4"
         let tx = CreateMultisigAddressRawTransaction(nonce: BigUInt(1),
                                                      chainId: 2,
-                                                     gasCoin: "MNT",
+                                                     gasCoinId: Coin.baseCoin().id!,
                                                      threshold: BigUInt(7),
                                                      weights: [BigUInt(1), BigUInt(3), BigUInt(5)],
                                                      addresses: ["Mxee81347211c72524338f9680072af90744333143",
@@ -43,10 +43,10 @@ class MultisigRawTransactionTestsSpec: BaseQuickSpec {
 
         let sendTx = SendCoinRawTransaction(nonce: BigUInt(1),
                                             chainId: 2,
-                                            gasCoin: "MNT",
+                                            gasCoinId: Coin.baseCoin().id!,
                                             to: "Mxd82558ea00eb81d35f2654953598f5d51737d31d",
                                             value: BigUInt("1000000000000000000")!,
-                                            coin: "MNT")
+                                            coinId: Coin.baseCoin().id!)
         let signed = RawTransactionSigner.sign(rawTx: sendTx,
                                                address: address,
                                                privateKeys: pks)

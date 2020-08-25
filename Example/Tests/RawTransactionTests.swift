@@ -21,17 +21,17 @@ class RawTransactionSpec: BaseQuickSpec {
 			it("Can be initialized") {
 				let nonce = BigUInt(1)
 				let gasPrice = BigUInt(1)
-				let gasCoin = "MNT".data(using: .utf8)!
+				let gasCoin = Coin.baseCoin().id!
 				let type = RawTransactionType.sendCoin.BigUIntValue()
 				let payload = "payload".data(using: .utf8)!
 				let serviceData = "serviceData".data(using: .utf8)!
 				
-				let rawTx = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type, payload: payload, serviceData: serviceData)
+				let rawTx = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type, payload: payload, serviceData: serviceData)
 				
 				expect(rawTx).notTo(beNil())
 				expect(rawTx.nonce).to(equal(nonce))
 				expect(rawTx.gasPrice).to(equal(gasPrice))
-				expect(rawTx.gasCoin).to(equal(gasCoin))
+				expect(rawTx.gasCoinId).to(equal(gasCoin))
 				expect(rawTx.type).to(equal(type))
 				expect(rawTx.payload).to(equal(payload))
 				expect(rawTx.serviceData).to(equal(serviceData))
@@ -41,7 +41,7 @@ class RawTransactionSpec: BaseQuickSpec {
 			it("Can be initialized") {
 				let nonce = BigUInt(1)
 				let gasPrice = BigUInt(1)
-				let gasCoin = "MNT".data(using: .utf8)!
+				let gasCoin = Coin.baseCoin().id!
 				let type = RawTransactionType.sendCoin.BigUIntValue()
 				let data = "data".data(using: .utf8)!
 				let payload = "payload".data(using: .utf8)!
@@ -55,12 +55,12 @@ class RawTransactionSpec: BaseQuickSpec {
 				let signatureData = RawTransaction.SignatureData(v: v, r: r, s: s)
 				
 				
-				let rawTx = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type, data: data, payload: payload, serviceData: serviceData, signatureType: signatureType, signatureData: signatureData)
+				let rawTx = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type, data: data, payload: payload, serviceData: serviceData, signatureType: signatureType, signatureData: signatureData)
 				
 				expect(rawTx).notTo(beNil())
 				expect(rawTx.nonce).to(equal(nonce))
 				expect(rawTx.gasPrice).to(equal(gasPrice))
-				expect(rawTx.gasCoin).to(equal(gasCoin))
+				expect(rawTx.gasCoinId).to(equal(gasCoin))
 				expect(rawTx.type).to(equal(type))
 				expect(rawTx.data).to(equal(data))
 				expect(rawTx.payload).to(equal(payload))
@@ -75,57 +75,57 @@ class RawTransactionSpec: BaseQuickSpec {
 			it("Can be initialized with different types") {
 				let nonce = BigUInt(1)
 				let gasPrice = BigUInt(1)
-				let gasCoin = "MNT".data(using: .utf8)!
+				let gasCoin = Coin.baseCoin().id!
 				let type = RawTransactionType.sellCoin.BigUIntValue()
 				let payload = "payload".data(using: .utf8)!
 				let serviceData = "serviceData".data(using: .utf8)!
 				
-				let rawTx = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type, payload: payload, serviceData: serviceData)
+				let rawTx = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type, payload: payload, serviceData: serviceData)
 				expect(rawTx).notTo(beNil())
 				expect(rawTx.type).to(equal(type))
 				
 				let type1 = RawTransactionType.sellAllCoins.BigUIntValue()
-				let rawTx1 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type1, payload: payload, serviceData: serviceData)
+				let rawTx1 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type1, payload: payload, serviceData: serviceData)
 				expect(rawTx1).notTo(beNil())
 				expect(rawTx1.type).to(equal(type1))
 				
 				let type2 = RawTransactionType.buyCoin.BigUIntValue()
-				let rawTx2 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type2, payload: payload, serviceData: serviceData)
+				let rawTx2 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type2, payload: payload, serviceData: serviceData)
 				expect(rawTx2).notTo(beNil())
 				expect(rawTx2.type).to(equal(type2))
 				
 				let type3 = RawTransactionType.createCoin.BigUIntValue()
-				let rawTx3 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type3, payload: payload, serviceData: serviceData)
+				let rawTx3 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type3, payload: payload, serviceData: serviceData)
 				expect(rawTx3).notTo(beNil())
 				expect(rawTx3.type).to(equal(type3))
 				
 				let type4 = RawTransactionType.declareCandidacy.BigUIntValue()
-				let rawTx4 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type4, payload: payload, serviceData: serviceData)
+				let rawTx4 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type4, payload: payload, serviceData: serviceData)
 				expect(rawTx4).notTo(beNil())
 				expect(rawTx4.type).to(equal(type4))
 				
 				let type5 = RawTransactionType.delegate.BigUIntValue()
-				let rawTx5 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type5, payload: payload, serviceData: serviceData)
+				let rawTx5 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type5, payload: payload, serviceData: serviceData)
 				expect(rawTx5).notTo(beNil())
 				expect(rawTx5.type).to(equal(type5))
 				
 				let type6 = RawTransactionType.unbond.BigUIntValue()
-				let rawTx6 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type6, payload: payload, serviceData: serviceData)
+				let rawTx6 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type6, payload: payload, serviceData: serviceData)
 				expect(rawTx6).notTo(beNil())
 				expect(rawTx6.type).to(equal(type6))
 				
 				let type7 = RawTransactionType.redeemCheck.BigUIntValue()
-				let rawTx7 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type7, payload: payload, serviceData: serviceData)
+				let rawTx7 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type7, payload: payload, serviceData: serviceData)
 				expect(rawTx7).notTo(beNil())
 				expect(rawTx7.type).to(equal(type7))
 				
 				let type8 = RawTransactionType.setCandidateOnline.BigUIntValue()
-				let rawTx8 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type8, payload: payload, serviceData: serviceData)
+				let rawTx8 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type8, payload: payload, serviceData: serviceData)
 				expect(rawTx8).notTo(beNil())
 				expect(rawTx8.type).to(equal(type8))
 				
 				let type9 = RawTransactionType.setCandidateOffline.BigUIntValue()
-				let rawTx9 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type9, payload: payload, serviceData: serviceData)
+				let rawTx9 = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type9, payload: payload, serviceData: serviceData)
 				expect(rawTx9).notTo(beNil())
 				expect(rawTx9.type).to(equal(type9))
 			}
@@ -145,12 +145,12 @@ class RawTransactionSpec: BaseQuickSpec {
 			it("Can be encoded/decoded") {
 				let nonce = BigUInt(1)
 				let gasPrice = BigUInt(1)
-				let gasCoin = "MNT".data(using: .utf8)!
+				let gasCoin = Coin.baseCoin().id!
 				let type = RawTransactionType.sellCoin.BigUIntValue()
 				let payload = "payload".data(using: .utf8)!
 				let serviceData = "serviceData".data(using: .utf8)!
 				
-				let rawTx = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoin: gasCoin, type: type, payload: payload, serviceData: serviceData)
+				let rawTx = RawTransaction(nonce: nonce, gasPrice: gasPrice, gasCoinId: gasCoin, type: type, payload: payload, serviceData: serviceData)
 				
 				let encoded = try? JSONEncoder().encode(rawTx)
 				expect(encoded).toNot(beNil())

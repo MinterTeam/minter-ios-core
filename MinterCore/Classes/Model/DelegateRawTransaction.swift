@@ -22,14 +22,13 @@ public class DelegateRawTransaction: RawTransaction {
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasPrice: Int = RawTransactionDefaultGasPrice,
-													gasCoin: String,
+													gasCoinId: Int,
 													data: Data) {
-		let gasCoinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data()
 
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(gasPrice),
-							gasCoin: gasCoinData,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.delegate.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data())
@@ -42,22 +41,22 @@ public class DelegateRawTransaction: RawTransaction {
 	///   - nonce: Nonce
 	///   - gasCoin: Coin to spend fee from
 	///   - publicKey: Validator's public key
-	///   - coin: Coin which you'd like to delegate
+	///   - coinId: Coin id which you'd like to delegate
 	///   - value: How much you'd like to delegate
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasPrice: Int = RawTransactionDefaultGasPrice,
-													gasCoin: String,
+													gasCoinId: Int,
 													publicKey: String,
-													coin: String,
+													coinId: Int,
 													value: BigUInt) {
 		let encodedData = DelegateRawTransactionData(publicKey: publicKey,
-																								 coin: coin,
+																								 coinId: coinId,
 																								 value: value).encode() ?? Data()
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: gasPrice,
-							gasCoin: gasCoin,
+							gasCoinId: gasCoinId,
 							data: encodedData)
 	}
 }
@@ -66,23 +65,23 @@ public class DelegateRawTransaction: RawTransaction {
 public struct DelegateRawTransactionData: Encodable, Decodable {
 	/// Validator's public key
 	public var publicKey: String
-	/// Coin you delegate (e.g. "MNT")
-	public var coin: String
+	/// Coin you delegate (e.g. 0)
+	public var coinId: Int
 	/// Amount
 	public var value: BigUInt
 
 	// MARK: -
 
-	public init(publicKey: String, coin: String, value: BigUInt) {
+	public init(publicKey: String, coinId: Int, value: BigUInt) {
 		self.publicKey = publicKey
-		self.coin = coin
+		self.coinId = coinId
 		self.value = value
 	}
 
 	public init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		self.publicKey = try values.decode(String.self, forKey: .publicKey)
-		self.coin = try values.decode(String.self, forKey: .coin)
+		self.coinId = try values.decode(Int.self, forKey: .coinId)
 		self.value = try values.decode(BigUInt.self, forKey: .value)
 	}
 
@@ -90,22 +89,21 @@ public struct DelegateRawTransactionData: Encodable, Decodable {
 
 	enum CodingKeys: String, CodingKey {
 		case publicKey
-		case coin
+		case coinId
 		case value
 	}
 
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(publicKey, forKey: .publicKey)
-		try container.encode(coin, forKey: .coin)
+		try container.encode(coinId, forKey: .coinId)
 		try container.encode(value, forKey: .value)
 	}
 
 	// MARK: - RLPEncoding
 
 	public func encode() -> Data? {
-		let coinData = coin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		let fields = [Data(hex: publicKey.stripMinterHexPrefix()), coinData, value] as [Any]
+		let fields = [Data(hex: publicKey.stripMinterHexPrefix()), coinId, value] as [Any]
 		return RLP.encode(fields)
 	}
 }

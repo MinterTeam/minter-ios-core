@@ -19,13 +19,13 @@ public class CreateCoinRawTransaction: RawTransaction {
 	///   - data: Encoded CreateCoinRawTransactionData instance
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: String,
+													gasCoinId: Int,
 													data: Data) {
-		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(RawTransactionDefaultGasPrice),
-							gasCoin: coinData,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.createCoin.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data())
@@ -45,12 +45,12 @@ public class CreateCoinRawTransaction: RawTransaction {
   ///   - maxSupply: Coin's max supply amount
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: String,
+													gasCoinId: Int,
 													name: String,
 													symbol: String,
 													initialAmount: BigUInt,
 													initialReserve: BigUInt,
-													reserveRatio: BigUInt,
+													reserveRatio: UInt,
                           maxSupply: BigUInt) {
 		let encodedData = CreateCoinRawTransactionData(name: name,
 																									 symbol: symbol,
@@ -60,7 +60,7 @@ public class CreateCoinRawTransaction: RawTransaction {
                                                    maxSupply: maxSupply).encode() ?? Data()
 		self.init(nonce: nonce,
 							chainId: chainId,
-							gasCoin: gasCoin,
+							gasCoinId: gasCoinId,
 							data: encodedData)
 	}
 
@@ -81,9 +81,9 @@ public struct CreateCoinRawTransactionData: Encodable, Decodable {
 	/// Initial Reserve (e.g. 100)
 	public var initialReserve: BigUInt
 
-	/// Reserve Ratio (e.g. 10%)
-	public var reserveRatio: BigUInt
-  
+	/// Reserve Ratio (e.g. 10)
+	public var reserveRatio: UInt
+
   /// Coin's max supply
   public var maxSupply: BigUInt
 
@@ -95,7 +95,7 @@ public struct CreateCoinRawTransactionData: Encodable, Decodable {
 		self.symbol = try values.decode(String.self, forKey: .symbol)
 		self.initialAmount = try values.decode(BigUInt.self, forKey: .initialAmount)
 		self.initialReserve = try values.decode(BigUInt.self, forKey: .initialReserve)
-		self.reserveRatio = try values.decode(BigUInt.self, forKey: .reserveRatio)
+		self.reserveRatio = try values.decode(UInt.self, forKey: .reserveRatio)
     self.maxSupply = try values.decode(BigUInt.self, forKey: .maxSupply)
 	}
 
@@ -107,11 +107,12 @@ public struct CreateCoinRawTransactionData: Encodable, Decodable {
 	///   - initialAmount: Coin initial amount
 	///   - initialReserve: Coin reserve balance
 	///		- reserveRatio: Coin reserve ratio in percent (e.g. 10%)
+  ///   - maxSupply: Coin max supply amount
 	public init(name: String,
 							symbol: String,
 							initialAmount: BigUInt,
 							initialReserve: BigUInt,
-							reserveRatio: BigUInt,
+							reserveRatio: UInt,
               maxSupply: BigUInt) {
 		self.name = name
 		self.symbol = symbol

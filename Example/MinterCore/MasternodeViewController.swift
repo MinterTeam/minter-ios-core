@@ -28,7 +28,7 @@ class MasternodeViewController: BaseViewController {
 		
 		let publicKey = self.publicKeyTextField.text ?? ""
 		let commission = Decimal(string: self.commissionTextField.text ?? "0") ?? 0
-		let coin = self.coinTextField.text ?? "MNT"
+    let coinId = Coin.baseCoin().id!
 		let stake = (Decimal(string: self.stakeTextField.text ?? "0") ?? 0) * TransactionCoinFactorDecimal
 		
 		SVProgressHUD.showProgress(0.5)
@@ -41,7 +41,7 @@ class MasternodeViewController: BaseViewController {
 				}
 
 				
-				let tx = DeclareCandidacyRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", address: Session.shared.address, publicKey: publicKey, commission: BigUInt(decimal: commission)!, coin: coin, stake: BigUInt(decimal: stake)!)
+				let tx = DeclareCandidacyRawTransaction(nonce: nonce, chainId: 2, gasCoinId: 0, address: Session.shared.address, publicKey: publicKey, commission: BigUInt(decimal: commission)!, coinId: coinId, stake: BigUInt(decimal: stake)!)
 				
 				let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey!.raw.toHexString())
 				
@@ -72,7 +72,7 @@ class MasternodeViewController: BaseViewController {
 					SVProgressHUD.showError(withStatus: "Can't get nonce")
 					return
 				}
-				let tx = SetCandidateOnlineRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", publicKey: self.publicKeyTextField.text ?? "")
+				let tx = SetCandidateOnlineRawTransaction(nonce: nonce, chainId: 2, gasCoinId: 0, publicKey: self.publicKeyTextField.text ?? "")
 				let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey!.raw.toHexString())
 				
 				TransactionManager.default.send(tx: "Mt" + signed!) { res, res1, error in
@@ -104,7 +104,7 @@ class MasternodeViewController: BaseViewController {
 					return
 				}
 				
-				let tx = SetCandidateOfflineRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", publicKey: publicKey)
+				let tx = SetCandidateOfflineRawTransaction(nonce: nonce, chainId: 2, gasCoinId: 0, publicKey: publicKey)
 				let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey!.raw.toHexString())
 				
 				TransactionManager.default.send(tx: "Mt" + signed!) { res, res1, error in

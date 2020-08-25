@@ -25,7 +25,7 @@ class DelegateViewController: BaseViewController {
 	@IBAction func didTapDelegateButton(_ sender: Any) {
 		
 		let amount = (Decimal(string: amountTextField.text ?? "0") ?? 0) * TransactionCoinFactorDecimal
-		let coin = coinTextField.text ?? "MNT"
+		let coinId = Coin.baseCoin().id!//coinTextField.text ?? "MNT"
 		let publicKey = publicKeyTextField.text ?? ""
 		
 		getNonce { (nonce) in
@@ -34,7 +34,7 @@ class DelegateViewController: BaseViewController {
 				return
 			}
 			
-			let tx = DelegateRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", publicKey: publicKey, coin: coin, value: BigUInt(decimal: amount)!)
+			let tx = DelegateRawTransaction(nonce: nonce, chainId: 2, gasCoinId: 0, publicKey: publicKey, coinId: coinId, value: BigUInt(decimal: amount)!)
 			
 			let signed = RawTransactionSigner.sign(rawTx: tx, privateKey: Session.shared.privateKey!.raw.toHexString())
 			

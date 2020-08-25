@@ -13,13 +13,13 @@ public class SetCandidateOfflineRawTransaction: RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: String,
+													gasCoinId: Int,
 													data: Data) {
-		let coinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
+
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(1),
-							gasCoin: coinData,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.setCandidateOffline.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data())
@@ -28,12 +28,12 @@ public class SetCandidateOfflineRawTransaction: RawTransaction {
 
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasCoin: String,
+													gasCoinId: Int,
 													publicKey: String) {
 		let encodedData = SetCandidateOfflineRawTransactionData(publicKey: publicKey).encode() ?? Data()
 		self.init(nonce: nonce,
 							chainId: chainId,
-							gasCoin: gasCoin,
+							gasCoinId: gasCoinId,
 							data: encodedData)
 	}
 

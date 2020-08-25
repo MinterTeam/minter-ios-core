@@ -25,6 +25,10 @@ public enum RawTransactionTypeCommissionOption: String {
 	case coinSymbolLettersCount
 }
 
+public enum RawTransactionError: Error {
+  case invalidTransactionData
+}
+
 /// Transaction type
 /// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/transactions.html#types
 public enum RawTransactionType: Int {
@@ -42,6 +46,11 @@ public enum RawTransactionType: Int {
 	case createMultisigAddress = 12
 	case multisend = 13//(addreessesCount: Int)
 	case editCandidate = 14
+  case setHaltBlock = 0x0F
+  case recreateCoin = 0x10
+  case changeCoinOwner  = 0x11
+  case editMultisigOwner  = 0x12
+  case priceVote  = 0x13
 
 	public func BigUIntValue() -> BigUInt {
 		return BigUInt(self.rawValue)
@@ -82,6 +91,11 @@ public enum RawTransactionType: Int {
 			}
 			return (0.01 + Decimal(max(0, multisendCount - 1)) * 0.005) * TransactionCoinFactorDecimal
 		case .editCandidate: return 10 * TransactionCoinFactorDecimal
+    case .setHaltBlock: return 1 * TransactionCoinFactorDecimal
+    case .recreateCoin: return 10000 * TransactionCoinFactorDecimal
+    case .changeCoinOwner: return 10000 * TransactionCoinFactorDecimal
+    case .editMultisigOwner: return 1 * TransactionCoinFactorDecimal
+    case .priceVote: return 0.01 * TransactionCoinFactorDecimal
 		}
 	}
 }
@@ -165,7 +179,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 	/// Used for managing transaction fees
 	public var gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice)
 	/// Coin which will be used to get commission from
-	public var gasCoin: Data
+	public var gasCoinId: Int = Coin.baseCoin().id!
 	/// Transaction type
 	/// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/transactions.html#types
 	public var type: BigUInt = BigUInt(1)
@@ -205,7 +219,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 	public init(nonce: BigUInt,
 							chainId: Int = MinterCoreSDK.shared.network.rawValue,
 							gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice),
-							gasCoin: Data,
+							gasCoinId: Int,
 							type: BigUInt,
 							data: Data = Data(),
 							payload: Data,
@@ -215,7 +229,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 		self.nonce = nonce
 		self.chainId = chainId
 		self.gasPrice = gasPrice
-		self.gasCoin = gasCoin
+		self.gasCoinId = gasCoinId
 		self.type = type
 		self.data = data
 		self.payload = payload
@@ -234,18 +248,18 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasPrice: BigUInt = BigUInt(RawTransactionDefaultGasPrice),
-													gasCoin: String,
+													gasCoinId: Int,
 													type: BigUInt,
 													data: Data,
 													payload: Data = Data(),
 													serviceData: Data = Data()) {
 
-		let gasCoinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data()
+//		let gasCoinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data()
 
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: gasPrice,
-							gasCoin: gasCoinData,
+							gasCoinId: gasCoinId,
 							type: type,
 							payload: payload,
 							serviceData: serviceData)
@@ -257,7 +271,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 		self.nonce = try values.decode(BigUInt.self, forKey: .nonce)
 		self.chainId = try values.decode(Int.self, forKey: .chainId)
 		self.gasPrice = try values.decode(BigUInt.self, forKey: .gasPrice)
-		self.gasCoin = try values.decode(Data.self, forKey: .gasCoin)
+		self.gasCoinId = try values.decode(Int.self, forKey: .gasCoinId)
 		self.type = try values.decode(BigUInt.self, forKey: .type)
 		self.data = try values.decode(Data.self, forKey: .data)
 		self.payload = try values.decode(Data.self, forKey: .payload)
@@ -272,7 +286,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 		case nonce
 		case chainId
 		case gasPrice
-		case gasCoin
+		case gasCoinId
 		case type
 		case data
 		case payload
@@ -286,7 +300,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 		try container.encode(nonce, forKey: .nonce)
 		try container.encode(chainId, forKey: .chainId)
 		try container.encode(gasPrice, forKey: .gasPrice)
-		try container.encode(gasCoin, forKey: .gasCoin)
+		try container.encode(gasCoinId, forKey: .gasCoinId)
 		try container.encode(type, forKey: .type)
 		try container.encode(data, forKey: .data)
 		try container.encode(payload, forKey: .payload)
@@ -303,7 +317,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 			let fields = [self.nonce,
 										self.chainId,
 										self.gasPrice,
-										self.gasCoin,
+										self.gasCoinId,
 										self.type,
 										self.data,
 										self.payload,
@@ -314,7 +328,7 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 			let fields = [self.nonce,
 										self.chainId,
 										self.gasPrice,
-										self.gasCoin,
+										self.gasCoinId,
 										self.type,
 										self.data,
 										self.payload,

@@ -35,7 +35,7 @@ class CheckBookViewController: BaseViewController {
 		
 		let dueBlock = dueBlockTextField.text ?? "999999"
 		let amount = amountTextField.text ?? "0"
-		let coin = coinTextField.text ?? "MNT"
+    let coinId = Coin.baseCoin().id!
 		let passPhrase = passPhraseTextField.text ?? "pass"
 		
 		getNonce { (nonce) in
@@ -44,7 +44,7 @@ class CheckBookViewController: BaseViewController {
 				return
 			}
 
-			let check = self.makeIssueTransaction(nonce: "nonce", dueBlock: dueBlock, amount: amount, coin: coin, passPhrase: passPhrase)
+			let check = self.makeIssueTransaction(nonce: "nonce", dueBlock: dueBlock, amount: amount, coinId: coinId, passPhrase: passPhrase)
 			DispatchQueue.main.async {
 				if let check = check {
 					self.checkTextField.text = check
@@ -71,7 +71,7 @@ class CheckBookViewController: BaseViewController {
 		
 		let data = RedeemCheckRawTransactionData(rawCheck: rawCheck, proof: proof!)
 		
-		let gasCoin = "MNT"
+		let gasCoin = Coin.baseCoin().id!
 		
 		getNonce { (nonce) in
 			guard let nonce = nonce else {
@@ -79,7 +79,7 @@ class CheckBookViewController: BaseViewController {
 				return
 			}
 
-			let tx = RedeemCheckRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, rawCheck: rawCheck, proof: proof!)!
+			let tx = RedeemCheckRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoin, rawCheck: rawCheck, proof: proof!)!
 			tx.data = data.encode()!
 
 			let result = RawTransactionSigner.sign(rawTx: tx, privateKey: pk)
@@ -103,11 +103,11 @@ class CheckBookViewController: BaseViewController {
 
 	// MARK: -
 
-	func makeIssueTransaction(nonce: String, dueBlock: String = "999999", amount: String, coin: String, passPhrase: String) -> String? {
+	func makeIssueTransaction(nonce: String, dueBlock: String = "999999", amount: String, coinId: Int, passPhrase: String) -> String? {
 		let due = BigUInt(dueBlock) ?? BigUInt(0)
 		let val = BigUInt(amount) ?? BigUInt(0)
 
-		var tx = IssueCheckRawTransaction(nonce: nonce, dueBlock: due, coin: coin, value: val, gasCoin: coin, passPhrase: passPhrase)
+		var tx = IssueCheckRawTransaction(nonce: nonce, dueBlock: due, coinId: coinId, value: val, gasCoinId: coinId, passPhrase: passPhrase)
 		let check = tx.serialize(privateKey: Session.shared.privateKey!.raw.toHexString(), passphrase: passPhrase)
 		return check
 	}

@@ -13,7 +13,7 @@ public class ValidatorManager: BaseManager {
 	/// Method retreives list of active validators
 	///
 	/// - Parameter completion: method which will be called after request finished.
-	public func validators(height: Int, with completion: (([[String : Any]]?, Error?) -> ())?) {
+	public func validators(height: Int, with completion: (([[String: Any]]?, Error?) -> ())?) {
 
 		let url = MinterAPIURL.validators.url()
 
@@ -31,7 +31,7 @@ public class ValidatorManager: BaseManager {
 				return
 			}
 
-			res = response.data as? [[String: Any]]
+      res = (response.data as? [String: Any])?["validators"] as? [[String: Any]]
 		}
 	}
 

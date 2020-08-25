@@ -21,13 +21,13 @@ public class BuyCoinRawTransaction: RawTransaction {
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasPrice: Int = RawTransactionDefaultGasPrice,
-													gasCoin: Data,
+													gasCoinId: Int,
 													data: Data) {
 
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: BigUInt(gasPrice),
-							gasCoin: gasCoin,
+							gasCoinId: gasCoinId,
 							type: RawTransactionType.buyCoin.BigUIntValue(),
 							payload: Data(),
 							serviceData: Data())
@@ -38,28 +38,28 @@ public class BuyCoinRawTransaction: RawTransaction {
 	///
 	/// - Parameters:
 	///   - nonce: Nonce
-	///   - gasCoin: Coin to spend fee from
-	///   - coinFrom: Coin which you'd like to spend
-	///   - coinTo: Coin which you'd like to buy
+	///   - gasCoinId: Coin to spend fee from
+	///   - coinFromId: Coin which you'd like to spend
+	///   - coinToId: Coin which you'd like to buy
 	///   - value: How much you'd like to buy
 	///   - maximumValueToSell: Maximum value of coins to sell.
 	public convenience init(nonce: BigUInt,
 													chainId: Int = MinterCoreSDK.shared.network.rawValue,
 													gasPrice: Int = RawTransactionDefaultGasPrice,
-													gasCoin: Data,
-													coinFrom: String,
-													coinTo: String,
+													gasCoinId: Int,
+													coinFromId: Int,
+													coinToId: Int,
 													value: BigUInt,
 													maximumValueToSell: BigUInt) {
 
-		let encodedData = BuyCoinRawTransactionData(coinFrom: coinFrom,
-																								coinTo: coinTo,
+		let encodedData = BuyCoinRawTransactionData(coinFromId: coinFromId,
+																								coinToId: coinToId,
 																								value: value,
 																								maximumValueToSell: maximumValueToSell).encode() ?? Data()
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: gasPrice,
-							gasCoin: gasCoin,
+							gasCoinId: gasCoinId,
 							data: encodedData)
 	}
 
@@ -72,34 +72,34 @@ public class BuyCoinRawTransaction: RawTransaction {
 	///   - coinTo: Coin which you'd like to buy
 	///   - value: How much you'd like to buy
 	///   - maximumValueToSell: Maximum value of coins to sell.
-	public convenience init(nonce: BigUInt,
-													chainId: Int = MinterCoreSDK.shared.network.rawValue,
-													gasPrice: Int = RawTransactionDefaultGasPrice,
-													gasCoin: String,
-													coinFrom: String,
-													coinTo: String,
-													value: BigUInt,
-													maximumValueToSell: BigUInt) {
-		
-		let encodedData = BuyCoinRawTransactionData(coinFrom: coinFrom,
-																								coinTo: coinTo,
-																								value: value,
-																								maximumValueToSell: maximumValueToSell).encode() ?? Data()
-		self.init(nonce: nonce,
-							chainId: chainId,
-							gasPrice: gasPrice,
-							gasCoin: gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10),
-							data: encodedData)
-	}
+//	public convenience init(nonce: BigUInt,
+//													chainId: Int = MinterCoreSDK.shared.network.rawValue,
+//													gasPrice: Int = RawTransactionDefaultGasPrice,
+//													gasCoinId: Int,
+//													coinFrom: String,
+//													coinTo: String,
+//													value: BigUInt,
+//													maximumValueToSell: BigUInt) {
+//
+//		let encodedData = BuyCoinRawTransactionData(coinFrom: coinFrom,
+//																								coinTo: coinTo,
+//																								value: value,
+//																								maximumValueToSell: maximumValueToSell).encode() ?? Data()
+//		self.init(nonce: nonce,
+//							chainId: chainId,
+//							gasPrice: gasPrice,
+//							gasCoinId: gasCoinId,
+//							data: encodedData)
+//	}
 
 }
 
 /// BuyCoinRawTransactionData
 public struct BuyCoinRawTransactionData: Encodable, Decodable {
-	/// Coin you sell (e.g. "MNT")
-	public var coinFrom: String
-	/// Coin you buy (e.g. "BELTCOIN")
-	public var coinTo: String
+	/// Coin you sell (e.g. 0)
+	public var coinFromId: Int
+	/// Coin you buy (e.g. 1)
+	public var coinToId: Int
 	/// Amount
 	public var value: BigUInt
 	/// Maximum value to buy
@@ -107,20 +107,20 @@ public struct BuyCoinRawTransactionData: Encodable, Decodable {
 
 	// MARK: -
 
-	public init(coinFrom: String,
-							coinTo: String,
+	public init(coinFromId: Int,
+							coinToId: Int,
 							value: BigUInt,
 							maximumValueToSell: BigUInt) {
-		self.coinFrom = coinFrom
-		self.coinTo = coinTo
+		self.coinFromId = coinFromId
+		self.coinToId = coinToId
 		self.value = value
 		self.maximumValueToSell = maximumValueToSell
 	}
 
 	public init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		self.coinFrom = try values.decode(String.self, forKey: .coinFrom)
-		self.coinTo = try values.decode(String.self, forKey: .coinTo)
+		self.coinFromId = try values.decode(Int.self, forKey: .coinFromId)
+		self.coinToId = try values.decode(Int.self, forKey: .coinToId)
 		self.value = try values.decode(BigUInt.self, forKey: .value)
 		self.maximumValueToSell = try values.decode(BigUInt.self, forKey: .maximumValueToSell)
 	}
@@ -128,24 +128,22 @@ public struct BuyCoinRawTransactionData: Encodable, Decodable {
 	// MARK: - Encoding
 
 	enum CodingKeys: String, CodingKey {
-		case coinFrom
-		case coinTo
+		case coinFromId
+		case coinToId
 		case value
 		case maximumValueToSell
 	}
 
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(coinFrom, forKey: .coinFrom)
-		try container.encode(coinTo, forKey: .coinTo)
+		try container.encode(coinFromId, forKey: .coinFromId)
+		try container.encode(coinToId, forKey: .coinToId)
 		try container.encode(value, forKey: .value)
 		try container.encode(maximumValueToSell, forKey: .maximumValueToSell)
 	}
 
 	public func encode() -> Data? {
-		let fromCoinData = coinFrom.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		let toCoinData = coinTo.data(using: .utf8)?.setLengthRight(10) ?? Data(repeating: 0, count: 10)
-		let fields = [toCoinData, value, fromCoinData, maximumValueToSell] as [Any]
+		let fields = [coinToId, value, coinFromId, maximumValueToSell] as [Any]
 		return RLP.encode(fields)
 	}
 

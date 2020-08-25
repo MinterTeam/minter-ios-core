@@ -11,7 +11,7 @@ import ObjectMapper
 /// Coin Model
 public class Coin {
   // Coin identifier
-  public var id: String?
+  public var id: Int?
 
 	/// Coin name (e.g. Belt Coin)
 	public var name: String?
@@ -68,6 +68,7 @@ public extension Coin {
 	/// Base coin model, differs depend on the network (testnet, mainnet)
 	static func baseCoin() -> Coin {
 		let coin = Coin()
+    coin.id = 0
 		if MinterCoreSDK.shared.network == .testnet {
 			coin.name = "MNT"
 			coin.symbol = "MNT"
