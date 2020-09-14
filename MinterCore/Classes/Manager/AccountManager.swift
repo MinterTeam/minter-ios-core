@@ -18,10 +18,11 @@ public class AccountManager: BaseManager {
 		Method retreives balance data from the Minter node
 		- Parameters:
 			- address: Address for which balance will be retreived
+      - height: Blockchains height
 			- completion: Method which will be called after request finished. Balance is in PIPs
 		- Precondition: `address` must contain "Mx" prefix
 	*/
-	public func address(_ address: String, height: String = "0", with completion: (([String : Any]?, Error?) -> ())?) {
+	public func address(_ address: String, height: String = "0", with completion: (([String: Any]?, Error?) -> ())?) {
 
     let balanceURL = MinterAPIURL.address(address: address).url()
 
