@@ -88,7 +88,7 @@ MinterCoreSDK.initialize(urlString: nodeUrlString)
 Returns coins list, balance and transaction count (for nonce) of an address.
 
 ```swift
-public func address(_ address: String, height: String = "0", with completion: (([String : Any]?, Error?) -> ())?)
+public func address(_ address: String, height: String = "0", with completion: (([String: Any]?, Error?) -> ())?)
 ```
 
 ###### Example
@@ -132,7 +132,7 @@ public func status(with completion: (([String : Any]?, Error?) -> ())?)
 Returns list of active validators.
 
 ```swift
-public func validators(height: Int, with completion: (([[String : Any]]?, Error?) -> ())?)
+public func validators(height: Int, with completion: (([[String: Any]]?, Error?) -> ())?)
 ```
 
 ### estimateCoinBuy
@@ -140,7 +140,7 @@ public func validators(height: Int, with completion: (([[String : Any]]?, Error?
 Return estimate of buy coin transaction.
 
 ```swift
-public func estimateCoinBuy(from: String, to: String, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?)
+public func estimateCoinBuy(fromId: Int, toId: Int, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?)
 ```
 
 ### estimateCoinSell
@@ -148,7 +148,7 @@ public func estimateCoinBuy(from: String, to: String, amount: Decimal, completio
 Return estimate of sell coin transaction.
 
 ```swift
-public func estimateCoinSell(from: String, to: String, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?)
+public func estimateCoinSell(fromId: Int, toId: Int, amount: Decimal, completion: ((Decimal?, Decimal?, Error?) -> ())?)
 ```
 
 ### coin info
@@ -238,9 +238,9 @@ Returns a signed tx.
 
 ```swift
 let sendData = SendCoinRawTransactionData(to: "Mx6b6b3c763d2605b842013f84cac4d670a5cb463d", value:
-BigUInt(decimal: 1 * TransactionCoinFactorDecimal)!, coin: "MNT").encode()
+BigUInt(decimal: 1 * TransactionCoinFactorDecimal)!, coinId: 0).encode()
 
-let rawTransaction = SendCoinRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoin: "MNT", data: sendData!)
+let rawTransaction = SendCoinRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoinId: 0, data: sendData!)
 
 let mnemonic = "adjust correct photo fancy knee lion blur away coconut inform sun cancel"
 
@@ -264,38 +264,38 @@ transactionManager.send(tx: "Mt" + signedTx) { (txHash, resultText, error) in
 * Sign the <b>SellCoin</b> transaction
 
 ```swift
-let gasCoin = "MNT"
+let gasCoinId = 0
 let nonce = BigUInt(1)
-let coinFrom = "MNT"
-let coinTo = "BPM"
+let coinFromId = 0
+let coinToId = 1
 let value = BigUInt(1)
 let minimumValue = BigUInt(0)
-let tx = SellCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, value: value, minimumValueToBuy: minimumValue)
+let tx = SellCoinRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoinId, coinFromId: coinFromId, coinToId: coinToId, value: value, minimumValueToBuy: minimumValue)
 ```
 
 ###### Example
 * Sign the <b>SellAllCoin</b> transaction
 
 ```swift
-let gasCoin = "MNT"
+let gasCoinId = 0
 let nonce = BigUInt(1)
-let coinFrom = "MNT"
-let coinTo = "BPM"
+let coinFromId = 0
+let coinToId = 1
 let minimumValue = BigUInt(0)
-let tx = SellAllCoinsRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, minimumValueToBuy: minimumValue)
+let tx = SellAllCoinsRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoinId, coinFromId: coinFromId, coinToId: coinToId, minimumValueToBuy: minimumValue)
 ```
 
 ###### Example
 * Sign the <b>BuyCoin</b> transaction
 
 ```swift
-let gasCoin = "MNT"
+let gasCoinId = 0
 let nonce = BigUInt(1)
-let coinFrom = "MNT"
-let coinTo = "BPM"
+let coinFromId = 0
+let coinToId = 1
 let value = BigUInt(1)
 let maximumValue = BigUInt(0)
-let tx = BuyCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, coinFrom: coinFrom, coinTo: coinTo, value: value, maximumValueToSell: maximumValue)
+let tx = BuyCoinRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoinId, coinFromId: coinFromId, coinToId: coinToId, value: value, maximumValueToSell: maximumValue)
 ```
 
 ###### Example
@@ -317,7 +317,7 @@ let data = CreateCoinRawTransactionData(
   reserveRatio: reserveRatio,
   maxSupply: maxSupply
 )
-let tx = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", data: data.encode()!)
+let tx = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoinId: 0, data: data.encode()!)
 ```
 
 ###### Example
@@ -325,8 +325,8 @@ let tx = CreateCoinRawTransaction(nonce: nonce, chainId: 2, gasCoin: "MNT", data
 
 ```swift
 let nonce = BigUInt(1)
-let gasCoin = "MNT"
-let coin = "MNT"
+let gasCoinId = 0
+let coinId = 0
 let address = "Mx7633980c000139dd3bd24a3f54e06474fa941e16"
 let publicKey = "Mp91cab56e6c6347560224b4adaea1200335f34687766199335143a52ec28533a5"
 let commission = BigUInt(1)
@@ -334,11 +334,11 @@ let stake = BigUInt(2)
 let model = DeclareCandidacyRawTransaction(
   nonce: nonce,
   chainId: 2,
-  gasCoin: gasCoin,
+  gasCoinId: gasCoinId,
   address: address,
   publicKey: publicKey,
   commission: commission,
-  coin: coin,
+  coinId: coinId,
   stake: stake
 )
 ```
@@ -350,9 +350,9 @@ let model = DeclareCandidacyRawTransaction(
 let tx = DelegateRawTransaction(
   nonce: BigUInt(1),
   chainId: 2,
-  gasCoin: "MNT",
+  gasCoinId: 0,
   publicKey: "Mp91cab56e6c6347560224b4adaea1200335f34687766199335143a52ec28533a5",
-  coin: "MNT",
+  coinId: 0,
   value: BigUInt(1000)
 )
 ```
@@ -362,9 +362,9 @@ let tx = DelegateRawTransaction(
 
 ```swift
 let nonce = BigUInt(1)
-let gasCoin = "MNT"
+let gasCoinId = 0
 let publicKey = "Mpeadea542b99de3b414806b362910cc518a177f8217b8452a8385a18d1687a80b"
-let model = SetCandidateOnlineRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, publicKey: publicKey)
+let model = SetCandidateOnlineRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoinId, publicKey: publicKey)
 ```
 
 ###### Example
@@ -372,9 +372,9 @@ let model = SetCandidateOnlineRawTransaction(nonce: nonce, chainId: 2, gasCoin: 
 
 ```swift
 let nonce = BigUInt(1)
-let gasCoin = "MNT"
+let gasCoinId = 0
 let publicKey = "Mpeadea542b99de3b414806b362910cc518a177f8217b8452a8385a18d1687a80b"
-let model = SetCandidateOfflineRawTransaction(nonce: nonce, chainId: 2, gasCoin: gasCoin, publicKey: publicKey)
+let model = SetCandidateOfflineRawTransaction(nonce: nonce, chainId: 2, gasCoinId: gasCoinId, publicKey: publicKey)
 ```
 
 ###### Example
@@ -384,7 +384,7 @@ let model = SetCandidateOfflineRawTransaction(nonce: nonce, chainId: 2, gasCoin:
 let tx = RedeemCheckRawTransaction(
   nonce: BigUInt(1),
   chainId: 2,
-  gasCoin: "MNT",
+  gasCoinId: 0,
   rawCheck: <Check data>,
   proof: <Proof Data>)
 ```
@@ -393,10 +393,10 @@ let tx = RedeemCheckRawTransaction(
 * Sign the <b>Unbond</b> transaction
 
 ```swift
-let coin = "MNT"
+let coinId = 0
 let publicKey = "91cab56e6c6347560224b4adaea1200335f34687766199335143a52ec28533a5"
 let value = BigUInt(2)
-let model = UnbondRawTransactionData(publicKey: publicKey, coin: coin, value: value)
+let model = UnbondRawTransactionData(publicKey: publicKey, coinId: coinId, value: value)
 ```
 
 ###### Example
@@ -406,7 +406,7 @@ let model = UnbondRawTransactionData(publicKey: publicKey, coin: coin, value: va
 let pk = "Mpc5b635cde82f796d1f8320efb8ec634f443e6b533a973570e4b5ea04aa44e96d"
 let address1 = "Mxe7ca647d17599d3e83048830fbb2df3726a7d22c"
 let address2 = "Mxa8ca647d17599d3e83048830fbb2df3726a7d215"
-let model = EditCandidateRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoin: "MNT", publicKey: pk, rewardAddress: address1, ownerAddress: address2)
+let model = EditCandidateRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoinId: 0, publicKey: pk, rewardAddress: address1, ownerAddress: address2)
 ```
 
 ### Create Minter Check
@@ -418,10 +418,10 @@ let model = EditCandidateRawTransaction(nonce: BigUInt(1), chainId: 2, gasCoin: 
 ```swift
 let nonce = "1"
 let dueBlock = BigUInt(99)
-let coin = "MNT"
+let coinId = 0
 let value = BigUInt(1)
 let phrase = "123"
-let tx = IssueCheckRawTransaction(nonce: nonce, dueBlock: dueBlock, coin: coin, value: value, gasCoin: coin, passPhrase: phrase)
+let tx = IssueCheckRawTransaction(nonce: nonce, dueBlock: dueBlock, coinId: coinId, value: value, gasCoinId: coinId, passPhrase: phrase)
 tx.data = data.encode()!
 let result = RawTransactionSigner.sign(rawTx: tx, privateKey: <Private Key>)
 ```

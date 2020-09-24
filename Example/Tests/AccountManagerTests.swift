@@ -12,13 +12,11 @@ import Nimble
 @testable import MinterCore
 import ObjectMapper
 
-
 class AccountManagerTestsSpec : BaseQuickSpec {
 	
 	let http = NodeAPIClient()
 	
 	var account: AccountManager?
-	
 	
 	override func spec() {
 		super.spec()

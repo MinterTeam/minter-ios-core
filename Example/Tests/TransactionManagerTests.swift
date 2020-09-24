@@ -181,29 +181,6 @@ class TransactionManagerTestsSpec: BaseQuickSpec {
 				}
 			}
 
-			it("Can create custom coin") {
-				let mnemonic = "dial script notice debris supreme game crisp taste place web gesture execute"
-				let seed = String.seedString(mnemonic)!
-				let pk = PrivateKey(seed: Data(hex: seed))
-
-				guard let key = try? pk.derive(at: 44, hardened: true).derive(at: 60, hardened: true).derive(at: 0, hardened: true).derive(at: 0).derive(at: 0) else { return }
-
-        let newCoin = CreateCoinRawTransaction(nonce: BigUInt(1),
-                                               chainId: 1,
-                                               gasCoinId: Coin.baseCoin().id!,
-                                               name: "TESTCOIN",
-                                               symbol: "TESTCOIN",
-                                               initialAmount: BigUInt(1000000000000000000),
-                                               initialReserve: BigUInt("100000000000000000000000"),
-                                               reserveRatio: 15,
-                                               maxSupply: BigUInt(1000000000000000000))
-
-				let signed = RawTransactionSigner.sign(rawTx: newCoin, privateKey: key.raw.toHexString())
-
-				self.manager?.send(tx: "Mt" + signed!, completion: { (res1, res2, error) in
-					
-				})
-			}
 		}
 	}
 }
