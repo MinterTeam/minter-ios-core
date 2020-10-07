@@ -254,8 +254,6 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 													payload: Data = Data(),
 													serviceData: Data = Data()) {
 
-//		let gasCoinData = gasCoin.data(using: .utf8)?.setLengthRight(10) ?? Data()
-
 		self.init(nonce: nonce,
 							chainId: chainId,
 							gasPrice: gasPrice,

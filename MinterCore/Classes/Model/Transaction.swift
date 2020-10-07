@@ -12,24 +12,6 @@ import BigInt
 public let TransactionCoinFactor = BigUInt(stringLiteral: "1000000000000000000")
 public let TransactionCoinFactorDecimal = pow(10, 18)
 
-/// Transaction type
-public enum TransactionType: Int {
-	case send = 1
-	case sell = 2
-	case sellAll = 3
-	case buy = 4
-	case createCoin = 5
-	case declare = 6
-	case delegate = 7
-	case unbond = 8
-	case redeemCheck = 9
-	case setCandidateOnline = 10
-	case setCandidateOffline = 11
-	case createMultisig = 12
-	case multisend = 13
-	case editCandidate = 14
-}
-
 /// Transaction Model
 /// Used to interact with Node's REST API
 open class Transaction {
@@ -42,12 +24,12 @@ open class Transaction {
 	public var rawTx: String?
 	public var height: Int?
 	public var index: Int?
-	public var txResult: [String : Any]?
+	public var txResult: [String: Any]?
 	public var from: String?
 	public var nonce: Int?
 	public var gasPrice: Int?
-	public var type: TransactionType?
-	public var data: [String : Any]?
+	public var type: RawTransactionType?
+	public var data: [String: Any]?
 	public var payload: String?
 }
 

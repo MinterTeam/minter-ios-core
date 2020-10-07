@@ -87,23 +87,31 @@ public class APIClient {
 			}
 
 			if let err = result["error"] as? [String: Any] {
-				if let code = result["code"] as? Int, let errorMessage = result["log"] as? String {
+        //Some old format?
+				if let code = result["code"] as? Int,
+           let errorMessage = result["log"] as? String {
 					let apiError = HTTPClientError()
-					apiError.userData = ["code" : code, "message" : errorMessage]
+					apiError.userData = ["code": code, "message": errorMessage]
 					error = apiError
 				} else {
-					let apiError = HTTPClientError()
+          let apiError = HTTPClientError()
+          if let code = result["code"] as? String, let codeInt = Int(code) {
+            apiError.code = codeInt
+          }
+          if let message = result["message"] as? String {
+            apiError.message = message
+          }
 					apiError.userData = err
 					error = apiError
 				}
 			} else if let code = result["code"] as? Int, let errorMessage = result["log"] as? String {
 				let apiError = HTTPClientError()
-				apiError.userData = ["code" : code, "message" : errorMessage]
+				apiError.userData = ["code": code, "message": errorMessage]
 				error = apiError
 			}
 
-			let meta = result["meta"] as? [String : Any]
-			let links = result["links"] as? [String : Any]
+			let meta = result["meta"] as? [String: Any]
+			let links = result["links"] as? [String: Any]
 
 			var data: Any?
 

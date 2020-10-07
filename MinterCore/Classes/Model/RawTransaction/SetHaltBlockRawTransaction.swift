@@ -41,7 +41,7 @@ public class SetHaltBlockRawTransactionData: Encodable, Decodable {
   /// height
   public var height: UInt
 
-  init(publicKey: String, height: UInt) {
+  public init(publicKey: String, height: UInt) {
     self.publicKey = publicKey
     self.height = height
   }
@@ -68,7 +68,7 @@ public class SetHaltBlockRawTransactionData: Encodable, Decodable {
   // MARK: - RLP Encoding
 
   public func encode() -> Data? {
-    let fields = [publicKey, height] as [Any]
+    let fields = [Data(hex: publicKey.stripMinterHexPrefix()), height] as [Any]
     return RLP.encode(fields)
   }
 }
