@@ -32,25 +32,26 @@ public enum RawTransactionError: Error {
 /// Transaction type
 /// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/transactions.html#types
 public enum RawTransactionType: Int {
-	case sendCoin = 1
-	case sellCoin = 2
-	case sellAllCoins = 3
-	case buyCoin = 4
-	case createCoin = 5
-	case declareCandidacy = 6
-	case delegate = 7
-	case unbond = 8
-	case redeemCheck = 9
-	case setCandidateOnline = 10
-	case setCandidateOffline = 11
-	case createMultisigAddress = 12
-	case multisend = 13//(addreessesCount: Int)
-	case editCandidate = 14
+	case sendCoin = 0x01
+	case sellCoin = 0x02
+	case sellAllCoins = 0x03
+	case buyCoin = 0x04
+	case createCoin = 0x05
+	case declareCandidacy = 0x06
+	case delegate = 0x07
+	case unbond = 0x08
+	case redeemCheck = 0x09
+	case setCandidateOnline = 0x0A
+	case setCandidateOffline = 0x0B
+	case createMultisigAddress = 0x0C
+	case multisend = 0x0D
+	case editCandidate = 0x0E
   case setHaltBlock = 0x0F
   case recreateCoin = 0x10
-  case changeCoinOwner  = 0x11
-  case editMultisigOwner  = 0x12
-  case priceVote  = 0x13
+  case changeCoinOwner = 0x11
+  case editMultisigOwner = 0x12
+  case priceVote = 0x13
+  case editCandidatePublicKey = 0x14
 
 	public func BigUIntValue() -> BigUInt {
 		return BigUInt(self.rawValue)
@@ -96,7 +97,8 @@ public enum RawTransactionType: Int {
     case .changeCoinOwner: return 10000 * TransactionCoinFactorDecimal
     case .editMultisigOwner: return 1 * TransactionCoinFactorDecimal
     case .priceVote: return 0.01 * TransactionCoinFactorDecimal
-		}
+    case .editCandidatePublicKey: return 10 * TransactionCoinFactorDecimal
+    }
 	}
 }
 

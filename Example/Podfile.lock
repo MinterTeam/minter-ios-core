@@ -5,7 +5,7 @@ PODS:
   - CryptoSwift (1.0.0)
   - GoldenKeystore (1.0.3):
     - TrezorCrypto (= 0.0.9)
-  - MinterCore (0.1.23):
+  - MinterCore (1.2.0):
     - Alamofire (= 4.7.3)
     - BigInt (~> 3.0)
     - CryptoSwift (~> 1.0)
@@ -27,7 +27,7 @@ DEPENDENCIES:
   - SVProgressHUD
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - BigInt
     - CryptoSwift
@@ -55,7 +55,7 @@ SPEC CHECKSUMS:
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   GoldenKeystore: 6d176bbb332a4abb99024ebce06a3e3067c73a8a
-  MinterCore: 226756ce757cfb8eebebde6afbd740510cdb9f0f
+  MinterCore: 53e1fdfd831092a8c9836644b77f47ddd1386389
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
@@ -66,4 +66,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6f134ba2f25c789fa3015779c875e401bccca5e1
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.9.3
