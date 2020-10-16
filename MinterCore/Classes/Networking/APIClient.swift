@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-let APIClientDefaultHeaders: [String : String] = ["X-Minter-Chain-Id" : "odin"]
+let APIClientDefaultHeaders: [String: String] = ["X-Minter-Chain-Id": "chilinet"]
 
 /// APIClient
 public class APIClient {
