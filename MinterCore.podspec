@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MinterCore'
-  s.version          = '1.2.2'
+  s.version          = '1.2.3'
   s.summary          = 'MinterCore SDK'
   s.homepage         = 'https://github.com/MinterTeam'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }

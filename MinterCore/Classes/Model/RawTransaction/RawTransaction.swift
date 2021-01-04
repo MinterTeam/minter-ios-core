@@ -57,47 +57,49 @@ public enum RawTransactionType: Int {
 		return BigUInt(self.rawValue)
 	}
 
+  static let commissionUnit = pow(10, 15)
+
 	/// Comission for a transaction in pips
-	/// - SeeAlso: https://minter-go-node.readthedocs.io/en/docs/commissions.html
+	/// - SeeAlso: https://www.minter.network/docs#commissions
 	public func commission(options: [RawTransactionTypeCommissionOption: Any] = [:]) -> Decimal {
 		switch self {
-		case .sendCoin: return 0.01 * TransactionCoinFactorDecimal
-		case .sellCoin, .buyCoin, .sellAllCoins: return 0.1 * TransactionCoinFactorDecimal
+    case .sendCoin: return 10 * RawTransactionType.commissionUnit
+		case .sellCoin, .buyCoin, .sellAllCoins: return 100 * RawTransactionType.commissionUnit
 		case .createCoin:
 			var coinSymbolLettersCount = 0
 			if let coinLength = options[.coinSymbolLettersCount] as? Int {
 				coinSymbolLettersCount = coinLength
 			}
 			if coinSymbolLettersCount <= 3 {
-				return 1000000 * TransactionCoinFactorDecimal
+				return 10_000_000_000 * TransactionCoinFactorDecimal
 			} else if coinSymbolLettersCount == 4 {
-				return 100000 * TransactionCoinFactorDecimal
+				return 1_000_000_000 * TransactionCoinFactorDecimal
 			} else if coinSymbolLettersCount == 5 {
-				return 10000 * TransactionCoinFactorDecimal
+				return 100_000_000 * TransactionCoinFactorDecimal
 			} else if coinSymbolLettersCount == 6 {
-				return 1000 * TransactionCoinFactorDecimal
+				return 10_000_000 * TransactionCoinFactorDecimal
 			}
-			return 100 * TransactionCoinFactorDecimal
-		case .declareCandidacy: return 10 * TransactionCoinFactorDecimal
-		case .delegate: return 0.2 * TransactionCoinFactorDecimal
-		case .unbond: return 0.2 * TransactionCoinFactorDecimal
-		case .redeemCheck: return 0.03 * TransactionCoinFactorDecimal
-		case .setCandidateOnline: return 0.1 * TransactionCoinFactorDecimal
-		case .setCandidateOffline: return 0.1 * TransactionCoinFactorDecimal
-		case .createMultisigAddress: return 0.1 * TransactionCoinFactorDecimal
+			return 1_000_000 * TransactionCoinFactorDecimal
+		case .declareCandidacy: return 10_000 * RawTransactionType.commissionUnit
+		case .delegate: return 200 * RawTransactionType.commissionUnit
+		case .unbond: return 200 * RawTransactionType.commissionUnit
+		case .redeemCheck: return 30 * RawTransactionType.commissionUnit
+		case .setCandidateOnline: return 100 * RawTransactionType.commissionUnit
+		case .setCandidateOffline: return 100 * RawTransactionType.commissionUnit
+		case .createMultisigAddress: return 100 * RawTransactionType.commissionUnit
 		case .multisend:
 			var multisendCount: Int = 0
 			if let count = options[.multisendCount] as? Int {
 				multisendCount = count
 			}
-			return (0.01 + Decimal(max(0, multisendCount - 1)) * 0.005) * TransactionCoinFactorDecimal
-		case .editCandidate: return 10 * TransactionCoinFactorDecimal
-    case .setHaltBlock: return 1 * TransactionCoinFactorDecimal
-    case .recreateCoin: return 10000 * TransactionCoinFactorDecimal
-    case .changeCoinOwner: return 10000 * TransactionCoinFactorDecimal
-    case .editMultisigOwner: return 1 * TransactionCoinFactorDecimal
-    case .priceVote: return 0.01 * TransactionCoinFactorDecimal
-    case .editCandidatePublicKey: return 10 * TransactionCoinFactorDecimal
+			return (10 + Decimal(max(0, multisendCount - 1)) * 5) * RawTransactionType.commissionUnit
+		case .editCandidate: return 10_000 * RawTransactionType.commissionUnit
+    case .setHaltBlock: return 1_000 * RawTransactionType.commissionUnit
+    case .recreateCoin: return 10_000_000 * RawTransactionType.commissionUnit
+    case .changeCoinOwner: return 10_000_000 * RawTransactionType.commissionUnit
+    case .editMultisigOwner: return 1_000 * RawTransactionType.commissionUnit
+    case .priceVote: return 10 * RawTransactionType.commissionUnit
+    case .editCandidatePublicKey: return 10_000_000 * RawTransactionType.commissionUnit
     }
 	}
 }
