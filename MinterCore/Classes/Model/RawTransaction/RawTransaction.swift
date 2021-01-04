@@ -71,7 +71,7 @@ public enum RawTransactionType: Int {
 				coinSymbolLettersCount = coinLength
 			}
 			if coinSymbolLettersCount <= 3 {
-				return 10_000_000_000 * TransactionCoinFactorDecimal
+				return pow(10, 9) * TransactionCoinFactorDecimal
 			} else if coinSymbolLettersCount == 4 {
 				return 1_000_000_000 * TransactionCoinFactorDecimal
 			} else if coinSymbolLettersCount == 5 {
