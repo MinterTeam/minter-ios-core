@@ -57,7 +57,7 @@ public enum RawTransactionType: Int {
 		return BigUInt(self.rawValue)
 	}
 
-  static let commissionUnit = pow(10, 15)
+  static let commissionUnit = pow(10, 18)
 
 	/// Comission for a transaction in pips
 	/// - SeeAlso: https://www.minter.network/docs#commissions
