@@ -32,7 +32,7 @@ class StatusManagerTestsSpec : BaseQuickSpec {
 				
 				expect(self.manager).toNot(beNil())
 				
-				waitUntil(timeout: 10.0) { done in
+				waitUntil(timeout: .seconds(10)) { done in
 					self.manager?.status(with: { (res, error) in
 						
 						expect(error).to(beNil())

@@ -101,19 +101,19 @@ public enum RawTransactionType: Int {
 }
 
 /// A base class for all RawTransactions
-open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
+open class RawTransaction: Codable, SignatureRLPEncodable {
 
-	public struct SignatureData: Encodable, Decodable, RLPEncodable {
-		public var v: BigUInt?
-		public var s: BigUInt?
-		public var r: BigUInt?
+	public struct SignatureData: Codable, RLPEncodable {
+		public var v: Data?
+		public var s: Data?
+		public var r: Data?
 
     public var multisigAddress: String?
     public var signatures = [(v: Data, r: Data, s: Data)]()
 
-		public init(v: BigUInt = BigUInt(1),
-								r: BigUInt = BigUInt(0),
-								s: BigUInt = BigUInt(0)) {
+		public init(v: Data? = nil,
+								r: Data? = nil,
+								s: Data? = nil) {
 			self.v = v
 			self.r = r
 			self.s = s
@@ -126,9 +126,9 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
 
 		public init(from decoder: Decoder) throws {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
-			self.v = try values.decode(BigUInt.self, forKey: .v)
-			self.s = try values.decode(BigUInt.self, forKey: .s)
-			self.r = try values.decode(BigUInt.self, forKey: .r)
+			self.v = try values.decode(Optional<Data>.self, forKey: .v)
+			self.s = try values.decode(Optional<Data>.self, forKey: .s)
+			self.r = try values.decode(Optional<Data>.self, forKey: .r)
 		}
 
 		// MARK: - RLPEncodable
@@ -145,11 +145,11 @@ open class RawTransaction: Encodable, Decodable, SignatureRLPEncodable {
         }])
       }
 
-      guard let v = self.v, let r = self.r, let s = self.s else {
+      guard let v, let r, let s else {
         return nil
       }
 
-			let fields = [self.v, self.r, self.s] as [Any]
+			let fields = [v, r, s] as [Any]
 			return RLP.encode(fields)
 		}
 

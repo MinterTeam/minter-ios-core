@@ -29,7 +29,7 @@ class CoinManagerTestsSpec : BaseQuickSpec {
 				self.manager = CoinManager(httpClient: self.http)
 				expect(self.manager).toNot(beNil())
 				
-				waitUntil(timeout: 10.0) { done in
+				waitUntil(timeout: .seconds(10)) { done in
 					self.manager?.info(symbol: "KLIM", completion: { (coin, error) in
 
 						expect(error).to(beNil())
@@ -45,7 +45,7 @@ class CoinManagerTestsSpec : BaseQuickSpec {
 				self.manager = CoinManager(httpClient: self.http)
 				expect(self.manager).toNot(beNil())
 				
-				waitUntil(timeout: 10.0) { done in
+				waitUntil(timeout: .seconds(10)) { done in
 					self.manager?.info(symbol: "BBB11", completion: { (coin, error) in
 						
 						expect(error).toNot(beNil())

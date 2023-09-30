@@ -47,9 +47,9 @@ public class RawTransactionSigner {
 		}
 
 		/// Prepearing Tx to be sent to the Minter Network
-		tx.signatureData.r = BigUInt(sign.r!)
-		tx.signatureData.s = BigUInt(sign.s!)
-		tx.signatureData.v = BigUInt(sign.v!)
+		tx.signatureData.r = sign.r
+		tx.signatureData.s = sign.s
+		tx.signatureData.v = sign.v
 
 		return tx.encode(forSignature: false)?.toHexString()
 	}

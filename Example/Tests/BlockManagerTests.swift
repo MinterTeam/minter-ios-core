@@ -21,7 +21,7 @@ class BlocksManagerTestsSpec : BaseQuickSpec {
 
 		describe("BlocksManager") {
 			it("BlocksManager can be initialized") {
-				waitUntil(timeout: 10.0) { done in
+				waitUntil(timeout: .seconds(10)) { done in
 					self.manager.blocks(height: "1") { blocks, error in
 
 						expect(blocks).toNot(beNil())

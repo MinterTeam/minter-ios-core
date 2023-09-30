@@ -48,9 +48,9 @@ class RawTransactionSpec: BaseQuickSpec {
 				let signatureType = BigUInt(1)
 				let serviceData = "serviceData".data(using: .utf8)!
 				
-				let v = BigUInt(1)
-				let r = BigUInt(2)
-				let s = BigUInt(3)
+				let v = Data()
+				let r = Data()
+				let s = Data()
 				
 				let signatureData = RawTransaction.SignatureData(v: v, r: r, s: s)
 				
@@ -134,9 +134,9 @@ class RawTransactionSpec: BaseQuickSpec {
 		describe("RawTransaction SignatureData encode") {
 			it("Can be encoded") {
 				
-				let v = BigUInt(1)
-				let r = BigUInt(1)
-				let s = BigUInt(1)
+				let v = Data()
+				let r = Data()
+				let s = Data()
 				
 				let signatureData = RawTransaction.SignatureData(v: v, r: r, s: s)
 				expect(signatureData).notTo(beNil())

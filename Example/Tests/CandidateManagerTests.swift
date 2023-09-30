@@ -29,7 +29,7 @@ class CandidateManagerTestsSpec: BaseQuickSpec {
 			it("CandidateManager can request candiadte data") {
 				self.manager = CandidateManager(httpClient: self.http)
 
-				waitUntil(timeout: 10.0) { done in
+				waitUntil(timeout: .seconds(10)) { done in
 					self.manager?.candidate(publicKey: "Mp0208f8a2bd535f65ecbe4b057b3b3c5fbfef6003b0713dc37b697b1d19153fe8", completion: { (response, error) in
 
 						expect(error).to(beNil())
@@ -43,7 +43,7 @@ class CandidateManagerTestsSpec: BaseQuickSpec {
 			it("CandidateManager can request incorrect candiadte") {
 				self.manager = CandidateManager(httpClient: self.http)
 				
-				waitUntil(timeout: 10.0) { done in
+				waitUntil(timeout: .seconds(10)) { done in
 					self.manager?.candidate(publicKey: "112", completion: { (response, error) in
 						
 						expect(error).toNot(beNil())
@@ -57,7 +57,7 @@ class CandidateManagerTestsSpec: BaseQuickSpec {
 			it("CandidateManager can retreive candidates") {
 				self.manager = CandidateManager(httpClient: self.http)
 
-				waitUntil(timeout: 10.0) { done in
+				waitUntil(timeout: .seconds(10)) { done in
 					self.manager?.candidates(includeStakes: false, completion: { (response, error) in
 
 						expect(error).to(beNil())
