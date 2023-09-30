@@ -10,7 +10,6 @@ import Foundation
 /// Extension for making base64 representations of `Data` safe for
 /// transmitting via URL query parameters
 extension Data {
-
     /// Instantiates data by decoding a base64url string into base64
     ///
     /// - Parameter string: A base64url encoded string
@@ -23,13 +22,11 @@ extension Data {
     /// - Returns: A string that is base64 encoded but made safe for passing
     ///            in as a query parameter into a URL string
     func base64URLEncodedString() -> String {
-        return self.base64EncodedString().toggleBase64URLSafe(on: true)
+        return base64EncodedString().toggleBase64URLSafe(on: true)
     }
-
 }
 
 extension String {
-
     /// Encodes or decodes into a base64url safe representation
     ///
     /// - Parameter on: Whether or not the string should be made safe for URL strings
@@ -37,13 +34,13 @@ extension String {
     func toggleBase64URLSafe(on: Bool) -> String {
         if on {
             // Make base64 string safe for passing into URL query params
-            let base64url = self.replacingOccurrences(of: "/", with: "_")
+            let base64url = replacingOccurrences(of: "/", with: "_")
                 .replacingOccurrences(of: "+", with: "-")
                 .replacingOccurrences(of: "=", with: "")
             return base64url
         } else {
             // Return to base64 encoding
-            var base64 = self.replacingOccurrences(of: "_", with: "/")
+            var base64 = replacingOccurrences(of: "_", with: "/")
                 .replacingOccurrences(of: "-", with: "+")
             // Add any necessary padding with `=`
             if base64.count % 4 != 0 {
@@ -52,5 +49,4 @@ extension String {
             return base64
         }
     }
-
 }

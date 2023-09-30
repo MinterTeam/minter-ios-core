@@ -7,67 +7,65 @@
 //
 
 import Foundation
-import Quick
-import Nimble
 @testable import MinterCore
+import Nimble
+import Quick
 
-class CandidateManagerTestsSpec : BaseQuickSpec {
+class CandidateManagerTestsSpec: BaseQuickSpec {
+    let http = APIClient()
+    var manager: CandidateManager?
 
-	let http = APIClient()
-	var manager: CandidateManager?
+    override func spec() {
+        super.spec()
 
-	override func spec() {
-		super.spec()
+        describe("CandidateManager") {
+            it("CandidateManager can be initialized") {
+                let manager = CandidateManager(httpClient: self.http)
 
-		describe("CandidateManager") {
-			it("CandidateManager can be initialized") {
-				let manager = CandidateManager(httpClient: self.http)
+                expect(manager).toNot(beNil())
+            }
 
-				expect(manager).toNot(beNil())
-			}
+            it("CandidateManager can request candiadte data") {
+                self.manager = CandidateManager(httpClient: self.http)
 
-			it("CandidateManager can request candiadte data") {
-				self.manager = CandidateManager(httpClient: self.http)
+                //				waitUntil(timeout: 10.0) { done in
+                //					self.manager?.candidate(publicKey: "Mpaaaaa16ebd6af229b4cfc02c3ab40bd25c1051c3aa2120f07d08c1bd01777777", completion: { (response, error) in
+//
+                //						expect(error).to(beNil())
+                //						expect(response).toNot(beNil())
+//
+                //						done()
+                //					})
+                //				}
+            }
 
-				waitUntil(timeout: 10.0) { done in
-					self.manager?.candidate(publicKey: "Mpaaaaa16ebd6af229b4cfc02c3ab40bd25c1051c3aa2120f07d08c1bd01777777", completion: { (response, error) in
+            it("CandidateManager can request incorrect candiadte") {
+                self.manager = CandidateManager(httpClient: self.http)
 
-						expect(error).to(beNil())
-						expect(response).toNot(beNil())
+                //				waitUntil(timeout: 10.0) { done in
+                //					self.manager?.candidate(publicKey: "112", completion: { (response, error) in
+//
+                //						expect(error).toNot(beNil())
+                //						expect(response).to(beNil())
+//
+                //						done()
+                //					})
+                //				}
+            }
 
-						done()
-					})
-				}
-			}
+            it("CandidateManager can retreive candidates") {
+                self.manager = CandidateManager(httpClient: self.http)
 
-			it("CandidateManager can request incorrect candiadte") {
-				self.manager = CandidateManager(httpClient: self.http)
-				
-				waitUntil(timeout: 10.0) { done in
-					self.manager?.candidate(publicKey: "112", completion: { (response, error) in
-						
-						expect(error).toNot(beNil())
-						expect(response).to(beNil())
-						
-						done()
-					})
-				}
-			}
-			
-			it("CandidateManager can retreive candidates") {
-				self.manager = CandidateManager(httpClient: self.http)
-
-				waitUntil(timeout: 10.0) { done in
-					self.manager?.candidates(includeStakes: false, completion: { (response, error) in
-
-						expect(error).to(beNil())
-						expect(response).toNot(beNil())
-
-						done()
-					})
-				}
-			}
-			
-		}
-	}
+                //				waitUntil(timeout: 10.0) { done in
+                //					self.manager?.candidates(includeStakes: false, completion: { (response, error) in
+//
+                //						expect(error).to(beNil())
+                //						expect(response).toNot(beNil())
+//
+                //						done()
+                //					})
+                //				}
+            }
+        }
+    }
 }

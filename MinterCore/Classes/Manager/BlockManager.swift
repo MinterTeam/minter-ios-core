@@ -7,38 +7,35 @@
 
 import Foundation
 
-public enum BlockManagerError : Error {
-	case incorrectPayload
+public enum BlockManagerError: Error {
+    case incorrectPayload
 }
 
 /// Block Manager
-public class BlockManager : BaseManager {
+public class BlockManager: BaseManager {
+    public func blocks(height: String = "0", with completion: (([String: Any]?, Error?) -> Void)?) {
+        let blocksURL = MinterAPIURL.blocks.url()
 
-	public func blocks(height: String = "0", with completion: (([String : Any]?, Error?) -> ())?) {
+        httpClient.getRequest(blocksURL, parameters: ["height": height]) { response, error in
 
-		let blocksURL = MinterAPIURL.blocks.url()
+            var res: [String: Any]?
+            var err: Error?
 
-		self.httpClient.getRequest(blocksURL, parameters: ["height" : height]) { (response, error) in
+            defer {
+                completion?(res, err)
+            }
 
-			var res: [String : Any]?
-			var err: Error?
+            guard error == nil else {
+                err = error
+                return
+            }
 
-			defer {
-				completion?(res, err)
-			}
-
-			guard nil == error else {
-				err = error
-				return
-			}
-
-			/// trying to parse response
-			guard let resp = response.data as? [String : Any] else {
-				err = BlockManagerError.incorrectPayload
-				return
-			}
-			res = resp
-		}
-	}
-
+            /// trying to parse response
+            guard let resp = response.data as? [String: Any] else {
+                err = BlockManagerError.incorrectPayload
+                return
+            }
+            res = resp
+        }
+    }
 }

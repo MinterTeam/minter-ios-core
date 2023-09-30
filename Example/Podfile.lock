@@ -2,17 +2,17 @@ PODS:
   - Alamofire (4.7.3)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
-  - CryptoSwift (1.0.0)
+  - CryptoSwift (1.8.0)
   - GoldenKeystore (1.0.3):
     - TrezorCrypto (= 0.0.9)
-  - MinterCore (0.1.23):
+  - MinterCore (0.1.28):
     - Alamofire (= 4.7.3)
     - BigInt (~> 3.0)
     - CryptoSwift (~> 1.0)
     - ObjectMapper (~> 3.1)
     - secp256k1.swift (~> 0.1)
-  - Nimble (8.0.4)
-  - ObjectMapper (3.5.1)
+  - Nimble (9.2.1)
+  - ObjectMapper (3.5.3)
   - Quick (1.2.0)
   - secp256k1.swift (0.1.4)
   - SipHash (1.2.2)
@@ -27,7 +27,7 @@ DEPENDENCIES:
   - SVProgressHUD
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/Cocoapods/Specs:
     - Alamofire
     - BigInt
     - CryptoSwift
@@ -53,17 +53,17 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
-  CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
+  CryptoSwift: 52aaf3fce7337552863b1d952e408085f0e65030
   GoldenKeystore: 6d176bbb332a4abb99024ebce06a3e3067c73a8a
-  MinterCore: 226756ce757cfb8eebebde6afbd740510cdb9f0f
-  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
-  ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
+  MinterCore: 6c4249d099efd59550ec6e4de0ca3437e04e6b23
+  Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
+  ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TrezorCrypto: bfeea47a052dca2c77d4a39e1e183865e52de14d
 
-PODFILE CHECKSUM: 6f134ba2f25c789fa3015779c875e401bccca5e1
+PODFILE CHECKSUM: d2437a086f22fa59e7856e719a3d5e4ef0e6ffee
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.13.0

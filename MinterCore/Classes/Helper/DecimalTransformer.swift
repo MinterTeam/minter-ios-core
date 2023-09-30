@@ -10,30 +10,28 @@ import ObjectMapper
 
 /// DecimalTransformer class
 public class DecimalTransformer: TransformType {
+    static let stringFormatters: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        return formatter
+    }()
 
-	static let stringFormatters: NumberFormatter = {
-		let formatter = NumberFormatter()
-		formatter.numberStyle = .none
-		return formatter
-	}()
+    // MARK: -
 
-	// MARK: -
+    public init() {}
 
-	public init() {}
+    public typealias Object = Decimal
 
-	public typealias Object = Decimal
+    public typealias JSON = String
 
-	public typealias JSON = String
+    public func transformFromJSON(_ value: Any?) -> Object? {
+        if let val = value as? String {
+            return Decimal(string: val)
+        }
+        return nil
+    }
 
-	public func transformFromJSON(_ value: Any?) -> Object? {
-		if let val = value as? String {
-			return Decimal(string: val)
-		}
-		return nil
-	}
-
-	public func transformToJSON(_ value: Object?) -> JSON? {
-		return DecimalTransformer.stringFormatters.string(for: value ?? 0.0)
-	}
-
+    public func transformToJSON(_ value: Object?) -> JSON? {
+        return DecimalTransformer.stringFormatters.string(for: value ?? 0.0)
+    }
 }

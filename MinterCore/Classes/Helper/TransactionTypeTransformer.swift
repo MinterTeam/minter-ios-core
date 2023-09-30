@@ -9,23 +9,21 @@ import Foundation
 import ObjectMapper
 
 /// TransactionTypeTransformer class
-public class TransactionTypeTransformer : TransformType {
+public class TransactionTypeTransformer: TransformType {
+    public init() {}
 
-	public init() {}
+    public typealias Object = TransactionType
 
-	public typealias Object = TransactionType
+    public typealias JSON = Int
 
-	public typealias JSON = Int
+    public func transformFromJSON(_ value: Any?) -> Object? {
+        if let val = value as? Int {
+            return TransactionType(rawValue: val)
+        }
+        return nil
+    }
 
-	public func transformFromJSON(_ value: Any?) -> Object? {
-		if let val = value as? Int {
-			return TransactionType(rawValue: val)
-		}
-		return nil
-	}
-
-	public func transformToJSON(_ value: Object?) -> JSON? {
-		return value?.rawValue
-	}
-
+    public func transformToJSON(_ value: Object?) -> JSON? {
+        return value?.rawValue
+    }
 }

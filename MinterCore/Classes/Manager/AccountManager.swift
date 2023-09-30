@@ -7,45 +7,43 @@
 
 import Foundation
 
-enum AccountManagerError : Error {
-	case balanceIncorrectPayload
+enum AccountManagerError: Error {
+    case balanceIncorrectPayload
 }
 
 /// Account Manager
 public class AccountManager: BaseManager {
+    /**
+     	Method retreives balance data from the Minter node
+     	- Parameters:
+     		- address: Address for which balance will be retreived
+     		- completion: Method which will be called after request finished. Balance is in PIPs
+     	- Precondition: `address` must contain "Mx" prefix
+     */
+    public func address(_ address: String, height: String = "0", with completion: (([String: Any]?, Error?) -> Void)?) {
+        let balanceURL = MinterAPIURL.address.url()
 
-	/**
-		Method retreives balance data from the Minter node
-		- Parameters:
-			- address: Address for which balance will be retreived
-			- completion: Method which will be called after request finished. Balance is in PIPs
-		- Precondition: `address` must contain "Mx" prefix
-	*/
-	public func address(_ address: String, height: String = "0", with completion: (([String : Any]?, Error?) -> ())?) {
+        httpClient.getRequest(balanceURL, parameters: ["address": address, "height": height]) { response, error in
 
-		let balanceURL = MinterAPIURL.address.url()
+            var res: [String: Any]?
+            var err: Error?
 
-		self.httpClient.getRequest(balanceURL, parameters: ["address" : address, "height" : height]) { (response, error) in
+            defer {
+                completion?(res, err)
+            }
 
-			var res: [String : Any]?
-			var err: Error?
+            guard error == nil else {
+                err = error
+                return
+            }
 
-			defer {
-				completion?(res, err)
-			}
+            /// trying to parse response
+            guard let balance = response.data as? [String: Any] else {
+                err = AccountManagerError.balanceIncorrectPayload
+                return
+            }
 
-			guard nil == error else {
-				err = error
-				return
-			}
-
-			/// trying to parse response
-			guard let balance = response.data as? [String : Any] else {
-				err = AccountManagerError.balanceIncorrectPayload
-				return
-			}
-
-			res = balance
-		}
-	}
+            res = balance
+        }
+    }
 }
