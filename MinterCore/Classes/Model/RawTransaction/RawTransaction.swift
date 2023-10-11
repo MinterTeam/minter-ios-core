@@ -52,6 +52,9 @@ public enum RawTransactionType: Int {
   case editMultisigOwner = 0x12
   case priceVote = 0x13
   case editCandidatePublicKey = 0x14
+  case sellSwap = 0x17
+  case buySwap = 0x18
+  case sellAllSwap = 0x19
 
 	public func BigUIntValue() -> BigUInt {
 		return BigUInt(self.rawValue)
@@ -100,6 +103,7 @@ public enum RawTransactionType: Int {
     case .editMultisigOwner: return 1_000 * RawTransactionType.commissionUnit
     case .priceVote: return 10 * RawTransactionType.commissionUnit
     case .editCandidatePublicKey: return 10_000_000 * RawTransactionType.commissionUnit
+    case .buySwap, .sellSwap, .sellAllSwap: return 100 * RawTransactionType.commissionUnit
     }
 	}
 }
