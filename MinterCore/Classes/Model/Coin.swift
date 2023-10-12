@@ -33,6 +33,8 @@ public class Coin {
 
   /// Creator`s address (e.g. Mx8aecc99090e22db1ae017a739b0dc0beb63dbee8)
   public var ownerAddress: String?
+
+  public var isOracleVerified: Bool = false
 }
 
 /// Internal use Coin mappable class
@@ -54,6 +56,9 @@ public class CoinMappable: Coin, Mappable {
 
   public func mapping(map: Map) {
     self.id <- map["id"]
+    if let idStr = map.JSON["id"] as? String, self.id == nil {
+        self.id = Int(idStr)
+    }
     self.name <- map["name"]
     self.symbol <- map["symbol"]
     self.volume <- map["volume"]
@@ -67,6 +72,7 @@ public class CoinMappable: Coin, Mappable {
 public extension Coin {
 
   /// Base coin model, differs depend on the network (testnet, mainnet)
+  /// To be removed in next versions. Please see Commissions endpoind for base coin
   static func baseCoin() -> Coin {
     let coin = Coin()
     coin.id = 0
